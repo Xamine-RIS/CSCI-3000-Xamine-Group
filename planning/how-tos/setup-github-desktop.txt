@@ -1,0 +1,7 @@
+0. Download and install Git. - https://git-scm.com/
+1. Download and install GitHub desktop. - https://desktop.github.com/
+2. Sign in with GitHub credentials.
+3. If you have already given Matt your GitHub username and accepted the invite to be a collabarator, you should see this repo in your list of repositories.
+4. Choose a location to store the repo locally on your machine and click "Clone". This will copy the entire repo onto your machine.
+5. You may then make whatever edits are needed to the repo and 'push' the changes to GitHub. GitHub desktop will automatically recognize that changes have been made.
+6. Under "Summary" in the bottom left, describe the changes you've made and click "Commit to master"
