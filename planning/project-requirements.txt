@@ -29,7 +29,7 @@
     View past medical, drug, family, surgical, and other history
     View diagnostic tests.
     
-6.	Referral Dr and patient portal
+6.	Results portal
     Doctor (and patient if needed) should be notified when a radiology report is approved.
     Doctor and patient can log in to same web portal to see results.
     
