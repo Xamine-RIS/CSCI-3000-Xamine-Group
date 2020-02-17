@@ -1,5 +1,10 @@
 First time setup:
 https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
 
-Every time:
+Activate development environment:
 https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#activating-a-virtual-environment
+
+Run test server:
+1. Activate virtual environment.
+2. Run 'python manage.py runserver'.
+3. Navigate to link as provided by runserver script.
