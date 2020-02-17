@@ -1,0 +1,9 @@
+When you're ready to submit your prototype, make a folder with your section number/title per below and upload the html file and any other needed files to that folder.  
+
+1. Patient Referral and Scheduling
+2. Check in and patient prep
+3. Image capture and processing
+4. Radiologist analysis and reporting
+5. Patient history and exam status
+6. Referring Dr and Patient portal
+7. User control and access system
