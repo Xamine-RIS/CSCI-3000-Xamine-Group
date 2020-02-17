@@ -1,0 +1,5 @@
+First time setup:
+https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
+Every time:
+https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#activating-a-virtual-environment
