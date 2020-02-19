@@ -5,5 +5,5 @@ When you're ready to submit your prototype, make a folder with your section numb
 3. Image capture and processing
 4. Radiologist analysis and reporting
 5. Patient history and exam status
-6. Referring Dr and Patient portal
+6. Results Portal
 7. User control and access system

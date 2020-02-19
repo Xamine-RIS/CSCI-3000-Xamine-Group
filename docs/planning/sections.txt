@@ -1,8 +1,0 @@
-Possible Sections of RIS app:
-- Patient referral and scheduling
-- Check in and patient preparation
-- Image capture and storage
-- Radiologist analysis and reporting
-- Patient history and exam status
-- Results portal
-- User access system
