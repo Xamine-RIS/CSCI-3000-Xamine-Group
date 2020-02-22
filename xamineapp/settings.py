@@ -26,7 +26,9 @@ SECRET_KEY = 'y=rd)^$u&9%2iq%vl-@b_$togiy%a18(al)a)3=_^7dnrx84$*'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'xaminegroup.pythonanywhere.com'
+    'xaminegroup.pythonanywhere.com',
+    '127.0.0.1',
+    'localhost',
 ]
 
 
