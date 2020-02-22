@@ -25,7 +25,9 @@ SECRET_KEY = 'y=rd)^$u&9%2iq%vl-@b_$togiy%a18(al)a)3=_^7dnrx84$*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'xaminegroup.pythonanywhere.com'
+]
 
 
 # Application definition
@@ -33,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'crispy_forms',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -55,7 +58,7 @@ ROOT_URLCONF = 'xamineapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,3 +122,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Misc
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
