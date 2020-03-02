@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Analysis and Reporting</title>
+	<style>
+		.section{
+			border-width: 2px;
+			border:#000000;
+			border-style:solid;
+			margin:1px;
+		}
+		#patients{	
+			width: 25%;
+			height:auto;
+			float: right;
+			max-height: 454px;
+		}
+		#img{
+			width:40%;
+			float:left;
+			height: 200px;
+		}
+		#history{
+			float:left;
+			width:30%;
+			height:200px;
+		}
+		#notes{
+			width:71%;
+			float:left;
+			height:auto;
+			max-height: 200px;
+		}
+		#updown{
+			width:71%;
+			height:50px;
+			float:left;
+		}
+		#notesArea{
+			width:100%;
+			max-height: 175px;
+			max-width: 99%;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="patients" class="section">
+		<table>
+			<thead>
+				<tr>
+					<th>Patient</th>
+					<th>Image Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Patient1</td>
+					<td>MRI</td>
+				</tr>
+				<tr>
+					<td>Patient2</td>
+					<td>UltraSound</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="img" class="section">Images Here</div>
+	<div id="history" class="section">History Here</div>
+	
+	<div id="notes" class="section">
+		Extra Notes Here:<br>
+		<textarea id="notesArea"></textarea>
+	</div>
+	
+	<div id="updown" class="section">
+		Upload/Download Voice File Here
+		<input type="button" value="Upload">
+		<input type="button" value="Download">
+	</div>
+</body>
+</html>
