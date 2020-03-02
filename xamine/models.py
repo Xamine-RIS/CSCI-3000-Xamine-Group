@@ -6,7 +6,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=128)
     
     @property
-    def full_name:
+    def full_name(self):
         if self.middle_name:
             return f"{self.first_name} {self.middle_name} {self.last_name}"
         else:
