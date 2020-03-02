@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+class Patient(models.Model):
+    first_name = models.CharField(max_length=128)
+    middle_name = models.CharField(max_length=128, blank=True, null=True)
+    last_name = models.CharField(max_length=128)
