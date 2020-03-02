@@ -9,7 +9,7 @@ def index(request, patid=None):
 
     if patid:
         patient = Patient.objects.get(pk=patid)
-        message = patient.first_name + ' ' + patient.last_name
+        message = "Patient: " + patient.first_name + ' ' + patient.last_name
     else:
         message = 'No Patient Selected'
 
