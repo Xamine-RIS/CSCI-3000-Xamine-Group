@@ -1,0 +1,6 @@
+Steps for Orders:
+-- 1. Placed: The referring order has been placed.
+-- 2. Scheduled: Appointment has been scheduled.
+-- 3. Checked In: Patient has arrived and is ready to be imaged.
+-- 4. Checked Out: Imaging is complete and uploaded.
+-- 5. Analyzed: Radiologist has filed report.
