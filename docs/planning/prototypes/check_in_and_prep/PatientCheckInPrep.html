@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Check-In</title>
-</head>
-<body>
-
-<h1 style="color:blue">Check-In</h1>
-<p>Please Check-In Below:</p>
-<form>
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname">
-</form>
-<p style="color:red">Thank you for visiting today! Your patience is appreciated during this time.</p>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="display-4">
+            Patient Check-In
+          </div>
+        </div>
+        <div class="col-4 mt-1">
+          <label>First Name:</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-4 mt-1">
+          <label>Last Name:</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-4 mt-1">
+          <label>Date of Birth:</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-4 mt-1">
+          <label>Phone Number:</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-6 mt-1">
+          <label>Email:</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-12 mt-1">
+          <label>Reason for Visit:</label>
+          <textarea class="form-control" id="textarea" rows= "3"></textarea>
+        </div>
+        <div class="col-2 mt-1">
+         <label for="Asthma">Do you have asthma?</label>
+         <select class="form-control" id="asthma">
+         <option>---</option>
+         <option>Yes</option>
+         <option>No</option> 
+          </select>
+          </div>
+        <div class="col-3 mt-1">
+         <label for="XrayDye">Are you allergic to Xray dye?</label>
+         <select class="form-control" id="XrayDye">
+         <option>---</option>
+         <option>Yes</option>
+         <option>No</option> 
+          </select>
+          </div>
+        <div class="col-2 mt-1">
+         <label for="MRIDye">MRI dye?</label>
+         <select class="form-control" id="MRIDye">
+         <option>---</option>
+         <option>Yes</option>
+         <option>No</option> 
+          </select>
+          </div>
+        <div class="col-2 mt-1">
+         <label for="Latex">Latex?</label>
+         <select class="form-control" id="Latex">
+         <option>---</option>
+         <option>Yes</option>
+         <option>No</option> 
+          </select>
+          </div>
+        <div class="col-12 mt-1">
+          <label>List any Food or Drug allergies you may have, if none, just write none:</label>
+          <textarea class="form-control" id="textarea" rows= "3"></textarea>
+        </div>
+          </div>
+      <div class="row mt-3">
+        <div class="col">
+          <button class="btn btn-primary">Check In</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
