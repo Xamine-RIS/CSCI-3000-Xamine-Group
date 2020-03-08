@@ -9,7 +9,7 @@
 
 {% block main %}
 
-    {% if request.user|has_group:"Physicians" or request.user.is_superuser  %}
+    {% if request.user|has_group:"Physicians" or request.user|has_group:"Admins" %}
     <!-- physician section -->
     <div id="physician_section">
         <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,7 +35,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container mt-1">
             <div class="row">
                 <div class="col-12 text-center">
@@ -107,7 +106,7 @@
                         </tr>
                         <tr>
                             <td><a class="orderlink" href="{% url 'order' %}">133</a></td>
-                            <td><a class="orderlink" href="{% url 'order' %}">William	Nash</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">William Nash</a></td>
                             <td>2/22/2020</td>
                         </tr>
                         </tbody>
@@ -120,7 +119,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Receptionists" or request.user.is_superuser  %}
+    {% if request.user|has_group:"Receptionists" or request.user|has_group:"Admins" %}
     <!-- receptionist section -->
     <div class="container mt-1" id="reception_section">
         <div class="row mt-3">
@@ -198,7 +197,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Technicians" or request.user.is_superuser  %}
+    {% if request.user|has_group:"Technicians" or request.user|has_group:"Admins" %}
     <!-- imaging/prep section -->
     <div class="container mt-1" id="imaging_section">
         <div class="row mt-3">
@@ -239,7 +238,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Radiologists" or request.user.is_superuser %}
+    {% if request.user|has_group:"Radiologists" or request.user|has_group:"Admins" %}
     <!-- analysis section -->
     <div class="container mt-1" id="analysis_section">
         <div class="row mt-3">
