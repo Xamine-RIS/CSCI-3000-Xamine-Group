@@ -9,7 +9,7 @@
 
 {% block main %}
 
-    {% if request.user|has_group:"Physicians" or request.user|has_group:"Admins" %}
+    {% if request.user|has_group:"Physicians" or request.user|has_group:"Administrators" %}
     <!-- physician section -->
     <div id="physician_section">
         <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -119,7 +119,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Receptionists" or request.user|has_group:"Admins" %}
+    {% if request.user|has_group:"Receptionists" or request.user|has_group:"Administrators" %}
     <!-- receptionist section -->
     <div class="container mt-1" id="reception_section">
         <div class="row mt-3">
@@ -197,7 +197,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Technicians" or request.user|has_group:"Admins" %}
+    {% if request.user|has_group:"Technicians" or request.user|has_group:"Administrators" %}
     <!-- imaging/prep section -->
     <div class="container mt-1" id="imaging_section">
         <div class="row mt-3">
@@ -238,7 +238,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Radiologists" or request.user|has_group:"Admins" %}
+    {% if request.user|has_group:"Radiologists" or request.user|has_group:"Administrators" %}
     <!-- analysis section -->
     <div class="container mt-1" id="analysis_section">
         <div class="row mt-3">
