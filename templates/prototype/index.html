@@ -8,18 +8,8 @@
 {% endblock %}
 
 {% block main %}
-{#    <div class="container">#}
-{#        <div class="row">#}
-{#            <div class="col text-center">#}
-{#                <a class="orderlink" href="#physician_section" data-toggle="collapse">Physician</a>&nbsp;-&nbsp;#}
-{#                <a class="orderlink" href="#reception_section" data-toggle="collapse">Receptionist</a>&nbsp;-&nbsp;#}
-{#                <a class="orderlink" href="#imaging_section" data-toggle="collapse">Technician</a>&nbsp;-&nbsp;#}
-{#                <a class="orderlink" href="#analysis_section" data-toggle="collapse">Radiologist</a>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
 
-    {% if request.user|has_group:"Physicians" %}
+    {% if request.user|has_group:"Physicians" or request.user.is_superuser  %}
     <!-- physician section -->
     <div id="physician_section">
         <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -130,7 +120,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Receptionists" %}
+    {% if request.user|has_group:"Receptionists" or request.user.is_superuser  %}
     <!-- receptionist section -->
     <div class="container mt-1" id="reception_section">
         <div class="row mt-3">
@@ -208,7 +198,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Technicians" %}
+    {% if request.user|has_group:"Technicians" or request.user.is_superuser  %}
     <!-- imaging/prep section -->
     <div class="container mt-1" id="imaging_section">
         <div class="row mt-3">
@@ -249,7 +239,7 @@
     {% endif %}
 
 
-    {% if request.user|has_group:"Radiologists" %}
+    {% if request.user|has_group:"Radiologists" or request.user.is_superuser %}
     <!-- analysis section -->
     <div class="container mt-1" id="analysis_section">
         <div class="row mt-3">
