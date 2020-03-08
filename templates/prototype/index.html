@@ -1,0 +1,300 @@
+{% extends 'base/base.html' %}
+
+{% block header %}
+    {% load group_auth %}
+    <style>
+        .orderlink { color: black; }
+    </style>
+{% endblock %}
+
+{% block main %}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col text-center">#}
+{#                <a class="orderlink" href="#physician_section" data-toggle="collapse">Physician</a>&nbsp;-&nbsp;#}
+{#                <a class="orderlink" href="#reception_section" data-toggle="collapse">Receptionist</a>&nbsp;-&nbsp;#}
+{#                <a class="orderlink" href="#imaging_section" data-toggle="collapse">Technician</a>&nbsp;-&nbsp;#}
+{#                <a class="orderlink" href="#analysis_section" data-toggle="collapse">Radiologist</a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+    {% if request.user|has_group:"Physicians" %}
+    <!-- physician section -->
+    <div id="physician_section">
+        <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create New Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            Please enter patient's date of birth:
+                        </div>
+                        <label for="datepicker" class="font-weight-bold">Date of Birth:</label>
+                        <input id="datepicker" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-1">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="button" data-toggle="modal" data-target="#new_order" class="btn btn-primary btn-sm">
+                        Create New Order
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    <div class="mb-3 h5">Active Orders</div>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th>Next Step</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">167</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Justin Hart</a></td>
+                            <td>Appointment</td>
+                        </tr>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">152</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Stephen	Oliver</a></td>
+                            <td>Analysis</td>
+                        </tr>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">153</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Jason Lawrence</a></td>
+                            <td>Analysis</td>
+                        </tr>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">143</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Keith Walsh</a></td>
+                            <td>Imaging</td>
+                        </tr>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">144</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Max	Ross</a></td>
+                            <td>Imaging</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6 text-center">
+                    <div class="mb-3 h5">Completed Orders</div>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th>Completed</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">122</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Mark Sampleperson</a></td>
+                            <td>2/9/2020</td>
+                        </tr>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">128</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">Jacob Personton</a></td>
+                            <td>2/28/2020</td>
+                        </tr>
+                        <tr>
+                            <td><a class="orderlink" href="{% url 'order' %}">133</a></td>
+                            <td><a class="orderlink" href="{% url 'order' %}">William	Nash</a></td>
+                            <td>2/22/2020</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end physician section -->
+    {% endif %}
+
+
+    {% if request.user|has_group:"Receptionists" %}
+    <!-- receptionist section -->
+    <div class="container mt-1" id="reception_section">
+        <div class="row mt-3">
+            <div class="col-6 text-center">
+                <div class="mb-3 h5">Today's Appointments</div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Patient</th>
+                        <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">167</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Justin Hart</a></td>
+                        <td>8:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">152</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Stephen	Oliver</a></td>
+                        <td>9:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">153</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Jason Lawrence</a></td>
+                        <td>9:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">143</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Keith Walsh</a></td>
+                        <td>10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">144</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Max	Ross</a></td>
+                        <td>11:00 AM</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 text-center">
+                <div class="mb-3 h5">Unscheduled Appointments</div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Patient</th>
+                        <th>Drafted</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">122</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Mark Sampleperson</a></td>
+                        <td>2/9/2020</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">128</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Jacob Personton</a></td>
+                        <td>2/28/2020</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">133</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">William	Nash</a></td>
+                        <td>2/22/2020</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- end receptionist section -->
+    {% endif %}
+
+
+    {% if request.user|has_group:"Technicians" %}
+    <!-- imaging/prep section -->
+    <div class="container mt-1" id="imaging_section">
+        <div class="row mt-3">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                <div class="mb-3 h5">Checked In Patients</div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Patient</th>
+                        <th>Drafted</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">122</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Mark Sampleperson</a></td>
+                        <td>2/9/2020</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">128</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Jacob Personton</a></td>
+                        <td>2/28/2020</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">133</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">William	Nash</a></td>
+                        <td>2/22/2020</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+    <!-- end imaging/prep section -->
+    {% endif %}
+
+
+    {% if request.user|has_group:"Radiologists" %}
+    <!-- analysis section -->
+    <div class="container mt-1" id="analysis_section">
+        <div class="row mt-3">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                <div class="mb-3 h5">Awaiting Analysis</div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Patient</th>
+                        <th>Completed</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">122</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Mark Sampleperson</a></td>
+                        <td>2/9/2020</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">128</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">Jacob Personton</a></td>
+                        <td>2/28/2020</td>
+                    </tr>
+                    <tr>
+                        <td><a class="orderlink" href="{% url 'order' %}">133</a></td>
+                        <td><a class="orderlink" href="{% url 'order' %}">William Nash</a></td>
+                        <td>2/22/2020</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+    <!-- end analysis section -->
+    {% endif %}
+
+{% endblock %}
+
+{% block afterscript %}
+    <script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
+{% endblock %}
