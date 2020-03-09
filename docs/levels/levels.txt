@@ -1,0 +1,5 @@
+1. Referral Placed
+2. Checked In
+3. Imaging Complete
+4. Analysis Complete
+5. Archived
