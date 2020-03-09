@@ -12,3 +12,8 @@ def order(request):
     return render(request, 'prototype/order.html')
 
 
+@login_required
+def patient(request):
+    return render(request, 'prototype/patient.html')
+
+
