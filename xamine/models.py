@@ -24,7 +24,7 @@ class Patient(models.Model):
         if self.middle_name:
             return f"{self.first_name} {self.middle_name} {self.last_name}"
         else:
-            return f"{self.first_name} {self.last_name}"  
+            return f"{self.first_name} {self.last_name}"
             
     def __str__(self):
         return f"{self.full_name} ({self.id})"
