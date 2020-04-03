@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Level(models.Model):
+    """ Model to define different points in order workflow """
     name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -15,6 +16,7 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=128)
     middle_name = models.CharField(max_length=128, blank=True, null=True)
     last_name = models.CharField(max_length=128)
+    # TODO: Add additional personal info needed for referral/checkin
 
     # Medical information
     # TODO: include fields for patient medical information
@@ -41,7 +43,7 @@ class Order(models.Model):
     last_edit = models.DateTimeField(auto_now=True)
 
     # Level tracking
-    level = models.ForeignKey(Level, on_delete=models.DO_NOTHING)
+    level = models.ForeignKey(Level, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     # Order information
     # TODO: add fields for order info tracking (reason for visit etc)
@@ -51,6 +53,9 @@ class Order(models.Model):
 
     # Analysis information
     # TODO: Add fields for radiologist analysis
+
+    # Report access information
+    # TODO: Add fields for patient access auth and archiving by doctor
     
     def __str__(self):
         return f"#{self.id} - {self.patient.full_name}"
