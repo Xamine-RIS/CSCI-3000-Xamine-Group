@@ -79,6 +79,7 @@ WSGI_APPLICATION = 'xamineapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# Local database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
