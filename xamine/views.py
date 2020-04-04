@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from xamine.models import Order
 from xamine.utils import get_setting, is_in_group
@@ -28,7 +28,7 @@ def order(request, order_id=None):
     if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/order.html')
 
-    cur_order = Order.objects.get_object_or_404(pk=order_id)
+    cur_order = get_object_or_404(Order, pk=order_id)
 
     context = {}
 
