@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 from xamine.models import Order
@@ -16,7 +17,7 @@ def index(request):
     if is_in_group(request.user, "Receptionists"):
         pass
     if is_in_group(request.user, "Technicians"):
-        pass
+        context['checked_in_orders'] = Order.objects.filter(level_id=2)
     if is_in_group(request.user, "Radiologists"):
         pass
 
@@ -28,7 +29,10 @@ def order(request, order_id=None):
     if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/order.html')
 
-    cur_order = get_object_or_404(Order, pk=order_id)
+    try:
+        cur_order = Order.objects.get(pk=order_id)
+    except Order.DoesNotExist:
+        raise Http404
 
     context = {}
 
@@ -49,7 +53,7 @@ def order(request, order_id=None):
         pass
 
     # Add current order to the context dict
-    context["cur_order"] = cur_order,
+    context["cur_order"] = cur_order
 
     # Define which user groups can see medical info, add to context
     medical_groups = ['Technicians', 'Radiologists', 'Physicians']
