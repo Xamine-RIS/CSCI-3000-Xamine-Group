@@ -7,7 +7,7 @@ from xamine.utils import get_setting, is_in_group
 
 @login_required
 def index(request):
-    if get_setting('SHOW_PROTOTYPE') == 'True':
+    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/index.html')
 
     context = {}
@@ -25,7 +25,7 @@ def index(request):
 
 @login_required
 def order(request, order_id=None):
-    if get_setting('SHOW_PROTOTYPE') == 'True':
+    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/order.html')
 
     cur_order = Order.objects.get_object_or_404(pk=order_id)
@@ -55,7 +55,5 @@ def order(request, order_id=None):
 
 @login_required
 def patient(request):
-    if get_setting('SHOW_PROTOTYPE') == 'True':
+    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/patient.html')
-
-
