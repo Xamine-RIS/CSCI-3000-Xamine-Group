@@ -1,0 +1,258 @@
+{% extends 'base/base.html' %}
+
+{% block main %}
+    <!-- patient info section -->
+    <div class="collapse show" id="patient_info">
+        <div class="container mt-1">
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <div class="display-4">Order # 137</div>
+                </div>
+                <div class="col-12">
+                    <span class="h4">Patient Information</span>
+                    <a href="{% url 'patient' %}" class="text-muted small ml-2" data-toggle="tooltip" data-placement="top" title="Link to Patient History">
+                        Edit
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <span class="font-weight-bold">First Name:</span><br>
+                            Delores
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">Middle Name:</span><br>
+                            A
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">Last Name:</span><br>
+                            Crow
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-4">
+                            <span class="font-weight-bold">DOB:</span><br>
+                            11/19/1951
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">Phone Number:</span><br>
+                            (212) 867-5309
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">Email Address:</span><br>
+                            delores@email.com
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-12">
+                            <hr>
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">X-Ray Dye Allergy:</span><br>
+                            No
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">MRI Dye Allergy:</span><br>
+                            No
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">Latex Allergy:</span><br>
+                            No
+                        </div>
+                        <div class="col-4">
+                            <span class="font-weight-bold">Asthma:</span><br>
+                            No
+                        </div>
+                        <div class="col-8">
+                            <span class="font-weight-bold">Other Allergies:</span><br>
+                            No
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="h5 mb-2">
+                        Patient Notes
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item list-group-item-warning notes">This is a note</li>
+                        <li class="list-group-item notes">This is another note</li>
+                        <li class="list-group-item notes">This is a longer note meant to demonstrate wrapping</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end physician section -->
+
+
+    <!-- edit order info section -->
+    <div class="collapse" id="edit_order_info">
+    <form id="edit_order_form">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <span class="h4">Edit Order Information</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <label class="font-weight-bold">Reason for Visit:</label>
+                            <textarea class="form-control">Broken Left Leg</textarea>
+                        </div>
+                        <div class="col-6">
+                            <label class="font-weight-bold">Imaging Needed:</label>
+                            <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <button type="button" class="btn btn-primary">Save Order Info</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="cancelEditOrder()">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    <!-- end edit order section -->
+
+    <!-- order info section -->
+    <div class="collapse show" id="order_info">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <span class="h4">Order Information</span>
+                    <a href="#" onclick="editOrder()" class="text-muted small ml-2" data-toggle="tooltip" data-placement="top" title="Link to Order Info">
+                        Edit
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <span class="font-weight-bold">Reason for Visit:</span><br>
+                    Broken Left Leg
+                </div>
+                <div class="col-6">
+                    <span class="font-weight-bold">Imaging Needed:</span><br>
+                    X-Ray of Left Leg Instep & Outstep
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end order section -->
+
+    <!-- imaging section -->
+    <div class="collapse show" id="imaging_info">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <span class="h4">Imaging</span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Timestamp</th>
+                            <th scope="col">User</th>
+                            <th scope="col"><i class="fas fa-plus"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>LeftLegInstep.jpg</td>
+                            <td>03/08/2020 10:31 AM</td>
+                            <td>sample_user</td>
+                            <td><i class="fas fa-trash"></i></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>LeftLegOutstep.jpg</td>
+                            <td>03/08/2020 10:35 AM</td>
+                            <td>sample_user</td>
+                            <td><i class="fas fa-trash"></i></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Images.dicom</td>
+                            <td>03/08/2020 10:38 AM</td>
+                            <td>sample_user</td>
+                            <td><i class="fas fa-trash"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end order section -->
+
+    <!-- analysis section -->
+    <form>
+        <div class="collapse show" id="order_info">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="h4">Analysis Report</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9 mt-2">
+                    <textarea rows="7" class="form-control">
+
+                    </textarea>
+                    </div>
+                    <div class="col-3">
+                        <div class="h5 mb-2">
+                            Audio Upload
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div><br>
+                        <button class="btn btn-sm btn-outline-primary mt-3" type="button">Submit Report</button>
+                        <button class="btn btn-sm btn-outline-secondary mt-3" type="button">Download Audio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- end analysis section -->
+{% endblock %}
+
+{% block afterscript %}
+    <script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        $(document).ready(function () {
+            bsCustomFileInput.init()
+        })
+
+        function editOrder() {
+            $('#order_info').collapse('hide');
+            $('#edit_order_info').collapse('show')
+        }
+
+        function cancelEditOrder () {
+            $('#order_info').collapse('show');
+            $('#edit_order_info').collapse('hide');
+            document.getElementById('edit_order_form').reset()
+        }
+    </script>
+{% endblock %}
+
+</body>
+</html>

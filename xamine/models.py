@@ -9,6 +9,15 @@ class Level(models.Model):
         return self.name
 
 
+class AppSetting(models.Model):
+    """ Defines settings that can be turned on and off """
+    name = models.CharField(max_length=32)
+    value = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.name
+
+
 class Patient(models.Model):
     """ Model to track the patient and their history """
 
