@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-9">
+                <div class="col-12">
                     <div class="row mt-3">
                         <div class="col-4">
                             <span class="font-weight-bold">First Name:</span><br>
@@ -45,42 +45,44 @@
                             delores@email.com
                         </div>
                     </div>
-                    <div class="row mt-1">
-                        <div class="col-12">
-                            <hr>
+                    {% if show_medical %}
+                        <div class="row mt-1">
+                            <div class="col-12">
+                                <hr>
+                            </div>
+                            <div class="col-4">
+                                <span class="font-weight-bold">X-Ray Dye Allergy:</span><br>
+                                No
+                            </div>
+                            <div class="col-4">
+                                <span class="font-weight-bold">MRI Dye Allergy:</span><br>
+                                No
+                            </div>
+                            <div class="col-4">
+                                <span class="font-weight-bold">Latex Allergy:</span><br>
+                                No
+                            </div>
+                            <div class="col-4">
+                                <span class="font-weight-bold">Asthma:</span><br>
+                                No
+                            </div>
+                            <div class="col-8">
+                                <span class="font-weight-bold">Other Allergies:</span><br>
+                                No
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <span class="font-weight-bold">X-Ray Dye Allergy:</span><br>
-                            No
-                        </div>
-                        <div class="col-4">
-                            <span class="font-weight-bold">MRI Dye Allergy:</span><br>
-                            No
-                        </div>
-                        <div class="col-4">
-                            <span class="font-weight-bold">Latex Allergy:</span><br>
-                            No
-                        </div>
-                        <div class="col-4">
-                            <span class="font-weight-bold">Asthma:</span><br>
-                            No
-                        </div>
-                        <div class="col-8">
-                            <span class="font-weight-bold">Other Allergies:</span><br>
-                            No
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
-                <div class="col-3">
-                    <div class="h5 mb-2">
-                        Patient Notes
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item list-group-item-warning notes">This is a note</li>
-                        <li class="list-group-item notes">This is another note</li>
-                        <li class="list-group-item notes">This is a longer note meant to demonstrate wrapping</li>
-                    </ul>
-                </div>
+{#                <div class="col-3">#}
+{#                    <div class="h5 mb-2">#}
+{#                        Patient Notes#}
+{#                    </div>#}
+{#                    <ul class="list-group list-group-flush">#}
+{#                        <li class="list-group-item list-group-item-warning notes">This is a note</li>#}
+{#                        <li class="list-group-item notes">This is another note</li>#}
+{#                        <li class="list-group-item notes">This is a longer note meant to demonstrate wrapping</li>#}
+{#                    </ul>#}
+{#                </div>#}
             </div>
         </div>
     </div>
@@ -89,32 +91,32 @@
 
     <!-- edit order info section -->
     <div class="collapse" id="edit_order_info">
-    <form id="edit_order_form">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-12">
-                    <span class="h4">Edit Order Information</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="row mt-3">
-                        <div class="col-6">
-                            <label class="font-weight-bold">Reason for Visit:</label>
-                            <textarea class="form-control">Broken Left Leg</textarea>
-                        </div>
-                        <div class="col-6">
-                            <label class="font-weight-bold">Imaging Needed:</label>
-                            <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
-                        </div>
+        <form id="edit_order_form">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="h4">Edit Order Information</span>
                     </div>
                 </div>
-                <div class="col-12 mt-2">
-                    <button type="button" class="btn btn-primary">Save Order Info</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="cancelEditOrder()">Cancel</button>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label class="font-weight-bold">Reason for Visit:</label>
+                                <textarea class="form-control">Broken Left Leg</textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="font-weight-bold">Imaging Needed:</label>
+                                <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <button type="button" class="btn btn-primary">Save Order Info</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="cancelEditOrder()">Cancel</button>
+                    </div>
                 </div>
             </div>
-        </div>
         </form>
     </div>
     <!-- end edit order section -->

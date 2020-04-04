@@ -48,7 +48,12 @@ def order(request, order_id=None):
         # Prepare context for template if archived
         pass
 
+    # Add current order to the context dict
     context["cur_order"] = cur_order,
+
+    # Define which user groups can see medical info, add to context
+    medical_groups = ['Technicians', 'Radiologists', 'Physicians']
+    context['show_medical'] = is_in_group(request.user, medical_groups)
 
     return render(request, 'order.html', context)
 
