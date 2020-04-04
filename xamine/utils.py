@@ -8,7 +8,7 @@ def get_setting(name, default=None):
     # If it's not found, we return the default, if given.
     # If not, we return None
     try:
-        return AppSetting.objects.get(pk=name).value
+        return AppSetting.objects.get(name=name).value
     except AppSetting.DoesNotExist:
         return default
 
@@ -21,4 +21,4 @@ def is_in_group(user, group):
     if isinstance(group, str):
         group = [group]
 
-    return user.groups.filter(name_in=group).exists()
+    return user.groups.filter(name__in=group).exists()
