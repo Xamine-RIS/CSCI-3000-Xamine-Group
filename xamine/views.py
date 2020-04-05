@@ -64,5 +64,5 @@ def order(request, order_id=None):
 
 @login_required
 def patient(request):
-    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
-        return render(request, 'prototype/patient.html')
+    # if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
+    return render(request, 'prototype/patient.html')
