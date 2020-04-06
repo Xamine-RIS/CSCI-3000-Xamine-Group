@@ -25,10 +25,18 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=128)
     middle_name = models.CharField(max_length=128, blank=True, null=True)
     last_name = models.CharField(max_length=128)
-    # TODO: Add additional personal info needed for referral/checkin
+    email_info = models.EmailField()
+    birth_date = models.DateField()
+    phone_number = models.CharField(max_length=10)
+
 
     # Medical information
     # TODO: include fields for patient medical information
+    allergy_asthma = models.BooleanField()
+    allergy_dye = models.BooleanField()
+    mri_dye = models.BooleanField()
+    latex = models.BooleanField()
+    notes = models.TextField(null=True, blank=True)
 
     @property
     def full_name(self):

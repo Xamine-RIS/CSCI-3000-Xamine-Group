@@ -10,7 +10,7 @@
                 </div>
                 <div class="col-12">
                     <span class="h4">Patient Information</span>
-                    <a href="{% url 'patient' %}" class="text-muted small ml-2" data-toggle="tooltip" data-placement="top" title="Link to Patient History">
+                    <a href="{% url 'patient' pat_id=cur_order.patient.id %}" class="text-muted small ml-2" data-toggle="tooltip" data-placement="top" title="Link to Patient History">
                         Edit
                     </a>
                 </div>

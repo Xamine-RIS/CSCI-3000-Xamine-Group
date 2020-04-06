@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
-from xamine.models import Order
+from xamine.models import Order, Patient
 from xamine.utils import get_setting, is_in_group
 
 
@@ -63,6 +63,13 @@ def order(request, order_id=None):
 
 
 @login_required
-def patient(request):
+def patient(request, pat_id=None):
     if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/patient.html')
+
+    patient = Patient.objects.get(pk=pat_id) 
+
+    context = {
+        'patient_info': patient
+    }
+    return render(request, 'patient.html', context)
