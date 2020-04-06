@@ -72,4 +72,4 @@ def patient(request, pat_id=None):
     context = {
         'patient_info': patient
     }
-
+    return render(request, 'patient.html', context)
