@@ -2,4 +2,3 @@
 
 A school project to create a RIS system.
 
-test

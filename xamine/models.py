@@ -29,9 +29,7 @@ class Patient(models.Model):
     birth_date = models.DateField()
     phone_number = models.CharField(max_length=10)
 
-
     # Medical information
-    # TODO: include fields for patient medical information
     allergy_asthma = models.BooleanField()
     allergy_dye = models.BooleanField()
     mri_dye = models.BooleanField()
@@ -69,7 +67,7 @@ class Order(models.Model):
     # TODO: use django-attachments instead of using model fields here
 
     # Analysis information
-    # TODO: Add fields for radiologist analysis
+    report = models.TextField(null=True, blank=True)
 
     # Report access information
     # TODO: Add fields for patient access auth and archiving by doctor
