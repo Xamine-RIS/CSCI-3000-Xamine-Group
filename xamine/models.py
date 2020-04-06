@@ -31,9 +31,10 @@ class Patient(models.Model):
 
     # Medical information
     allergy_asthma = models.BooleanField()
-    allergy_dye = models.BooleanField()
-    mri_dye = models.BooleanField()
-    latex = models.BooleanField()
+    allergy_xraydye = models.BooleanField()
+    allergy_mridye = models.BooleanField()
+    allergy_latex = models.BooleanField()
+
     notes = models.TextField(null=True, blank=True)
 
     @property
