@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Level(models.Model):
@@ -47,7 +48,6 @@ class Patient(models.Model):
     def __str__(self):
         return f"{self.full_name} ({self.id})"
 
-
 class Order(models.Model):
     """ Model for each individual imaging order placed by doctors """
     
@@ -75,3 +75,30 @@ class Order(models.Model):
     
     def __str__(self):
         return f"#{self.id} - {self.patient.full_name}"
+
+
+def image_path(instance, filename):
+    timestamp = timezone.now().strftime('%f')
+
+    return f"ris/{instance.order.id}/{timestamp}-{filename}"
+
+
+class Image(models.Model):
+    """ Model for the actual Image to be associated with an Order """
+
+    # ForeignKey link to Order associated with Image
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='images')
+
+    # label for image
+    label = models.CharField(max_length=30)
+
+    image = models.FileField(upload_to=image_path)
+
+    # username of person who uploaded image
+    user = models.CharField(max_length=30)
+
+    #DateTime that image was uploaded on
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.label} for order # {self.order.id}"
