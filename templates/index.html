@@ -254,20 +254,26 @@
                         </thead>
                         <tbody>
                         {% for order in radiologist_orders %}
-                        <tr>
-                            <td>
-                                <a class="orderlink" href="{% url 'order' order_id=order.id %}">
-                                    {{ order.id }}
-                                </a>
-                            </td>
-                            <td>
-                                <a class="orderlink" href="{% url 'order' order_id=order.id %}">
-                                    {{ order.patient.full_name }}
-                                </a>
-                            </td>
-                            <td>-- injury --</td>
-                            <td>{{ order.last_edit }}</td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <a class="orderlink" href="{% url 'order' order_id=order.id %}">
+                                        {{ order.id }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="orderlink" href="{% url 'order' order_id=order.id %}">
+                                        {{ order.patient.full_name }}
+                                    </a>
+                                </td>
+                                <td>-- injury --</td>
+                                <td>{{ order.last_edit }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    No orders
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
