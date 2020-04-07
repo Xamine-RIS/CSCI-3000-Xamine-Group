@@ -1,26 +1,77 @@
-from django.views.generic import TemplateView
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 
-from polls.forms import CheckinForm
-from polls.models import CheckinModel
+from xamine.models import Order, Patient
+from xamine.utils import get_setting, is_in_group
 
-class CheckinView(TemplateView):
-template_name='patient copy.html'
 
-def get(self, request)
-    form = CheckinForm
-    information = CheckinModel.objects.all()
-    args = {'form': form, 'information': information}
-    return render(request, self.template_name, args)
-def post(self, request)
-    form = CheckinForm(request.POST)
-    if form.is_valid:
-        form.save()
-        info = form.cleaned_data('FirstName', 'LastName', 'DOB', 'PhoneNumber',
-       'Email', 'Asthma', 'XrayDye', 'MRIDye', 'Latex',
-       'AdditionalInfo')
-       form = CheckinForm()
-       return redirect(CheckinForm:CheckinForm)
+@login_required
+def index(request):
+    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
+        return render(request, 'prototype/index.html')
 
-    args = ('form': form, 'info': info)
-    return render(request, self.template_name, args)
+    see_all = is_in_group(request.user, "Administrators")
+
+    context = {}
+    if see_all or is_in_group(request.user, "Physicians"):
+        pass
+    if see_all or is_in_group(request.user, "Receptionists"):
+        pass
+    if see_all or is_in_group(request.user, "Technicians"):
+        context['checked_in_orders'] = Order.objects.filter(level_id=2)
+    if see_all or is_in_group(request.user, "Radiologists"):
+        context['radiologist_orders'] = Order.objects.filter(level_id=3)
+
+    return render(request, 'index.html', context)
+
+
+@login_required
+def order(request, order_id=None):
+    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
+        return render(request, 'prototype/order.html')
+
+    try:
+        cur_order = Order.objects.get(pk=order_id)
+    except Order.DoesNotExist:
+        raise Http404
+
+    context = {}
+
+    if cur_order.level_id == 1:
+        # Prepare context for template if at referral placed step
+        pass
+    elif cur_order.level_id == 2:
+        # Prepare context for template if at checked in step
+        pass
+    elif cur_order.level_id == 3:
+        # Prepare context for template if at imaging complete step
+        pass
+    elif cur_order.level_id == 4:
+        # Prepare context for template if at analysis complete step
+        pass
+    elif cur_order.level_id == 5:
+        # Prepare context for template if archived
+        pass
+
+    # Add current order to the context dict
+    context["cur_order"] = cur_order
+
+    # Define which user groups can see medical info, add to context
+    medical_groups = ['Technicians', 'Radiologists', 'Physicians']
+    context['show_medical'] = is_in_group(request.user, medical_groups)
+
+    return render(request, 'order.html', context)
+
+
+@login_required
+def patient(request, pat_id=None):
+    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
+        return render(request, 'prototype/patient.html')
+
+    patient = Patient.objects.get(pk=pat_id) 
+
+    context = {
+        'patient_info': patient
+    }
+    return render(request, 'patient.html', context)
