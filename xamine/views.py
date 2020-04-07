@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
@@ -17,7 +19,13 @@ def index(request):
     if see_all or is_in_group(request.user, "Physicians"):
         pass
     if see_all or is_in_group(request.user, "Receptionists"):
-        pass
+        # Find today's appts
+        today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+        today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+        context['todays_orders'] = Order.objects.filter(level_id=1, appointment__range=(today_min, today_max))
+
+        # Find unscheduled appts
+        context['unsched_orders'] = Order.objects.filter(level_id=1, appointment__isnull=True)
     if see_all or is_in_group(request.user, "Technicians"):
         context['checked_in_orders'] = Order.objects.filter(level_id=2)
     if see_all or is_in_group(request.user, "Radiologists"):

@@ -134,31 +134,19 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for order in todays_orders %}
                         <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">167</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">Justin Hart</a></td>
-                            <td>8:30 AM</td>
+                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
+                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
+                            <td>{{ order.appointment }}</td>
                         </tr>
+                        {% empty %}
                         <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">152</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">Stephen	Oliver</a></td>
-                            <td>9:00 AM</td>
+                            <td colspan="3" class="text-center">
+                                No orders
+                            </td>
                         </tr>
-                        <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">153</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">Jason Lawrence</a></td>
-                            <td>9:30 AM</td>
-                        </tr>
-                        <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">143</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">Keith Walsh</a></td>
-                            <td>10:00 AM</td>
-                        </tr>
-                        <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">144</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">Max	Ross</a></td>
-                            <td>11:00 AM</td>
-                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -173,15 +161,19 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for order in unsched_orders %}
                         <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">122</a></td>
-                            <td>
-                                <a class="orderlink" href="{% url 'order_prototype' %}">
-                                    Mark Sampleperson
-                                </a>
-                            </td>
-                            <td>2/9/2020</td>
+                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
+                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
+                            <td>{{ order.added_on }}</td>
                         </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">
+                                No orders
+                            </td>
+                        </tr>
+                        {% endfor %}
 
                         </tbody>
                     </table>

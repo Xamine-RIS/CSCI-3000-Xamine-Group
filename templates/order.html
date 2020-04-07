@@ -34,15 +34,15 @@
                     <div class="row mt-1">
                         <div class="col-4">
                             <span class="font-weight-bold">DOB:</span><br>
-                            11/19/1951
+                            {{ cur_order.patient.birth_date }}
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Phone Number:</span><br>
-                            (212) 867-5309
+                            {{ cur_order.patient.phone_number }}
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Email Address:</span><br>
-                            delores@email.com
+                            {{ cur_order.patient.email_info }}
                         </div>
                     </div>
                     {% if show_medical %}
@@ -52,37 +52,27 @@
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">X-Ray Dye Allergy:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_xraydye|yesno:"Yes,No" }}
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">MRI Dye Allergy:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_mridye|yesno:"Yes,No" }}
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">Latex Allergy:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_latex|yesno:"Yes,No" }}
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">Asthma:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_asthma|yesno:"Yes,No" }}
                             </div>
                             <div class="col-8">
-                                <span class="font-weight-bold">Other Allergies:</span><br>
-                                No
+                                <span class="font-weight-bold">Notes:</span><br>
+                                {{ cur_order.notes }}
                             </div>
                         </div>
                     {% endif %}
                 </div>
-                {#                <div class="col-3">#}
-                {#                    <div class="h5 mb-2">#}
-                {#                        Patient Notes#}
-                {#                    </div>#}
-                {#                    <ul class="list-group list-group-flush">#}
-                {#                        <li class="list-group-item list-group-item-warning notes">This is a note</li>#}
-                {#                        <li class="list-group-item notes">This is another note</li>#}
-                {#                        <li class="list-group-item notes">This is a longer note meant to demonstrate wrapping</li>#}
-                {#                    </ul>#}
-                {#                </div>#}
             </div>
         </div>
     </div>

@@ -48,11 +48,13 @@ class Patient(models.Model):
     def __str__(self):
         return f"{self.full_name} ({self.id})"
 
+
 class Order(models.Model):
     """ Model for each individual imaging order placed by doctors """
     
     # link to patient
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="orders")
+    appointment = models.DateTimeField(null=True, blank=True)
     
     # Automatically record timestamp info
     added_on = models.DateTimeField(auto_now_add=True)
@@ -102,3 +104,7 @@ class Image(models.Model):
 
     def __str__(self):
         return f"{self.label} for order # {self.order.id}"
+
+
+class TestModel(models.Model):
+    label = models.CharField(max_length=12)
