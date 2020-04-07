@@ -171,27 +171,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>LeftLegInstep.jpg</td>
-                                <td>03/08/2020 10:31 AM</td>
-                                <td>sample_user</td>
-                                <td><i class="fas fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>LeftLegOutstep.jpg</td>
-                                <td>03/08/2020 10:35 AM</td>
-                                <td>sample_user</td>
-                                <td><i class="fas fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Images.dicom</td>
-                                <td>03/08/2020 10:38 AM</td>
-                                <td>sample_user</td>
-                                <td><i class="fas fa-trash"></i></td>
-                            </tr>
+                            {% for image in cur_order.images.all %} 
+                                <tr>
+                                    <th scope="row">{{ image.id }}</th>
+                                    <td>{{ image.label }}</td>
+                                    <td>{{ image.added_on }}</td>
+                                    <td>{{ image.user }}</td>
+                                    <td><i class="fas fa-trash"></i></td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
