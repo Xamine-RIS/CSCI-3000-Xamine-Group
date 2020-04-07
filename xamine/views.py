@@ -19,7 +19,7 @@ def index(request):
     if is_in_group(request.user, "Technicians"):
         context['checked_in_orders'] = Order.objects.filter(level_id=2)
     if is_in_group(request.user, "Radiologists"):
-        pass
+        context['radiologist_orders'] = Order.objects.filter(level_id=3)
 
     return render(request, 'index.html', context)
 
