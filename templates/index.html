@@ -126,10 +126,9 @@
                 <div class="col-6 text-center">
                     <div class="mb-3 h5">
                         Today's Appointments
-                        <br>
-                        <span class="text-muted small">
-                            {% now "DATE_FORMAT" %}
-                        </span>
+                    </div>
+                    <div class="text-muted small">
+                        {% now "DATE_FORMAT" %}
                     </div>
                     <table class="table table-sm">
                         <thead>
@@ -141,28 +140,24 @@
                         </thead>
                         <tbody>
                         {% for order in todays_orders %}
-                        <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
-                            <td>{{ order.appointment|date:'P' }}</td>
-                        </tr>
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.appointment|date:'P' }}</td>
+                            </tr>
                         {% empty %}
-                        <tr>
-                            <td colspan="3" class="text-center">
-                                No orders
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    No orders
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="col-6 text-center">
-                    <div class="mb-3 h5">Unscheduled Appointments
-                        <br>
-                        <span class="text-muted small">
-                            Click to Schedule
-                        </span>
-                    </div>
+                    <div class="mb-3 h5">Unscheduled Appointments</div>
+                    <div class="text-muted small">Click to Schedule</div>
                     <table class="table table-sm">
                         <thead>
                         <tr>
@@ -173,17 +168,17 @@
                         </thead>
                         <tbody>
                         {% for order in unsched_orders %}
-                        <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
-                            <td>{{ order.added_on }}</td>
-                        </tr>
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.added_on }}</td>
+                            </tr>
                         {% empty %}
-                        <tr>
-                            <td colspan="3" class="text-center">
-                                No orders
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    No orders
+                                </td>
+                            </tr>
                         {% endfor %}
 
                         </tbody>
