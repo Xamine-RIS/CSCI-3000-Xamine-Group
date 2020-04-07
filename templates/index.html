@@ -124,7 +124,13 @@
         <div class="container mt-1" id="reception_section">
             <div class="row mt-3">
                 <div class="col-6 text-center">
-                    <div class="mb-3 h5">Today's Appointments</div>
+                    <div class="mb-3 h5">
+                        Today's Appointments
+                        <br>
+                        <span class="text-muted small">
+                            {% now "DATE_FORMAT" %}
+                        </span>
+                    </div>
                     <table class="table table-sm">
                         <thead>
                         <tr>
@@ -151,7 +157,12 @@
                     </table>
                 </div>
                 <div class="col-6 text-center">
-                    <div class="mb-3 h5">Unscheduled Appointments</div>
+                    <div class="mb-3 h5">Unscheduled Appointments
+                        <br>
+                        <span class="text-muted small">
+                            Click to schedule
+                        </span>
+                    </div>
                     <table class="table table-sm">
                         <thead>
                         <tr>
