@@ -191,10 +191,6 @@
         <!-- end receptionist section -->
     {% endif %}
 
-    {% if cur_order.level_id == 2 %}
-
-    {% endif %}
-
     {% if request.user|has_group:"Technicians" or request.user|has_group:"Administrators" %}
         <!-- imaging/prep section -->
         <div class="container mt-1" id="imaging_section">
