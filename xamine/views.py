@@ -11,14 +11,16 @@ def index(request):
     if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/index.html')
 
+    see_all = is_in_group(request.user, "Administrators")
+
     context = {}
-    if is_in_group(request.user, "Physicians"):
+    if see_all or is_in_group(request.user, "Physicians"):
         pass
-    if is_in_group(request.user, "Receptionists"):
+    if see_all or is_in_group(request.user, "Receptionists"):
         pass
-    if is_in_group(request.user, "Technicians"):
+    if see_all or is_in_group(request.user, "Technicians"):
         context['checked_in_orders'] = Order.objects.filter(level_id=2)
-    if is_in_group(request.user, "Radiologists"):
+    if see_all or is_in_group(request.user, "Radiologists"):
         context['radiologist_orders'] = Order.objects.filter(level_id=3)
 
     return render(request, 'index.html', context)
