@@ -188,18 +188,22 @@
                         <tr>
                             <th>Order #</th>
                             <th>Patient</th>
+                            <th>Visit Reason</th>
+                            <th>Imaging</th>
                             <th>Modality</th>
                             <th>Appt</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for order in checked_in_orders %}
-                        <tr>
-                            <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                            <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                            <td>{{ order.modality }}</td>
-                            <td>{{ order.appointment }}</td>
-                        </tr>
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.visit_reason }}</td>
+                                <td>{{ order.imaging_needed }}</td>
+                                <td>{{ order.modality }}</td>
+                                <td>{{ order.appointment }}</td>
+                            </tr>
                         {% empty %}
                             <tr>
                                 <td colspan="3" class="text-center">
