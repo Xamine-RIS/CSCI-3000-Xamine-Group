@@ -136,8 +136,8 @@
                         <tbody>
                         {% for order in todays_orders %}
                         <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
+                            <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                            <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
                             <td>{{ order.appointment }}</td>
                         </tr>
                         {% empty %}
@@ -163,8 +163,8 @@
                         <tbody>
                         {% for order in unsched_orders %}
                         <tr>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.id }}</a></td>
-                            <td><a class="orderlink" href="{% url 'order_prototype' %}">{{ order.patient.full_name }}</a></td>
+                            <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                            <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
                             <td>{{ order.added_on }}</td>
                         </tr>
                         {% empty %}
