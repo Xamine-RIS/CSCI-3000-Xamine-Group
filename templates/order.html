@@ -91,12 +91,16 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row mt-3">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="font-weight-bold">Reason for Visit:</label>
                                     <textarea class="form-control">Broken Left Leg</textarea>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="font-weight-bold">Imaging Needed:</label>
+                                    <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
+                                </div>
+                                <div class="col-4">
+                                    <label class="font-weight-bold">Modality:</label>
                                     <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
                                 </div>
                             </div>
@@ -126,13 +130,17 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-4">
                     <span class="font-weight-bold">Reason for Visit:</span><br>
-                    Broken Left Leg
+                    {{ cur_order.visit_reason }}
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <span class="font-weight-bold">Imaging Needed:</span><br>
-                    X-Ray of Left Leg Instep & Outstep
+                    {{ cur_order.imaging_needed }}
+                </div>
+                <div class="col-4">
+                    <span class="font-weight-bold">Modality:</span><br>
+                    {{ cur_order.modality }}
                 </div>
             </div>
         </div>

@@ -49,13 +49,20 @@ class Patient(models.Model):
         return f"{self.full_name} ({self.id})"
 
 
+class ModalityOptions(models.Model):   #temp
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+
+
 class Order(models.Model):
     """ Model for each individual imaging order placed by doctors """
-    
-    # link to patient
+
+    # patient info
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="orders")
     appointment = models.DateTimeField(null=True, blank=True)
-    
+
     # Automatically record timestamp info
     added_on = models.DateTimeField(auto_now_add=True)
     last_edit = models.DateTimeField(auto_now=True)
@@ -64,10 +71,9 @@ class Order(models.Model):
     level = models.ForeignKey(Level, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     # Order information
-    # TODO: add fields for order info tracking (reason for visit etc)
-
-    # Imaging information
-    # TODO: use django-attachments instead of using model fields here
+    visit_reason = models.CharField(max_length=128, null=True, blank=True)  # temp
+    imaging_needed = models.CharField(max_length=128, null=True, blank=True)  # temp
+    modality = models.ForeignKey(ModalityOptions, on_delete=models.SET_NULL, null=True, blank=True)  # temp
 
     # Analysis information
     report = models.TextField(null=True, blank=True)
