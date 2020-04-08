@@ -17,7 +17,7 @@ def index(request):
 
     context = {}
     if see_all or is_in_group(request.user, "Physicians"):
-        active_orders = Order.objects.filter(level_id_lt=4)
+        active_orders = Order.objects.filter(level_id__lt=4)
         complete_orders = Order.objects.filter(level_id=4)
 
         if not see_all:
