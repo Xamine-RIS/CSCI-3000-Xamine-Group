@@ -55,11 +55,11 @@
                             </tr>
                             </thead>
                             <tbody>
-{#                            temp#}
+{#                            temp {% url 'order' order_id=order.id %}#}
                             {% for order in active_orders %}
                             <tr>
-                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td><a class="orderlink" href="#">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="#">{{ order.patient.full_name }}</a></td>
                                 <td>{{ order.level.name }}</td>
                             </tr>
                             {% empty %}
@@ -85,8 +85,8 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td><a class="orderlink" href="#">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="#">{{ order.patient.full_name }}</a></td>
                                 <td>{{ order.last_edit|date:'d/m/Y' }}</td>
                             </tr>
                             </tbody>
