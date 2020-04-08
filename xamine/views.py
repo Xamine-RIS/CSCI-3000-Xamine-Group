@@ -17,7 +17,15 @@ def index(request):
 
     context = {}
     if see_all or is_in_group(request.user, "Physicians"):
-        pass
+        active_orders = Order.objects.filter(level_id_lt=4)
+        complete_orders = Order.objects.filter(level_id=4)
+
+        if not see_all:
+            active_orders = active_orders.filter(doctor=request.user)
+            complete_orders = complete_orders.filter(doctor=request.user)
+
+        context['active_orders'] = active_orders
+        context['complete_orders'] = complete_orders
     if see_all or is_in_group(request.user, "Receptionists"):
         # Find today's appts
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)

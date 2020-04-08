@@ -51,35 +51,25 @@
                             <tr>
                                 <th>Order #</th>
                                 <th>Patient</th>
-                                <th>Next Step</th>
+                                <th>Stage</th>
                             </tr>
                             </thead>
                             <tbody>
+{#                            temp#}
+                            {% for order in active_orders %}
                             <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">167</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Justin Hart</a></td>
-                                <td>Appointment</td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.level.name }}</td>
                             </tr>
-                            <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">152</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Stephen	Oliver</a></td>
-                                <td>Analysis</td>
+                            {% empty %}
+                                <tr>
+                                <td colspan="3" class="text-center">
+                                    No orders
+                                </td>
                             </tr>
-                            <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">153</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Jason Lawrence</a></td>
-                                <td>Analysis</td>
-                            </tr>
-                            <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">143</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Keith Walsh</a></td>
-                                <td>Imaging</td>
-                            </tr>
-                            <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">144</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Max	Ross</a></td>
-                                <td>Imaging</td>
-                            </tr>
+                            {% endfor %}
+{#                            endtemp#}
                             </tbody>
                         </table>
                     </div>
@@ -95,19 +85,9 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">122</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Mark Sampleperson</a></td>
-                                <td>2/9/2020</td>
-                            </tr>
-                            <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">128</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">Jacob Personton</a></td>
-                                <td>2/28/2020</td>
-                            </tr>
-                            <tr>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">133</a></td>
-                                <td><a class="orderlink" href="{% url 'order_prototype' %}">William Nash</a></td>
-                                <td>2/22/2020</td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.last_edit|date:'d/m/Y' }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -171,7 +151,7 @@
                         <tr>
                             <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                             <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                            <td>{{ order.added_on }}</td>
+                            <td>{{ order.added_on|date:'d/m/Y' }}</td>
                         </tr>
                         {% empty %}
                             <tr>

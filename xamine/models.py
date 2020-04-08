@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -79,6 +80,7 @@ class Order(models.Model):
     report = models.TextField(null=True, blank=True)
 
     # Report access information
+    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     # TODO: Add fields for patient access auth and archiving by doctor
     
     def __str__(self):
