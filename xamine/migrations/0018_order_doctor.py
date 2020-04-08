@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='doctor',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(default=10, on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL),
             preserve_default=False,
         ),
     ]
