@@ -1,6 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django_agenda.time_span import TimeSpan
+from django_agenda.models import (AbstractAvailability,
+                                  AbstractAvailabilityOccurrence,
+                                  AbstractTimeSlot,
+                                  AbstractBooking)
 
 
 class Level(models.Model):
@@ -104,3 +109,42 @@ class Image(models.Model):
 
     def __str__(self):
         return f"{self.label} for order # {self.order.id}"
+
+
+#Models for scheduling via django-agenda
+class Availability(AbstractAvailability):
+    class AgendaMeta:
+        schedule_model = Team
+        schedule_field = "team"
+
+
+class AvailabilityOccurrence(AbstractAvailabilityOccurrence):
+    class AgendaMeta:
+        availability_model = Availability
+        schedule_model = Team
+        schedule_field = "team"
+
+
+class TimeSlot(AbstractTimeSlot):
+    class AgendaMeta:
+        availability_model = Availability
+        schedule_model = Team
+        schedule_field = "team" 
+
+class TeamReservation(AbstractBooking):
+    class AgendaMeta:
+        schedule_model = Team
+
+    owner = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="reservations",
+    )
+    start_time = models.DateTimeField(db_index=True)
+    end_time = models.DateTimeField(db_index=True)
+    approved = models.BooleanField(default=False)
+
+    def get_reserved_spans(self):
+        # we only reserve the time if the reservation has been approved
+        if self.approved:
+            yield TimeSpan(self.start_time, self.end_time)
