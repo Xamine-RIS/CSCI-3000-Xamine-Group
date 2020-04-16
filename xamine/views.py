@@ -91,3 +91,6 @@ def patient(request, pat_id=None):
         'patient_info': patient
     }
     return render(request, 'patient.html', context)
+
+
+
