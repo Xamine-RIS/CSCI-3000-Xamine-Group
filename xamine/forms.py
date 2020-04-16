@@ -2,12 +2,12 @@ from django import forms
 
 from xamine.models import Patient
 
-class PatientInfoForm(forms.ModelForm)
+class PatientInfoForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = [
             'first_name', 'middle_name','last_name','email_info','birth_date','phone_number',
-            'allergy_asthma','allergy_dye','mri_dye','latex','notes'
+            'allergy_asthma','allergy_xraydye','allergy_mridye','allergy_latex','notes'
             ]
 
 

@@ -19,7 +19,7 @@
                 <div class="display-4">
                     Patient Information
                 </div>
-                <a data-toggle="collapse" href="#patient-info" class="text-muted small ml-2">
+                <a data-toggle="collapse" href=".patient-info" class="text-muted small ml-2">
                     Edit
                 </a>
             </div>
@@ -74,45 +74,45 @@
                 <div class="row collapse patient-info">
                     <div class="col-6 mt-1">
                         <label>First Name:</label><br>
-                        {{ patient_info.first_name }}
+                        {{ form.first_name }}
                     </div>
                     <div class="col-6 mt-1">
                         <label>Last Name:</label><br>
-                        {{ patient_info.last_name }}
+                        {{ form.first_name }}
                     </div>
                     <div class="col-6 mt-1">
                         <label>Date of Birth:</label><br>
-                        {{ patient_info.birth_date}}
+                        {{ form.birth_date}}
                     </div>
                     <div class="col-6 mt-1">
                         <label>Phone Number:</label><br>
-                        {{ patient_info.phone_number }}
+                        {{ form.phone_number }}
                     </div>
                     <div class="col-6 mt-1">
                         <label>Email:</label><br>
-                        {{ patient_info.email_info }}
+                        {{ form.email_info }}
                     </div>
                     <div class="col-6 mt-1">
                         <label for="Asthma">Do you have asthma?</label><br>
-                        {% if patient_info.allergy_asthma %}Yes{% else %}No{% endif %}
+                        {{ form.allergy_asthma }}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="XrayDye">Are you allergic to Xray dye?</label><br>
-                        {% if patient_info.allergy_dye %}Yes{% else %}No{% endif %}
+                        {{ form.allergy_xraydye }}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="MRIDye">MRI dye?</label><br>
-                        {% if patient_info.mri_dye %}Yes{% else %}No{% endif %}
+                        {{ form.allergy_mridye }}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="Latex">Latex?</label><br>
-                        {% if patient_info.latex %}Yes{% else %}No{% endif %}
+                    {{ form.allergy_latex }}
                     </div>
                     <div class="col-12 mt-1">
                         <label for="textarea">
                             List any Food or Drug allergies you may have, if none, just write none:
                         </label><br>
-                            {{ patient_info.notes }}
+                            {{ form.notes }}
                     </div>
                     <div class="col mt-3 ">
                         <button class="btn btn-primary">Save Patient Info</button>
