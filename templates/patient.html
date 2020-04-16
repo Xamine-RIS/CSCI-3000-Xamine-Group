@@ -19,11 +19,14 @@
                 <div class="display-4">
                     Patient Information
                 </div>
+                <a data-toggle="collapse" href="#patient-info" class="text-muted small ml-2">
+                    Edit
+                </a>
             </div>
         </div>
         <div class="row">
             <div class="col-8">
-                <div class="row">
+                <div class="row collapse show patient-info">
                     <div class="col-6 mt-1">
                         <label>First Name:</label><br>
                         {{ patient_info.first_name }}
@@ -65,26 +68,59 @@
                             List any Food or Drug allergies you may have, if none, just write none:
                         </label><br>
                             {{ patient_info.notes }}
-                        
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col">
+
+                <div class="row collapse patient-info">
+                    <div class="col-6 mt-1">
+                        <label>First Name:</label><br>
+                        {{ patient_info.first_name }}
+                    </div>
+                    <div class="col-6 mt-1">
+                        <label>Last Name:</label><br>
+                        {{ patient_info.last_name }}
+                    </div>
+                    <div class="col-6 mt-1">
+                        <label>Date of Birth:</label><br>
+                        {{ patient_info.birth_date}}
+                    </div>
+                    <div class="col-6 mt-1">
+                        <label>Phone Number:</label><br>
+                        {{ patient_info.phone_number }}
+                    </div>
+                    <div class="col-6 mt-1">
+                        <label>Email:</label><br>
+                        {{ patient_info.email_info }}
+                    </div>
+                    <div class="col-6 mt-1">
+                        <label for="Asthma">Do you have asthma?</label><br>
+                        {% if patient_info.allergy_asthma %}Yes{% else %}No{% endif %}
+                    </div>
+                    <div class="col-4 mt-1">
+                        <label for="XrayDye">Are you allergic to Xray dye?</label><br>
+                        {% if patient_info.allergy_dye %}Yes{% else %}No{% endif %}
+                    </div>
+                    <div class="col-4 mt-1">
+                        <label for="MRIDye">MRI dye?</label><br>
+                        {% if patient_info.mri_dye %}Yes{% else %}No{% endif %}
+                    </div>
+                    <div class="col-4 mt-1">
+                        <label for="Latex">Latex?</label><br>
+                        {% if patient_info.latex %}Yes{% else %}No{% endif %}
+                    </div>
+                    <div class="col-12 mt-1">
+                        <label for="textarea">
+                            List any Food or Drug allergies you may have, if none, just write none:
+                        </label><br>
+                            {{ patient_info.notes }}
+                    </div>
+                    <div class="col mt-3 ">
                         <button class="btn btn-primary">Save Patient Info</button>
                         <button class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <div class="h5 mb-2 text-center">
-                    Patient Notes
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-warning notes">This is a note</li>
-                    <li class="list-group-item notes">This is another note</li>
-                    <li class="list-group-item notes">This is a longer note meant to demonstrate wrapping</li>
-                </ul>
-                <br>
                 <div class="mb-3 h5 text-center">Patient Orders</div>
                 <table class="table table-sm">
                     <thead>
@@ -113,6 +149,8 @@
                     </tbody>
                 </table>
             </div>
+        
+        
         </div>
     </div>
 
