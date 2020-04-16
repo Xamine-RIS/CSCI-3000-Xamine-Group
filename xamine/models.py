@@ -111,7 +111,6 @@ class Image(models.Model):
         return f"{self.label} for order # {self.order.id}"
 
 
-<<<<<<< HEAD
 class OrderKey(models.Model):
     #Secret Key for auth public orders
     
@@ -123,7 +122,7 @@ class OrderKey(models.Model):
     def __str__(self):
         return f"{self.order.patient.email_info} on {self.date_created}"
 
-=======
+
 #Models for scheduling via django-agenda
 class Availability(AbstractAvailability):
     class AgendaMeta:
@@ -161,4 +160,3 @@ class TeamReservation(AbstractBooking):
         # we only reserve the time if the reservation has been approved
         if self.approved:
             yield TimeSpan(self.start_time, self.end_time)
->>>>>>> 520cbda060b03432de86f04c738ae8da204798db
