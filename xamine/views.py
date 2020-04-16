@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
@@ -11,15 +13,31 @@ def index(request):
     if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/index.html')
 
+    see_all = is_in_group(request.user, "Administrators")
+
     context = {}
-    if is_in_group(request.user, "Physicians"):
-        pass
-    if is_in_group(request.user, "Receptionists"):
-        pass
-    if is_in_group(request.user, "Technicians"):
+    if see_all or is_in_group(request.user, "Physicians"):
+        active_orders = Order.objects.filter(level_id__lt=4)
+        complete_orders = Order.objects.filter(level_id=4)
+
+        if not see_all:
+            active_orders = active_orders.filter(doctor=request.user)
+            complete_orders = complete_orders.filter(doctor=request.user)
+
+        context['active_orders'] = active_orders
+        context['complete_orders'] = complete_orders
+    if see_all or is_in_group(request.user, "Receptionists"):
+        # Find today's appts
+        today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+        today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+        context['todays_orders'] = Order.objects.filter(level_id=1, appointment__range=(today_min, today_max))
+
+        # Find unscheduled appts
+        context['unsched_orders'] = Order.objects.filter(level_id=1, appointment__isnull=True)
+    if see_all or is_in_group(request.user, "Technicians"):
         context['checked_in_orders'] = Order.objects.filter(level_id=2)
-    if is_in_group(request.user, "Radiologists"):
-        pass
+    if see_all or is_in_group(request.user, "Radiologists"):
+        context['radiologist_orders'] = Order.objects.filter(level_id=3)
 
     return render(request, 'index.html', context)
 
@@ -72,4 +90,7 @@ def patient(request, pat_id=None):
     context = {
         'patient_info': patient
     }
+    return render(request, 'patient.html', context)
+
+
 

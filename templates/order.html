@@ -6,7 +6,7 @@
         <div class="container mt-1">
             <div class="row">
                 <div class="col-12 mb-2">
-                    <div class="display-4">Order # 137</div>
+                    <div class="display-4">Order # {{ cur_order.id }}</div>
                 </div>
                 <div class="col-12">
                     <span class="h4">Patient Information</span>
@@ -35,15 +35,15 @@
                     <div class="row mt-1">
                         <div class="col-4">
                             <span class="font-weight-bold">DOB:</span><br>
-                            11/19/1951
+                            {{ cur_order.patient.birth_date }}
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Phone Number:</span><br>
-                            (212) 867-5309
+                            {{ cur_order.patient.phone_number }}
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Email Address:</span><br>
-                            delores@email.com
+                            {{ cur_order.patient.email_info }}
                         </div>
                     </div>
                     {% if show_medical %}
@@ -53,37 +53,27 @@
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">X-Ray Dye Allergy:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_xraydye|yesno:"Yes,No" }}
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">MRI Dye Allergy:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_mridye|yesno:"Yes,No" }}
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">Latex Allergy:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_latex|yesno:"Yes,No" }}
                             </div>
                             <div class="col-4">
                                 <span class="font-weight-bold">Asthma:</span><br>
-                                No
+                                {{ cur_order.patient.allergy_asthma|yesno:"Yes,No" }}
                             </div>
                             <div class="col-8">
-                                <span class="font-weight-bold">Other Allergies:</span><br>
-                                No
+                                <span class="font-weight-bold">Notes:</span><br>
+                                {{ cur_order.notes }}
                             </div>
                         </div>
                     {% endif %}
                 </div>
-                {#                <div class="col-3">#}
-                {#                    <div class="h5 mb-2">#}
-                {#                        Patient Notes#}
-                {#                    </div>#}
-                {#                    <ul class="list-group list-group-flush">#}
-                {#                        <li class="list-group-item list-group-item-warning notes">This is a note</li>#}
-                {#                        <li class="list-group-item notes">This is another note</li>#}
-                {#                        <li class="list-group-item notes">This is a longer note meant to demonstrate wrapping</li>#}
-                {#                    </ul>#}
-                {#                </div>#}
             </div>
         </div>
     </div>
@@ -102,12 +92,16 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row mt-3">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="font-weight-bold">Reason for Visit:</label>
                                     <textarea class="form-control">Broken Left Leg</textarea>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="font-weight-bold">Imaging Needed:</label>
+                                    <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
+                                </div>
+                                <div class="col-4">
+                                    <label class="font-weight-bold">Modality:</label>
                                     <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
                                 </div>
                             </div>
@@ -137,13 +131,17 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-4">
                     <span class="font-weight-bold">Reason for Visit:</span><br>
-                    Broken Left Leg
+                    {{ cur_order.visit_reason }}
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <span class="font-weight-bold">Imaging Needed:</span><br>
-                    X-Ray of Left Leg Instep & Outstep
+                    {{ cur_order.imaging_needed }}
+                </div>
+                <div class="col-4">
+                    <span class="font-weight-bold">Modality:</span><br>
+                    {{ cur_order.modality }}
                 </div>
             </div>
         </div>
@@ -172,27 +170,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>LeftLegInstep.jpg</td>
-                                <td>03/08/2020 10:31 AM</td>
-                                <td>sample_user</td>
-                                <td><i class="fas fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>LeftLegOutstep.jpg</td>
-                                <td>03/08/2020 10:35 AM</td>
-                                <td>sample_user</td>
-                                <td><i class="fas fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Images.dicom</td>
-                                <td>03/08/2020 10:38 AM</td>
-                                <td>sample_user</td>
-                                <td><i class="fas fa-trash"></i></td>
-                            </tr>
+                            {% for image in cur_order.images.all %} 
+                                <tr>
+                                    <th scope="row">{{ image.id }}</th>
+                                    <td>{{ image.label }}</td>
+                                    <td>{{ image.added_on }}</td>
+                                    <td>{{ image.user }}</td>
+                                    <td><i class="fas fa-trash"></i></td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -202,7 +188,7 @@
         <!-- end order section -->
     {% endif %}
 
-    {% if cur_order.level_id > 1 %}
+    {% if cur_order.level_id > 2 %}
         <!-- analysis section -->
         <form>
             <div class="collapse show" id="order_info">
@@ -213,21 +199,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-9 mt-2">
-                    <textarea rows="7" class="form-control">
-
-                    </textarea>
-                        </div>
-                        <div class="col-3">
-                            <div class="h5 mb-2">
-                                Audio Upload
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                            </div><br>
-                            <button class="btn btn-sm btn-outline-primary mt-3" type="button">Submit Report</button>
-                            <button class="btn btn-sm btn-outline-secondary mt-3" type="button">Download Audio</button>
+                        <div class="col-12 mt-2">
+                            <!-- <textarea rows="7" class="form-control">
+                            </textarea> -->
+                            {{ cur_order.report }}
                         </div>
                     </div>
                 </div>

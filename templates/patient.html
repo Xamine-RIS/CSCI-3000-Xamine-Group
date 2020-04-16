@@ -53,15 +53,15 @@
                     </div>
                     <div class="col-4 mt-1">
                         <label for="XrayDye">Are you allergic to Xray dye?</label><br>
-                        {% if patient_info.allergy_dye %}Yes{% else %}No{% endif %}
+                        {% if patient_info.allergy_xraydye %}Yes{% else %}No{% endif %}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="MRIDye">MRI dye?</label><br>
-                        {% if patient_info.mri_dye %}Yes{% else %}No{% endif %}
+                        {% if patient_info.allergy_mridye %}Yes{% else %}No{% endif %}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="Latex">Latex?</label><br>
-                        {% if patient_info.latex %}Yes{% else %}No{% endif %}
+                        {% if patient_info.allergy_latex %}Yes{% else %}No{% endif %}
                     </div>
                     <div class="col-12 mt-1">
                         <label for="textarea">
