@@ -5,6 +5,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 from xamine.models import Order, Patient
+from xamine.forms import PatientInfoForm
 from xamine.utils import get_setting, is_in_group
 
 
@@ -88,7 +89,8 @@ def patient(request, pat_id=None):
     patient = Patient.objects.get(pk=pat_id) 
 
     context = {
-        'patient_info': patient
+        'patient_info': patient,
+        'form': PatientInfoForm(instance=patient)
     }
     return render(request, 'patient.html', context)
 

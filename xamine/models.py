@@ -124,6 +124,7 @@ class OrderKey(models.Model):
 
 
 #Models for scheduling via django-agenda
+
 # class Availability(AbstractAvailability):
 #     class AgendaMeta:
 #         schedule_model = Team
