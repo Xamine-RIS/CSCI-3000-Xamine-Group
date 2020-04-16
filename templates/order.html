@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block main %}
+    {% load group_auth %}
     <!-- patient info section -->
     <div class="collapse show" id="patient_info">
         <div class="container mt-1">
@@ -204,15 +205,40 @@
                             {{ cur_order.report }}
                         </div>
                     </div>
+                    {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
+                    <div class="row">
+                        <div class='col-12 text-right'>
+                            <button type="button" class="btn btn-primary" onclick="sendPatientEmail">Send Report</button> 
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </form>
         <!-- end analysis section -->
     {% endif %}
 
+
+
 {% endblock %}
 
 {% block afterscript %}
+{% load group_auth %}
+    {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
+        <script>
+            function sendPatientEmail () {
+                let orderId = '{{ cur_order.id }}';
+                fetch('/order/' + orderId + '/send')
+                .then(res => {
+                    return res.json()
+                })
+                .then(json => {
+                    console.log(json)
+                })
+            }
+        </script>
+    {% endif %}
+
     <script>
         $('#datepicker').datepicker({
             uiLibrary: 'bootstrap4'
