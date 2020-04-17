@@ -29,11 +29,11 @@ def add_groups(apps, schema_editor):
     db_alias = schema_editor.connection.alias
 
     groups = [
-        'Referral Placed',
-        'Checked In',
-        'Imaging Complete',
-        'Analysis Complete',
-        'Archived'
+        'Administrators',
+        'Physicians',
+        'Radiologists',
+        'Receptionists',
+        'Technicians'
     ]
 
     group_objs = []
