@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load phone_number %}
 {% load crispy_forms_filters %}
 
 {% block header %}
@@ -49,7 +50,7 @@
                     </div>
                     <div class="col-6 mt-1">
                         <label>Phone Number:</label><br>
-                        {{ patient_info.phone_number }}
+                        {{ patient_info.phone_number|phone_number }}
                     </div>
                     <div class="col-6 mt-1">
                         <label>Email:</label><br>
@@ -57,19 +58,19 @@
                     </div>
                     <div class="col-6 mt-1">
                         <label for="Asthma">Do you have asthma?</label><br>
-                        {% if patient_info.allergy_asthma %}Yes{% else %}No{% endif %}
+                        {{ patient_info.allergy_asthma|yesno:'Yes,No' }}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="XrayDye">Are you allergic to Xray dye?</label><br>
-                        {% if patient_info.allergy_xraydye %}Yes{% else %}No{% endif %}
+                        {{ patient_info.allergy_xraydye|yesno:'Yes,No'  }}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="MRIDye">MRI dye?</label><br>
-                        {% if patient_info.allergy_mridye %}Yes{% else %}No{% endif %}
+                        {{ patient_info.allergy_mridye|yesno:'Yes,No' }}
                     </div>
                     <div class="col-4 mt-1">
                         <label for="Latex">Latex?</label><br>
-                        {% if patient_info.allergy_latex %}Yes{% else %}No{% endif %}
+                        {{ patient_info.allergy_latex|yesno:'Yes,No' }}
                     </div>
                     <div class="col-12 mt-1">
                         <label for="textarea">
