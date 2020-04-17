@@ -10,9 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='patient',
-            name='phone_number',
-            field=models.CharField(max_length=10),
-        ),
+
     ]
