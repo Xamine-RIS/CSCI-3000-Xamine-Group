@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django_agenda.time_span import TimeSpan
-from phonenumber_field.modelfields import PhoneNumberField
 from django_agenda.models import (AbstractAvailability,
                                   AbstractAvailabilityOccurrence,
                                   AbstractTimeSlot,
@@ -56,7 +55,7 @@ class Patient(models.Model):
         return f"{self.full_name} ({self.id})"
 
 
-class ModalityOptions(models.Model):   #temp
+class ModalityOptions(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
