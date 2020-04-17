@@ -4,45 +4,6 @@
 from django.db import migrations
 
 
-def add_levels(apps, schema_editor):
-    Level = apps.get_model('xamine', 'Level')
-    db_alias = schema_editor.connection.alias
-
-    levels = [
-        'Referral Placed',
-        'Checked In',
-        'Imaging Complete',
-        'Analysis Complete',
-        'Archived'
-    ]
-
-    level_objs = []
-    for level in levels:
-        if not Level.objects.using(db_alias).filter(name=level).exists():
-            level_objs.append(Level(name=level))
-
-    Level.objects.using(db_alias).bulk_create(level_objs)
-
-
-def add_groups(apps, schema_editor):
-    Group = apps.get_model('auth', 'Group')
-    db_alias = schema_editor.connection.alias
-
-    groups = [
-        'Administrators',
-        'Physicians',
-        'Radiologists',
-        'Receptionists',
-        'Technicians'
-    ]
-
-    group_objs = []
-    for group in groups:
-        if not Group.objects.using(db_alias).filter(name=group).exists():
-            group_objs.append(Group(name=group))
-
-    Group.objects.using(db_alias).bulk_create(group_objs)
-
 
 class Migration(migrations.Migration):
 
@@ -51,6 +12,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(add_levels),
-        migrations.RunPython(add_groups),
     ]

@@ -55,7 +55,7 @@ class Patient(models.Model):
         return f"{self.full_name} ({self.id})"
 
 
-class ModalityOptions(models.Model):
+class ModalityOption(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
@@ -79,7 +79,7 @@ class Order(models.Model):
     # Order information
     visit_reason = models.CharField(max_length=128, null=True, blank=True)  # temp
     imaging_needed = models.CharField(max_length=128, null=True, blank=True)  # temp
-    modality = models.ForeignKey(ModalityOptions, on_delete=models.SET_NULL, null=True, blank=True)  # temp
+    modality = models.ForeignKey(ModalityOption, on_delete=models.SET_NULL, null=True, blank=True)  # temp
 
     # Analysis information
     report = models.TextField(null=True, blank=True)
