@@ -41,6 +41,7 @@ def add_data(apps, schema_editor, app, model, items):
 
     model.objects.using(db_alias).bulk_create(item_objs)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

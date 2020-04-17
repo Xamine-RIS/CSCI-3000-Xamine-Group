@@ -10,8 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameModel(
-            old_name='ModalityOptions',
-            new_name='ModalityOption',
-        ),
+
     ]
