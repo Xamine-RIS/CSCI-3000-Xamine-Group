@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django_agenda.time_span import TimeSpan
+from phonenumber_field.modelfields import PhoneNumberField
 from django_agenda.models import (AbstractAvailability,
                                   AbstractAvailabilityOccurrence,
                                   AbstractTimeSlot,
@@ -34,7 +35,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=128)
     email_info = models.EmailField()
     birth_date = models.DateField()
-    phone_number = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=32)
 
     # Medical information
     allergy_asthma = models.BooleanField()

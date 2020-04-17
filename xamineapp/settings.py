@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_agenda',
+    'intl_tel_input',
+    'bootstrap_datepicker_plus',
     'xamine.apps.XamineConfig',
     'rest_framework',
 ]
@@ -147,3 +149,8 @@ EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = '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'
 # SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 SENDGRID_ECHO_TO_STDOUT = True
+
+# Datepicker
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
