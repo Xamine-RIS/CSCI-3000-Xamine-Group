@@ -113,11 +113,14 @@ def schedule_order(request, order_id):
 
     if request.method == 'POST':
         order = Order.objects.get(pk=order_id)
+        if request.POST['appointment']:
+            appt = datetime.datetime.strptime(request.POST['appointment'], '%m/%d/%Y %I:%M %p')
+            twohrslater = appt + datetime.timedelta(hours=2)
 
-        appt = datetime.datetime.strptime(request.POST['appointment'], '%m/%d/%Y %I:%M %p')
-        twohrslater = appt + datetime.timedelta(hours=2)
-
-        conflict = Order.objects.filter(appointment__gte=appt, appointment__lt=twohrslater).exists()
+            conflict = Order.objects.filter(appointment__gte=appt, appointment__lt=twohrslater).exists()
+        else:
+            appt = None
+            conflict = False
 
         if not conflict:
             order.appointment = appt

@@ -1,11 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django_agenda.time_span import TimeSpan
-from django_agenda.models import (AbstractAvailability,
-                                  AbstractAvailabilityOccurrence,
-                                  AbstractTimeSlot,
-                                  AbstractBooking)
 
 
 class Level(models.Model):
@@ -60,6 +55,7 @@ class ModalityOption(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Team(models.Model):
     name = models.CharField(max_length=64)
@@ -121,7 +117,7 @@ class Image(models.Model):
 
 
 class OrderKey(models.Model):
-    #Secret Key for auth public orders
+    """ Secret Key for auth public orders """
     
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='secret_keys')
     secret_key = models.CharField(max_length=256)
@@ -130,42 +126,3 @@ class OrderKey(models.Model):
 
     def __str__(self):
         return f"{self.order.patient.email_info} on {self.date_created}"
-
-
-# #Models for scheduling via django-agenda
-# class Availability(AbstractAvailability):
-#     class AgendaMeta:
-#         schedule_model = Team
-#         schedule_field = "team"
-
-
-# class AvailabilityOccurrence(AbstractAvailabilityOccurrence):
-#     class AgendaMeta:
-#         availability_model = Availability
-#         schedule_model = Team
-#         schedule_field = "team"
-
-
-# class TimeSlot(AbstractTimeSlot):
-#     class AgendaMeta:
-#         availability_model = Availability
-#         schedule_model = Team
-#         schedule_field = "team" 
-
-# class TeamReservation(AbstractBooking):
-#     class AgendaMeta:
-#         schedule_model = Team
-
-#     owner = models.ForeignKey(
-#         to=User,
-#         on_delete=models.PROTECT,
-#         related_name="reservations",
-#     )
-#     start_time = models.DateTimeField(db_index=True)
-#     end_time = models.DateTimeField(db_index=True)
-#     approved = models.BooleanField(default=False)
-
-#     def get_reserved_spans(self):
-#         # we only reserve the time if the reservation has been approved
-#         if self.approved:
-#             yield TimeSpan(self.start_time, self.end_time)
