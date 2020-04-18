@@ -130,7 +130,6 @@
                         <div class="col mt-3 ">
                             <button class="btn btn-primary">Save Patient Info</button>
                             <a class="btn btn-secondary" data-toggle="collapse" href=".patient-info" onclick="resetForm()">Cancel</a>
-
                         </div>
                     </div>
                 </form>
@@ -164,8 +163,6 @@
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     </div>
 
@@ -175,10 +172,12 @@
 
     <!-- start form media -->
     {{ form.media.js }}
-
     <!-- end form media -->
+
+    <!-- start cleave media -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.10/cleave.min.js" integrity="sha256-lqWAcasN+EP6bxH3+SBODfrydkyHQ7FDwcI44sZeff4=" crossorigin="anonymous"></script>
     <script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
+    <!-- end cleave media -->
 
     <script>
         function resetForm() {
