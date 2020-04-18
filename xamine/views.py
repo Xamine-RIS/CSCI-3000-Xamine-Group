@@ -44,9 +44,7 @@ def index(request):
 
 
 @login_required
-def order(request, order_id=None):
-    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
-        return render(request, 'prototype/order.html')
+def order(request, order_id):
 
     try:
         cur_order = Order.objects.get(pk=order_id)
@@ -96,8 +94,6 @@ def order(request, order_id=None):
 
 @login_required
 def patient(request, pat_id=None):
-    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
-        return render(request, 'prototype/patient.html')
 
     patient_rec = Patient.objects.get(pk=pat_id)
 
