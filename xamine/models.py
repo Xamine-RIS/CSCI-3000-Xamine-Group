@@ -61,13 +61,22 @@ class ModalityOption(models.Model):
     def __str__(self):
         return self.name
 
+class Team(models.Model):
+    name = models.CharField(max_length=64)
+    technicians = models.ManyToManyField(User, blank=True, related_name='tech_teams')
+    radiologists = models.ManyToManyField(User, blank=True, related_name='radiol_teams')
+
+    def __str__(self):
+        return self.name
+
 
 class Order(models.Model):
     """ Model for each individual imaging order placed by doctors """
 
     # patient info
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="orders")
-    appointment = models.DateTimeField(null=True, blank=True)
+    appointment = models.DateTimeField(null=True, blank=True,)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
 
     # Automatically record timestamp info
     added_on = models.DateTimeField(auto_now_add=True)
@@ -148,7 +157,7 @@ class OrderKey(models.Model):
 #         schedule_model = Team
 
 #     owner = models.ForeignKey(
-#         to=settings.AUTH_USER_MODEL,
+#         to=User,
 #         on_delete=models.PROTECT,
 #         related_name="reservations",
 #     )

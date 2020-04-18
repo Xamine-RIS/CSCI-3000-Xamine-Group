@@ -1,4 +1,5 @@
 from xamine.models import AppSetting
+from datetime import datetime
 
 
 def get_setting(name, default=None):

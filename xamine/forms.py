@@ -1,9 +1,9 @@
 from django import forms
 
 from intl_tel_input.widgets import IntlTelInputWidget
-from xamine.models import Patient
+from xamine.models import Patient, Order
 
-from bootstrap_datepicker_plus import DatePickerInput
+from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 
 yesnoch = (
     (False, 'No'),
@@ -35,7 +35,25 @@ class PatientInfoForm(forms.ModelForm):
         }
 
 
+class ScheduleForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['appointment']
 
+        widgets = {
+            'appointment': DateTimePickerInput(format='%m/%d/%Y %I:%M %p', options={"useCurrent": True},  
+                                                attrs={'placeholder': 'mm/dd/yyyy'})
+        }
+
+
+class TeamSelectionForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['team']
+
+        widgets = {
+            'team': forms.Select(attrs={'class': 'form-control'})
+        }
 
 
 """
