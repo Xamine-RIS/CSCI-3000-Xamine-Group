@@ -99,11 +99,11 @@ def patient(request, pat_id=None):
     if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
         return render(request, 'prototype/patient.html')
 
-    patient = Patient.objects.get(pk=pat_id) 
+    patient_rec = Patient.objects.get(pk=pat_id)
 
     context = {
-        'patient_info': patient,
-        'form': PatientInfoForm(instance=patient)
+        'patient_info': patient_rec,
+        'form': PatientInfoForm(instance=patient_rec)
     }
     return render(request, 'patient.html', context)
 
