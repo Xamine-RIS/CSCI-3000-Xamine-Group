@@ -80,6 +80,7 @@
                     </div>
                 </div>
                 <form id="patient_info_form" method="POST">
+                    {% csrf_token %}
                     <div class="row collapse patient-info">
                         <div class="col-4 mt-1">
                             <label>First Name:</label><br>
