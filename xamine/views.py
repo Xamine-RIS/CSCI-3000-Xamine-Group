@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from xamine.models import Order, Patient
 from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
 from xamine.utils import get_setting, is_in_group
+from xamine.tasks import send_notification
 
 
 @login_required
@@ -59,10 +60,6 @@ def order(request, order_id):
             if form.is_valid():
             
                 form.save()
-
-                cur_order.refresh_from_db()
-                cur_order.level_id = 2
-                cur_order.save()
         elif cur_order.level_id == 3 and is_in_group(request.user, ['Radiologists']):
             if request.user in cur_order.team.radiologists.all():
                 form = AnalysisForm(data=request.POST, instance=cur_order)
@@ -70,13 +67,16 @@ def order(request, order_id):
                     
                     form.save()
 
-                    cur_order.refresh_from_db()
-                    cur_order.level_id = 4
-                    cur_order.save()
                 else:
                     raise Http404('bad form')
+        else:
+            raise Http404('bad status')
+
+        cur_order.refresh_from_db()
+        cur_order.level_id += 1
+        cur_order.save()
                     
-        # TODO: send notification email
+        send_notification.now(order_id)
 
     context = {}
 
