@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from xamine.models import Order, Patient
-from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm
+from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
 from xamine.utils import get_setting, is_in_group
 
 
@@ -53,14 +53,29 @@ def order(request, order_id):
 
     if request.method == 'POST':
         # process submission
-        form = TeamSelectionForm(data=request.POST, instance=cur_order)
         
-        if cur_order.level_id == 1 and is_in_group(request.user, ['Receptionists', 'Administrators']) and form.is_valid():
-            form.save()
+        if cur_order.level_id == 1 and is_in_group(request.user, ['Receptionists', 'Administrators']):
+            form = TeamSelectionForm(data=request.POST, instance=cur_order)
+            if form.is_valid():
+            
+                form.save()
 
-            cur_order.level_id = 2
-            cur_order.save()
+                cur_order.refresh_from_db()
+                cur_order.level_id = 2
+                cur_order.save()
+        elif cur_order.level_id == 3 and is_in_group(request.user, ['Radiologists']):
+            if request.user in cur_order.team.radiologists.all():
+                form = AnalysisForm(data=request.POST, instance=cur_order)
+                if form.is_valid():
+                    
+                    form.save()
 
+                    cur_order.refresh_from_db()
+                    cur_order.level_id = 4
+                    cur_order.save()
+                else:
+                    raise Http404('bad form')
+                    
         # TODO: send notification email
 
     context = {}
@@ -74,7 +89,8 @@ def order(request, order_id):
         pass
     elif cur_order.level_id == 3:
         # Prepare context for template if at imaging complete step
-        pass
+        if request.user in cur_order.team.radiologists.all():
+            context['analysis_form'] = AnalysisForm(instance=cur_order)
     elif cur_order.level_id == 4:
         # Prepare context for template if at analysis complete step
         pass

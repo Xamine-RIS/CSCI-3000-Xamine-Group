@@ -266,7 +266,6 @@
 
     {% if cur_order.level_id > 2 %}
         <!-- analysis section -->
-        <form>
             <div class="collapse show" id="order_info">
                 <div class="container mt-5">
                     <div class="row">
@@ -276,14 +275,19 @@
                     </div>
                     <div class="row">
                         <div class="col-12 mt-2">
-                            <!-- <textarea rows="7" class="form-control">
-                            </textarea> -->
-                            {{ cur_order.report }}
+                            {% if analysis_form %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ analysis_form.report }}
+                                <button type="submit" class="mt-2 btn btn-primary">Submit Report</button>
+                            </form>
+                            {% else %}
+                                {{ cur_order.report }}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
         <!-- end analysis section -->
     {% endif %}
 

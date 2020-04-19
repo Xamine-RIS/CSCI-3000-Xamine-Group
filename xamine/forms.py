@@ -56,20 +56,12 @@ class TeamSelectionForm(forms.ModelForm):
         }
 
 
-"""
-# Personal information
-    first_name = models.CharField(max_length=128)
-    middle_name = models.CharField(max_length=128, blank=True, null=True)
-    last_name = models.CharField(max_length=128)
-    email_info = models.EmailField()
-    birth_date = models.DateField()
-    phone_number = models.CharField(max_length=10)
+class AnalysisForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['report']
 
+        widgets = {
+            'report': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '6'}),
+        }
 
-    # Medical information
-    allergy_asthma = models.BooleanField()
-    allergy_dye = models.BooleanField()
-    mri_dye = models.BooleanField()
-    latex = models.BooleanField()
-    notes = models.TextField(null=True, blank=True)
-"""
