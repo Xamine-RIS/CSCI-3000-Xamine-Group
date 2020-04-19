@@ -22,8 +22,8 @@ def index(request):
         complete_orders = Order.objects.filter(level_id=4)
 
         if not see_all:
-            active_orders = active_orders.filter(doctor=request.user)
-            complete_orders = complete_orders.filter(doctor=request.user)
+            active_orders = active_orders.filter(patient__doctor=request.user)
+            complete_orders = complete_orders.filter(patient__doctor=request.user)
 
         context['active_orders'] = active_orders
         context['complete_orders'] = complete_orders
