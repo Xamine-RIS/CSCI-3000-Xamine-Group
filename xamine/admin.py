@@ -2,6 +2,8 @@ from django.contrib import admin
 
 from xamine.models import Patient, Level, AppSetting, Order, Image, ModalityOption, Team
 
+admin.site.site_header = 'Xamine RIS Admin'
+
 
 class ImageInline(admin.TabularInline):
     model = Image
