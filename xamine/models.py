@@ -39,6 +39,8 @@ class Patient(models.Model):
 
     notes = models.TextField(null=True, blank=True)
 
+    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
     @property
     def full_name(self):
         if self.middle_name:
@@ -90,7 +92,6 @@ class Order(models.Model):
     report = models.TextField(null=True, blank=True)
 
     # Report access information
-    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     # TODO: Add fields for patient access auth and archiving by doctor
     
     def __str__(self):
