@@ -55,7 +55,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {#                            temp {% url 'order' order_id=order.id %}#}
                             {% for order in active_orders %}
                                 <tr>
                                     <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
@@ -69,7 +68,6 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                            {#                            endtemp#}
                             </tbody>
                         </table>
                     </div>

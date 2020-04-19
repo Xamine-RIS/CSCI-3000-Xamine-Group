@@ -99,7 +99,9 @@ def patient(request, pat_id=None):
 
     context = {
         'patient_info': patient_rec,
-        'form': PatientInfoForm(instance=patient_rec)
+        'form': PatientInfoForm(instance=patient_rec),
+        'active_orders': patient_rec.orders.filter(level_id__lt=4),
+        'completed_orders': patient_rec.orders.filter(level_id__gte=4),
     }
     return render(request, 'patient.html', context)
 
