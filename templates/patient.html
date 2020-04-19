@@ -56,19 +56,19 @@
                         <label>Email:</label><br>
                         {{ patient_info.email_info }}
                     </div>
-                    <div class="col-6 mt-1">
+                    <div class="col-3 mt-1">
                         <label for="Asthma">Asthma</label><br>
                         {{ patient_info.allergy_asthma|yesno:'Yes,No' }}
                     </div>
-                    <div class="col-4 mt-1">
+                    <div class="col-3 mt-1">
                         <label for="XrayDye">Xray dye allergy</label><br>
                         {{ patient_info.allergy_xraydye|yesno:'Yes,No'  }}
                     </div>
-                    <div class="col-4 mt-1">
+                    <div class="col-3 mt-1">
                         <label for="MRIDye">MRI dye allergy</label><br>
                         {{ patient_info.allergy_mridye|yesno:'Yes,No' }}
                     </div>
-                    <div class="col-4 mt-1">
+                    <div class="col-3 mt-1">
                         <label for="Latex">Latex allergy</label><br>
                         {{ patient_info.allergy_latex|yesno:'Yes,No' }}
                     </div>
