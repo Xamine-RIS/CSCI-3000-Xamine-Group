@@ -137,7 +137,7 @@
             <div class="col-4">
         
                 <div class="mb-3 h5 text-center">Active Orders</div>
-                    <table class="table table-sm">
+                    <table class="table table-sm text-center">
                         <thead>
                         <tr>
                             <th>Order #</th>
@@ -165,7 +165,7 @@
                     <br>
                 
                 <div class="mb-3 h5 text-center">Completed Orders</div>
-                <table class="table table-sm">
+                <table class="table table-sm text-center">
                     <thead>
                     <tr>
                         <th>Order #</th>
@@ -178,7 +178,7 @@
                             <tr>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                <td>{{ order.last_edit|date:'d/m/Y' }}</td>
+                                <td>{{ order.last_edit|date:'m/d/Y' }}</td>
                             </tr>
                         {% empty %}
                             <tr>

@@ -97,6 +97,14 @@ def patient(request, pat_id=None):
 
     patient_rec = Patient.objects.get(pk=pat_id)
 
+    if request.method == 'POST':
+        form = PatientInfoForm(data=request.POST, instance=patient_rec)
+
+        if form.is_valid():
+            form.save()
+        else:
+            raise Http404(form.errors)
+
     context = {
         'patient_info': patient_rec,
         'form': PatientInfoForm(instance=patient_rec),
