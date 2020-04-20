@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'xamine.apps.XamineConfig',
     'rest_framework',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
