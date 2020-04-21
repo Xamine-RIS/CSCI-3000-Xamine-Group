@@ -156,3 +156,4 @@ SENDGRID_ECHO_TO_STDOUT = True
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
