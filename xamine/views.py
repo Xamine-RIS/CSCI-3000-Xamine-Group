@@ -12,8 +12,6 @@ from xamine.tasks import send_notification
 
 @login_required
 def index(request):
-    if get_setting('SHOW_PROTOTYPE', 'False') == 'True':
-        return render(request, 'prototype/index.html')
 
     see_all = is_in_group(request.user, "Administrators")
 
