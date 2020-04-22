@@ -90,6 +90,8 @@ class Order(models.Model):
 
     # Analysis information
     report = models.TextField(null=True, blank=True)
+    completed = models.CharField(max_length=64, null=True, blank=True)
+    completed_time = models.DateTimeField(null=True, blank=True)
 
     # Report access information
     # TODO: Add fields for patient access auth and archiving by doctor
