@@ -209,7 +209,7 @@
                     {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
                     <div class="row">
                         <div class='col-12 text-right'>
-                            <button type="button" class="btn btn-primary" onclick="sendPatientEmail">Send Report</button> 
+                            <button type="button" class="btn btn-primary" onclick="sendPatientEmail()">Send Report</button> 
                         </div>
                     </div>
                     {% endif %}
