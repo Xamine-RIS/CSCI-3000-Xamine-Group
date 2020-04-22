@@ -279,10 +279,16 @@
                             <form method="POST">
                                 {% csrf_token %}
                                 {{ analysis_form.report }}
+                                <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-primary">Save Report</button>
                                 <button type="submit" class="mt-2 btn btn-primary">Submit Report</button>
                             </form>
                             {% else %}
                                 {{ cur_order.report }}
+                                <br>
+                                <div class='text-muted small mt-2'>
+                                Completed by {{ cur_order.completed }} on {{ cur_order.completed_time }}
+                                </div>
+
                             {% endif %}
                         </div>
                     </div>

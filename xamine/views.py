@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 
 from xamine.models import Order, Patient
 from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
@@ -41,6 +42,23 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+@login_required
+def save_order(request, order_id):
+
+    try:
+        cur_order = Order.objects.get(pk=order_id)
+    except Order.DoesNotExist:
+        raise Http404
+    
+    if request.method == 'POST':
+
+        if cur_order.level_id == 3 and is_in_group(request.user, ['Radiologists']):
+            form = AnalysisForm(data=request.POST, instance=cur_order)
+            if form.is_valid():
+
+                form.save()
+    
+    return redirect('order', order_id=order_id)
 
 @login_required
 def order(request, order_id):
@@ -64,6 +82,11 @@ def order(request, order_id):
                 if form.is_valid():
                     
                     form.save()
+                    cur_order.refresh_from_db()
+                    cur_order.completed = request.user.get_username()
+                    cur_order.completed_time = timezone.now()
+                    cur_order.save()
+                
 
                 else:
                     raise Http404('bad form')
