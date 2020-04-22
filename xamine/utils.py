@@ -1,4 +1,6 @@
 from xamine.models import AppSetting
+from datetime import datetime
+from django.http import Http404
 
 
 def get_setting(name, default=None):
@@ -22,3 +24,12 @@ def is_in_group(user, group):
         group = [group]
 
     return user.groups.filter(name__in=group).exists()
+
+
+def get_patients_from_dob(dob, user):
+    if is_in_group(user, 'Physicians'):
+        patient_list = Patient.objects.all()
+    elif is_in_group(user, ['Administrators', 'Radiologists', 'Receptionists', 'Technicians']):
+        patient_list = Patient.objects.all()
+    else:
+        raise Http404('bad auth')

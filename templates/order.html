@@ -1,18 +1,94 @@
 {% extends 'base/base.html' %}
 
+{% block header %}
+{{ schedule_form.media.css }}
+
+{% endblock %}
+
 {% block main %}
     {% load group_auth %}
+
+    {% if schedule_form %}
+      <form method="POST" action="{% url 'schedule_time' order_id=cur_order.id %}">
+          {% csrf_token %}
+            <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Schedule</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{ schedule_form.appointment }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% endif %}
+
+    {% if cur_order.level_id == 1 %}
+      <form method="POST" action="{% url 'order' order_id=cur_order.id %}">
+          {% csrf_token %}
+      <div class="modal fade" id="checkInModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Check in</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <b>Team:</b>
+                {{ checkin_form.team }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Check in</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% endif %}
+
     <!-- patient info section -->
     <div class="collapse show" id="patient_info">
         <div class="container mt-1">
             <div class="row">
                 <div class="col-12 mb-2">
                     <div class="display-4">Order # {{ cur_order.id }}</div>
+                    
+                        <div class="h5">Appointment: {{ cur_order.appointment  }}</div>
+                        {% if cur_order.team %}
+                        <div class='text-muted small'>Team: {{ cur_order.team }}</div>
+                        {% endif %}
+                        <div class="text-muted small">
+                            {% if schedule_form %}
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">
+                                    {{ cur_order.appointment|yesno:"Reschedule,Schedule" }}
+                                </a>
+                                &nbsp;&nbsp;
+                            {% endif %}
+                            {% if cur_order.level.id == 1 %}
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkInModal">
+                                    Check In
+                                </a>
+                            {% endif %}
+                        </div>
+                    <hr>
                 </div>
                 <div class="col-12">
                     <span class="h4">Patient Information</span>
                     <a href="{% url 'patient' pat_id=cur_order.patient.id %}" class="text-muted small ml-2" data-toggle="tooltip" data-placement="top" title="Link to Patient History">
-                        Edit
+                        View More
                     </a>
                 </div> 
 
@@ -191,7 +267,6 @@
 
     {% if cur_order.level_id > 2 %}
         <!-- analysis section -->
-        <form>
             <div class="collapse show" id="order_info">
                 <div class="container mt-5">
                     <div class="row">
@@ -201,9 +276,21 @@
                     </div>
                     <div class="row">
                         <div class="col-12 mt-2">
-                            <!-- <textarea rows="7" class="form-control">
-                            </textarea> -->
-                            {{ cur_order.report }}
+                            {% if analysis_form %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ analysis_form.report }}
+                                <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-primary">Save Report</button>
+                                <button type="submit" class="mt-2 btn btn-primary">Submit Report</button>
+                            </form>
+                            {% else %}
+                                {{ cur_order.report }}
+                                <br>
+                                <div class='text-muted small mt-2'>
+                                Completed by {{ cur_order.completed }} on {{ cur_order.completed_time }}
+                                </div>
+
+                            {% endif %}
                         </div>
                     </div>
                     {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
@@ -215,7 +302,6 @@
                     {% endif %}
                 </div>
             </div>
-        </form>
         <!-- end analysis section -->
     {% endif %}
 
@@ -239,6 +325,8 @@
             }
         </script>
     {% endif %}
+
+{{ schedule_form.media.js }}
 
     <script>
         $('#datepicker').datepicker({

@@ -5,3 +5,7 @@ djangorestframework
 markdown
 django-filter
 django-agenda
+django-bootstrap-datepicker-plus
+django-intl-tel-input
+django-sendgrid-v5
+django-background-tasks

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'xaminegroup.pythonanywhere.com',
     '127.0.0.1',
     'localhost',
+    'xamine.msb.dev',
 ]
 
 
@@ -42,9 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_agenda',
+    'intl_tel_input',
+    'background_task',
+    'bootstrap_datepicker_plus',
     'xamine.apps.XamineConfig',
     'rest_framework',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +151,9 @@ EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = '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'
 # SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 SENDGRID_ECHO_TO_STDOUT = True
+
+# Datepicker
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
+

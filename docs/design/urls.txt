@@ -1,0 +1,28 @@
+/
+	Controller: xamine.views.index
+	URL Name: index
+	Decorators:
+/login/
+	Controller: django.contrib.auth.views.LoginView
+	URL Name: login
+	Decorators:
+/logout/
+	Controller: django.contrib.auth.views.LogoutView
+	URL Name: logout
+	Decorators:
+/order/<int:order_id>/
+	Controller: xamine.views.order
+	URL Name: order
+	Decorators:
+/order/<int:order_id>/schedule
+	Controller: xamine.views.schedule_order
+	URL Name: schedule_time
+	Decorators:
+/order/<int:order_id>/send
+	Controller: xamine.apiviews.patient_email
+	URL Name: patient_view
+	Decorators:
+/patient/<int:pat_id>/
+	Controller: xamine.views.patient
+	URL Name: patient
+	Decorators:

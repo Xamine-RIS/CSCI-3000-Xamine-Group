@@ -1,7 +1,12 @@
 {% extends 'base/base.html' %}
+{% load phone_number %}
+{% load crispy_forms_filters %}
 
 {% block header %}
+
     {% load group_auth %}
+    {{ form.media.css }}
+
     <style>
         .orderlink { color: black; }
 
@@ -16,10 +21,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="display-4">
+                <span class="display-4">
                     Patient Information
-                </div>
-                <a data-toggle="collapse" href=".patient-info" class="text-muted small ml-2">
+                </span>
+                <a data-toggle="collapse" href=".patient-info" class="text-muted small ml-2 collapse show patient-info">
                     Edit
                 </a>
             </div>
@@ -27,102 +32,141 @@
         <div class="row">
             <div class="col-8">
                 <div class="row collapse show patient-info">
-                    <div class="col-6 mt-1">
+                    <div class="col-4 mt-1">
                         <label>First Name:</label><br>
                         {{ patient_info.first_name }}
                     </div>
-                    <div class="col-6 mt-1">
+                    <div class="col-4 mt-1">
+                        <label>Middle Name:</label><br>
+                        {{ patient_info.middle_name|default_if_none:'' }}
+                    </div>
+                    <div class="col-4 mt-1">
                         <label>Last Name:</label><br>
                         {{ patient_info.last_name }}
                     </div>
-                    <div class="col-6 mt-1">
+                    <div class="col-4 mt-1">
                         <label>Date of Birth:</label><br>
                         {{ patient_info.birth_date}}
                     </div>
-                    <div class="col-6 mt-1">
+                    <div class="col-4 mt-1">
                         <label>Phone Number:</label><br>
-                        {{ patient_info.phone_number }}
+                        {{ patient_info.phone_number|phone_number }}
                     </div>
-                    <div class="col-6 mt-1">
+                    <div class="col-4 mt-1">
                         <label>Email:</label><br>
                         {{ patient_info.email_info }}
                     </div>
-                    <div class="col-6 mt-1">
-                        <label for="Asthma">Do you have asthma?</label><br>
-                        {% if patient_info.allergy_asthma %}Yes{% else %}No{% endif %}
+                    <div class="col-3 mt-1">
+                        <label for="Asthma">Asthma:</label><br>
+                        {{ patient_info.allergy_asthma|yesno:'Yes,No' }}
                     </div>
-                    <div class="col-4 mt-1">
-                        <label for="XrayDye">Are you allergic to Xray dye?</label><br>
-                        {% if patient_info.allergy_xraydye %}Yes{% else %}No{% endif %}
+                    <div class="col-3 mt-1">
+                        <label for="XrayDye">Xray dye allergy:</label><br>
+                        {{ patient_info.allergy_xraydye|yesno:'Yes,No'  }}
                     </div>
-                    <div class="col-4 mt-1">
-                        <label for="MRIDye">MRI dye?</label><br>
-                        {% if patient_info.allergy_mridye %}Yes{% else %}No{% endif %}
+                    <div class="col-3 mt-1">
+                        <label for="MRIDye">MRI dye allergy:</label><br>
+                        {{ patient_info.allergy_mridye|yesno:'Yes,No' }}
                     </div>
-                    <div class="col-4 mt-1">
-                        <label for="Latex">Latex?</label><br>
-                        {% if patient_info.allergy_latex %}Yes{% else %}No{% endif %}
+                    <div class="col-3 mt-1">
+                        <label for="Latex">Latex allergy:</label><br>
+                        {{ patient_info.allergy_latex|yesno:'Yes,No' }}
                     </div>
                     <div class="col-12 mt-1">
                         <label for="textarea">
-                            List any Food or Drug allergies you may have, if none, just write none:
+                            Other Allergies/Notes:
                         </label><br>
-                            {{ patient_info.notes }}
+                        {{ patient_info.notes }}
                     </div>
                 </div>
-
-                <div class="row collapse patient-info">
-                    <div class="col-6 mt-1">
-                        <label>First Name:</label><br>
-                        {{ form.first_name }}
-                    </div>
-                    <div class="col-6 mt-1">
-                        <label>Last Name:</label><br>
-                        {{ form.first_name }}
-                    </div>
-                    <div class="col-6 mt-1">
-                        <label>Date of Birth:</label><br>
-                        {{ form.birth_date}}
-                    </div>
-                    <div class="col-6 mt-1">
-                        <label>Phone Number:</label><br>
-                        {{ form.phone_number }}
-                    </div>
-                    <div class="col-6 mt-1">
-                        <label>Email:</label><br>
-                        {{ form.email_info }}
-                    </div>
-                    <div class="col-6 mt-1">
-                        <label for="Asthma">Do you have asthma?</label><br>
-                        {{ form.allergy_asthma }}
-                    </div>
-                    <div class="col-4 mt-1">
-                        <label for="XrayDye">Are you allergic to Xray dye?</label><br>
-                        {{ form.allergy_xraydye }}
-                    </div>
-                    <div class="col-4 mt-1">
-                        <label for="MRIDye">MRI dye?</label><br>
-                        {{ form.allergy_mridye }}
-                    </div>
-                    <div class="col-4 mt-1">
-                        <label for="Latex">Latex?</label><br>
-                    {{ form.allergy_latex }}
-                    </div>
-                    <div class="col-12 mt-1">
-                        <label for="textarea">
-                            List any Food or Drug allergies you may have, if none, just write none:
-                        </label><br>
+                <form id="patient_info_form" method="POST">
+                    {% csrf_token %}
+                    <div class="row collapse patient-info">
+                        <div class="col-4 mt-1">
+                            <label>First Name:</label><br>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-4 mt-1">
+                            <label>Middle Name:</label><br>
+                            {{ form.middle_name }}
+                        </div>
+                        <div class="col-4 mt-1">
+                            <label>Last Name:</label><br>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-4 mt-1">
+                            <label>Date of Birth:</label><br>
+                            {{ form.birth_date}}
+                        </div>
+                        <div class="col-4 mt-1">
+                            <label>Phone Number:</label><br>
+                            {{ form.phone_number }}
+                        </div>
+                        <div class="col-4 mt-1">
+                            <label>Email:</label><br>
+                            {{ form.email_info }}
+                        </div>
+                        <div class="col-3 mt-1">
+                            <label for="Asthma">Asthma allergy:</label><br>
+                            {{ form.allergy_asthma }}
+                        </div>
+                        <div class="col-3 mt-1">
+                            <label for="XrayDye">XRAY dye allergy:</label><br>
+                            {{ form.allergy_xraydye }}
+                        </div>
+                        <div class="col-3 mt-1">
+                            <label for="MRIDye">MRI dye allergy:</label><br>
+                            {{ form.allergy_mridye }}
+                        </div>
+                        <div class="col-3 mt-1">
+                            <label for="Latex">Latex allergy:</label><br>
+                            {{ form.allergy_latex }}
+                        </div>
+                        <div class="col-12 mt-1">
+                            <label for="textarea">
+                                Other Allergies/Notes:
+                            </label><br>
                             {{ form.notes }}
+                        </div>
+                        <div class="col mt-3 ">
+                            <button class="btn btn-primary">Save Patient Info</button>
+                            <a class="btn btn-secondary" data-toggle="collapse" href=".patient-info" onclick="resetForm()">Cancel</a>
+                        </div>
                     </div>
-                    <div class="col mt-3 ">
-                        <button class="btn btn-primary">Save Patient Info</button>
-                        <button class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="col-4">
-                <div class="mb-3 h5 text-center">Patient Orders</div>
-                <table class="table table-sm">
+        
+                <div class="mb-3 h5 text-center">Active Orders</div>
+                    <table class="table table-sm text-center">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Modality</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in active_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.level.name }}</td>
+                            </tr>
+                        
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">
+                                    No orders
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <br>
+                
+                <div class="mb-3 h5 text-center">Completed Orders</div>
+                <table class="table table-sm text-center">
                     <thead>
                     <tr>
                         <th>Order #</th>
@@ -131,33 +175,48 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><a class="orderlink" href="{% url 'order_prototype' %}">122</a></td>
-                        <td><a class="orderlink" href="{% url 'order_prototype' %}">MRI</a></td>
-                        <td>2/9/2020</td>
-                    </tr>
-                    <tr>
-                        <td><a class="orderlink" href="{% url 'order_prototype' %}">128</a></td>
-                        <td><a class="orderlink" href="{% url 'order_prototype' %}">X-Ray</a></td>
-                        <td>2/28/2020</td>
-                    </tr>
-                    <tr>
-                        <td><a class="orderlink" href="{% url 'order_prototype' %}">133</a></td>
-                        <td><a class="orderlink" href="{% url 'order_prototype' %}">CT Scan</a></td>
-                        <td>2/22/2020</td>
-                    </tr>
+                        {% for order in complete_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.last_edit|date:'m/d/Y' }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-        
-        
         </div>
     </div>
 
 {% endblock %}
 
 {% block afterscript %}
+
+    <!-- start form media -->
+    {{ form.media.js }}
+    <!-- end form media -->
+
+    <!-- start cleave media -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.10/cleave.min.js" integrity="sha256-lqWAcasN+EP6bxH3+SBODfrydkyHQ7FDwcI44sZeff4=" crossorigin="anonymous"></script>
+    <script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
+    <!-- end cleave media -->
+
     <script>
+        function resetForm() {
+            document.getElementById("patient_info_form").reset();
+        }
+
+        var cleavePhone = new Cleave('.input-phone', {
+            phone: true,
+            phoneRegionCode: 'US'
+        });
+
         $('#datepicker').datepicker({
             uiLibrary: 'bootstrap4'
         });

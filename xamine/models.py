@@ -1,11 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django_agenda.time_span import TimeSpan
-from django_agenda.models import (AbstractAvailability,
-                                  AbstractAvailabilityOccurrence,
-                                  AbstractTimeSlot,
-                                  AbstractBooking)
 
 
 class Level(models.Model):
@@ -34,7 +29,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=128)
     email_info = models.EmailField()
     birth_date = models.DateField()
-    phone_number = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=32)
 
     # Medical information
     allergy_asthma = models.BooleanField()
@@ -43,6 +38,8 @@ class Patient(models.Model):
     allergy_latex = models.BooleanField()
 
     notes = models.TextField(null=True, blank=True)
+
+    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     @property
     def full_name(self):
@@ -55,8 +52,17 @@ class Patient(models.Model):
         return f"{self.full_name} ({self.id})"
 
 
-class ModalityOptions(models.Model):   #temp
+class ModalityOption(models.Model):
     name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=64)
+    technicians = models.ManyToManyField(User, blank=True, related_name='tech_teams')
+    radiologists = models.ManyToManyField(User, blank=True, related_name='radiol_teams')
 
     def __str__(self):
         return self.name
@@ -67,7 +73,8 @@ class Order(models.Model):
 
     # patient info
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="orders")
-    appointment = models.DateTimeField(null=True, blank=True)
+    appointment = models.DateTimeField(null=True, blank=True,)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
 
     # Automatically record timestamp info
     added_on = models.DateTimeField(auto_now_add=True)
@@ -79,13 +86,14 @@ class Order(models.Model):
     # Order information
     visit_reason = models.CharField(max_length=128, null=True, blank=True)  # temp
     imaging_needed = models.CharField(max_length=128, null=True, blank=True)  # temp
-    modality = models.ForeignKey(ModalityOptions, on_delete=models.SET_NULL, null=True, blank=True)  # temp
+    modality = models.ForeignKey(ModalityOption, on_delete=models.SET_NULL, null=True, blank=True)  # temp
 
     # Analysis information
     report = models.TextField(null=True, blank=True)
+    completed = models.CharField(max_length=64, null=True, blank=True)
+    completed_time = models.DateTimeField(null=True, blank=True)
 
     # Report access information
-    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     # TODO: Add fields for patient access auth and archiving by doctor
     
     def __str__(self):
@@ -112,7 +120,7 @@ class Image(models.Model):
 
 
 class OrderKey(models.Model):
-    #Secret Key for auth public orders
+    """ Secret Key for auth public orders """
     
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='secret_keys')
     secret_key = models.CharField(max_length=256)

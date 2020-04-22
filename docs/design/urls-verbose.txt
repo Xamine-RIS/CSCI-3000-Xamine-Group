@@ -1,0 +1,316 @@
+/
+	Controller: xamine.views.index
+	URL Name: index
+	Decorators:
+/admin/
+	Controller: django.contrib.admin.sites.index
+	URL Name: admin:index
+	Decorators:
+/admin/<app_label>/
+	Controller: django.contrib.admin.sites.app_index
+	URL Name: admin:app_list
+	Decorators:
+/admin/auth/group/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:auth_group_changelist
+	Decorators:
+/admin/auth/group/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/auth/group/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:auth_group_change
+	Decorators:
+/admin/auth/group/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:auth_group_delete
+	Decorators:
+/admin/auth/group/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:auth_group_history
+	Decorators:
+/admin/auth/group/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:auth_group_add
+	Decorators:
+/admin/auth/group/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:auth_group_autocomplete
+	Decorators:
+/admin/auth/user/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:auth_user_changelist
+	Decorators:
+/admin/auth/user/<id>/password/
+	Controller: django.contrib.auth.admin.user_change_password
+	URL Name: admin:auth_user_password_change
+	Decorators:
+/admin/auth/user/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/auth/user/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:auth_user_change
+	Decorators:
+/admin/auth/user/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:auth_user_delete
+	Decorators:
+/admin/auth/user/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:auth_user_history
+	Decorators:
+/admin/auth/user/add/
+	Controller: django.contrib.auth.admin.add_view
+	URL Name: admin:auth_user_add
+	Decorators:
+/admin/auth/user/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:auth_user_autocomplete
+	Decorators:
+/admin/background_task/completedtask/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:background_task_completedtask_changelist
+	Decorators:
+/admin/background_task/completedtask/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/background_task/completedtask/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:background_task_completedtask_change
+	Decorators:
+/admin/background_task/completedtask/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:background_task_completedtask_delete
+	Decorators:
+/admin/background_task/completedtask/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:background_task_completedtask_history
+	Decorators:
+/admin/background_task/completedtask/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:background_task_completedtask_add
+	Decorators:
+/admin/background_task/completedtask/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:background_task_completedtask_autocomplete
+	Decorators:
+/admin/background_task/task/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:background_task_task_changelist
+	Decorators:
+/admin/background_task/task/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/background_task/task/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:background_task_task_change
+	Decorators:
+/admin/background_task/task/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:background_task_task_delete
+	Decorators:
+/admin/background_task/task/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:background_task_task_history
+	Decorators:
+/admin/background_task/task/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:background_task_task_add
+	Decorators:
+/admin/background_task/task/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:background_task_task_autocomplete
+	Decorators:
+/admin/jsi18n/
+	Controller: django.contrib.admin.sites.i18n_javascript
+	URL Name: admin:jsi18n
+	Decorators:
+/admin/login/
+	Controller: django.contrib.admin.sites.login
+	URL Name: admin:login
+	Decorators:
+/admin/logout/
+	Controller: django.contrib.admin.sites.logout
+	URL Name: admin:logout
+	Decorators:
+/admin/password_change/
+	Controller: django.contrib.admin.sites.password_change
+	URL Name: admin:password_change
+	Decorators:
+/admin/password_change/done/
+	Controller: django.contrib.admin.sites.password_change_done
+	URL Name: admin:password_change_done
+	Decorators:
+/admin/r/<int:content_type_id>/<path:object_id>/
+	Controller: django.contrib.contenttypes.views.shortcut
+	URL Name: admin:view_on_site
+	Decorators:
+/admin/xamine/level/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:xamine_level_changelist
+	Decorators:
+/admin/xamine/level/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/xamine/level/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:xamine_level_change
+	Decorators:
+/admin/xamine/level/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:xamine_level_delete
+	Decorators:
+/admin/xamine/level/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:xamine_level_history
+	Decorators:
+/admin/xamine/level/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:xamine_level_add
+	Decorators:
+/admin/xamine/level/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:xamine_level_autocomplete
+	Decorators:
+/admin/xamine/modalityoption/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:xamine_modalityoption_changelist
+	Decorators:
+/admin/xamine/modalityoption/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/xamine/modalityoption/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:xamine_modalityoption_change
+	Decorators:
+/admin/xamine/modalityoption/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:xamine_modalityoption_delete
+	Decorators:
+/admin/xamine/modalityoption/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:xamine_modalityoption_history
+	Decorators:
+/admin/xamine/modalityoption/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:xamine_modalityoption_add
+	Decorators:
+/admin/xamine/modalityoption/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:xamine_modalityoption_autocomplete
+	Decorators:
+/admin/xamine/order/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:xamine_order_changelist
+	Decorators:
+/admin/xamine/order/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/xamine/order/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:xamine_order_change
+	Decorators:
+/admin/xamine/order/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:xamine_order_delete
+	Decorators:
+/admin/xamine/order/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:xamine_order_history
+	Decorators:
+/admin/xamine/order/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:xamine_order_add
+	Decorators:
+/admin/xamine/order/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:xamine_order_autocomplete
+	Decorators:
+/admin/xamine/patient/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:xamine_patient_changelist
+	Decorators:
+/admin/xamine/patient/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/xamine/patient/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:xamine_patient_change
+	Decorators:
+/admin/xamine/patient/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:xamine_patient_delete
+	Decorators:
+/admin/xamine/patient/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:xamine_patient_history
+	Decorators:
+/admin/xamine/patient/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:xamine_patient_add
+	Decorators:
+/admin/xamine/patient/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:xamine_patient_autocomplete
+	Decorators:
+/admin/xamine/team/
+	Controller: django.contrib.admin.options.changelist_view
+	URL Name: admin:xamine_team_changelist
+	Decorators:
+/admin/xamine/team/<path:object_id>/
+	Controller: django.views.generic.base.RedirectView
+	URL Name: 
+	Decorators:
+/admin/xamine/team/<path:object_id>/change/
+	Controller: django.contrib.admin.options.change_view
+	URL Name: admin:xamine_team_change
+	Decorators:
+/admin/xamine/team/<path:object_id>/delete/
+	Controller: django.contrib.admin.options.delete_view
+	URL Name: admin:xamine_team_delete
+	Decorators:
+/admin/xamine/team/<path:object_id>/history/
+	Controller: django.contrib.admin.options.history_view
+	URL Name: admin:xamine_team_history
+	Decorators:
+/admin/xamine/team/add/
+	Controller: django.contrib.admin.options.add_view
+	URL Name: admin:xamine_team_add
+	Decorators:
+/admin/xamine/team/autocomplete/
+	Controller: django.contrib.admin.options.autocomplete_view
+	URL Name: admin:xamine_team_autocomplete
+	Decorators:
+/login/
+	Controller: django.contrib.auth.views.LoginView
+	URL Name: login
+	Decorators:
+/logout/
+	Controller: django.contrib.auth.views.LogoutView
+	URL Name: logout
+	Decorators:
+/order/<int:order_id>/
+	Controller: xamine.views.order
+	URL Name: order
+	Decorators:
+/order/<int:order_id>/schedule
+	Controller: xamine.views.schedule_order
+	URL Name: schedule_time
+	Decorators:
+/order/<int:order_id>/send
+	Controller: xamine.apiviews.patient_email
+	URL Name: patient_view
+	Decorators:
+/patient/<int:pat_id>/
+	Controller: xamine.views.patient
+	URL Name: patient
+	Decorators:
