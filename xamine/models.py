@@ -101,13 +101,13 @@ class Order(models.Model):
 def image_path(instance, filename):
     timestamp = timezone.now().strftime('%f')
 
-    return f"ris/{instance.order.id}/{timestamp}-{filename}"
+    return f"ris/{instance.order_id}/{timestamp}-{filename}"
 
 
 class Image(models.Model):
     """ Model for the actual Image to be associated with an Order """
 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='images')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='images', null=True)
     label = models.CharField(max_length=30)
     image = models.FileField(upload_to=image_path)
     user = models.CharField(max_length=30)

@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from xamine.models import Order, Patient
-from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
+from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm, ImageUploadForm
 from xamine.utils import get_setting, is_in_group
 from xamine.tasks import send_notification
 
@@ -43,6 +43,22 @@ def index(request):
 
 
 @login_required
+def upload_file(request, order_id):
+    if request.method == 'POST':
+        data = request.POST.copy()
+        data['order'] = order_id
+
+        form = ImageUploadForm(data, request.FILES)
+        if form.is_valid():
+            # file is saved
+            new_image = form.save()
+            new_image.user = request.user.get_username()
+            new_image.save()
+    
+    return redirect('order', order_id=order_id)
+
+
+@login_required
 def order(request, order_id):
 
     try:
@@ -58,6 +74,8 @@ def order(request, order_id):
             if form.is_valid():
             
                 form.save()
+        elif cur_order.level_id == 2 and is_in_group(request.user, ['Technicians', 'Radiologists']):
+                pass
         elif cur_order.level_id == 3 and is_in_group(request.user, ['Radiologists']):
             if request.user in cur_order.team.radiologists.all():
                 form = AnalysisForm(data=request.POST, instance=cur_order)
@@ -78,14 +96,15 @@ def order(request, order_id):
 
     context = {}
 
-    if cur_order.level_id == 1:
+    if cur_order.level_id == 1 and is_in_group(request.user, ['Receptionists', 'Administrators']):
         # Add scheduler form if not yet checked in
         context['schedule_form'] = ScheduleForm(instance=cur_order)
         context['checkin_form'] = TeamSelectionForm(instance=cur_order)
-    elif cur_order.level_id == 2:
+    elif cur_order.level_id == 2 and is_in_group(request.user, ['Technicians', 'Radiologists']):
         # Prepare context for template if at checked in step
-        pass
-    elif cur_order.level_id == 3:
+        if request.user in cur_order.team.radiologists.all() | cur_order.team.technicians.all():
+            context['image_form'] = ImageUploadForm(instance=cur_order)
+    elif cur_order.level_id == 3 and is_in_group(request.user, ['Radiologists']):
         # Prepare context for template if at imaging complete step
         if request.user in cur_order.team.radiologists.all():
             context['analysis_form'] = AnalysisForm(instance=cur_order)

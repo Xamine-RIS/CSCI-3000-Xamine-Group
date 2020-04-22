@@ -1,7 +1,9 @@
 from django import forms
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from intl_tel_input.widgets import IntlTelInputWidget
-from xamine.models import Patient, Order
+from xamine.models import Patient, Order, Image
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 
@@ -65,3 +67,16 @@ class AnalysisForm(forms.ModelForm):
             'report': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '6'}),
         }
 
+
+class ImageUploadForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['label', 'image', 'order']
+
+        
+
+        widgets = {
+            'label': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'image': forms.FileInput(attrs={'allow_empty_file': 'off', 'max_length': '50', 'class': 'custom-file-input',}),
+            'order': forms.HiddenInput(),
+        }
