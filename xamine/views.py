@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
 from xamine.models import Order, Patient
+from xamine.forms import NewOrderForm, PatientLookupForm
 from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
 from xamine.utils import get_setting, is_in_group
 from xamine.tasks import send_notification
@@ -27,6 +28,8 @@ def index(request):
 
         context['active_orders'] = active_orders
         context['complete_orders'] = complete_orders
+
+        context['patient_lookup'] = PatientLookupForm()
     if see_all or is_in_group(request.user, "Receptionists"):
         # Find today's appts
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
@@ -41,6 +44,7 @@ def index(request):
         context['radiologist_orders'] = Order.objects.filter(level_id=3)
 
     return render(request, 'index.html', context)
+
 
 @login_required
 def save_order(request, order_id):
@@ -59,6 +63,7 @@ def save_order(request, order_id):
                 form.save()
     
     return redirect('order', order_id=order_id)
+    
 
 @login_required
 def order(request, order_id):
@@ -173,3 +178,87 @@ def schedule_order(request, order_id):
             raise Http404('date conflict')
 
     return redirect('order', order_id=order_id)
+
+
+
+@login_required
+def patient_lookup(request):
+
+    dob = datetime.datetime.strptime(request.POST['birth_date'], '%m/%d/%Y').date()
+
+    patient_list = Patient.objects.filter(birth_date=dob)
+
+    context = {
+        'patient_list': patient_list,
+        'date_selected': dob.strftime('%m/%d/%Y'),
+        'new_patient_form': PatientInfoForm(),
+        'patient_lookup': PatientLookupForm(),
+    }
+    return render(request, 'patient_lookup.html', context)
+
+
+@login_required
+def new_patient(request):
+
+    if not request.method == 'POST':
+        redirect('index')
+
+    new_form = PatientInfoForm(data=request.POST)
+
+    if new_form.is_valid():
+        new_patient = new_form.save()
+
+        new_patient.doctor_id = request.user.pk
+        new_patient.save()
+
+        return redirect('new_order', pat_id=new_patient.pk)
+
+    else:
+        context = {
+            'patient_list': None,
+            'date_selected': None,
+            'new_patient_form': new_form,
+            'show_modal': True,
+        }
+        return render(request, 'patient_lookup.html', context)
+
+
+@login_required
+def new_order(request, pat_id):
+
+    if request.method == 'POST':
+        form_data = request.POST.copy()
+        form_data['patient'] = pat_id
+
+        new_form = NewOrderForm(data=form_data)
+
+        if new_form.is_valid():
+            new_order = new_form.save()
+            new_order.level_id = 1
+            new_order.save()
+
+            return redirect('order', order_id=new_order.pk)
+    else:
+        new_form = NewOrderForm()
+       
+    context = {
+        'new_order_form': new_form,
+        'patient': Patient.objects.get(pk=pat_id),
+    }
+    return render(request, 'new_order.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

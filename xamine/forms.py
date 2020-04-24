@@ -65,3 +65,27 @@ class AnalysisForm(forms.ModelForm):
             'report': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '6'}),
         }
 
+
+class PatientLookupForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['birth_date']
+
+        widgets = {
+            'birth_date': DatePickerInput(format='%m/%d/%Y', options={"useCurrent": False},
+                                          attrs={'placeholder': 'mm/dd/yyyy'}),
+        }
+
+
+class NewOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['patient', 'visit_reason', 'imaging_needed', 'modality', 'notes']
+
+        widgets = {
+            'patient': forms.HiddenInput(),
+            'visit_reason': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'imaging_needed': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
+            'modality': forms.Select(attrs={'class': 'form-control'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '3'}),
+        }

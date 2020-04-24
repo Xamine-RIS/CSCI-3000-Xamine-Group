@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block header %}
+{% load phone_number %}
 {{ schedule_form.media.css }}
 
 {% endblock %}
@@ -115,7 +116,7 @@
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Phone Number:</span><br>
-                            {{ cur_order.patient.phone_number }}
+                            {{ cur_order.patient.phone_number|phone_number }}
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Email Address:</span><br>
