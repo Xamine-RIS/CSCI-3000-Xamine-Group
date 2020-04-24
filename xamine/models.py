@@ -39,7 +39,7 @@ class Patient(models.Model):
 
     notes = models.TextField(null=True, blank=True)
 
-    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 
     @property
     def full_name(self):
@@ -83,10 +83,11 @@ class Order(models.Model):
     # Level tracking
     level = models.ForeignKey(Level, on_delete=models.DO_NOTHING, null=True, blank=True)
 
-    # Order information
-    visit_reason = models.CharField(max_length=128, null=True, blank=True)  # temp
-    imaging_needed = models.CharField(max_length=128, null=True, blank=True)  # temp
-    modality = models.ForeignKey(ModalityOption, on_delete=models.SET_NULL, null=True, blank=True)  # temp
+    # Order information"
+    visit_reason = models.CharField(max_length=128)
+    imaging_needed = models.CharField(max_length=128) 
+    modality = models.ForeignKey(ModalityOption, on_delete=models.DO_NOTHING)
+    notes = models.TextField(null=True, blank=True)
 
     # Analysis information
     report = models.TextField(null=True, blank=True)
