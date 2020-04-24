@@ -180,7 +180,6 @@ def schedule_order(request, order_id):
     return redirect('order', order_id=order_id)
 
 
-
 @login_required
 def patient_lookup(request):
 
@@ -188,11 +187,13 @@ def patient_lookup(request):
 
     patient_list = Patient.objects.filter(birth_date=dob)
 
+    new_form = PatientLookupForm()
+
     context = {
         'patient_list': patient_list,
         'date_selected': dob.strftime('%m/%d/%Y'),
         'new_patient_form': PatientInfoForm(),
-        'patient_lookup': PatientLookupForm(),
+        'patient_lookup': new_form,
     }
     return render(request, 'patient_lookup.html', context)
 
