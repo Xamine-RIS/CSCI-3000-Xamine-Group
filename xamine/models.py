@@ -12,7 +12,7 @@ class Level(models.Model):
 
 
 class AppSetting(models.Model):
-    """ Defines settings that can be turned on and off """
+    """ Defines settings that can be set dynamically """
     name = models.CharField(max_length=32)
     value = models.CharField(max_length=256)
 
