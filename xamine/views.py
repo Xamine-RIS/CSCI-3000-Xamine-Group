@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from xamine.models import Order, Patient
+from xamine.models import Order, Patient, Image
 from xamine.forms import ImageUploadForm
 from xamine.forms import NewOrderForm, PatientLookupForm
 from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
@@ -323,17 +323,9 @@ def new_order(request, pat_id):
     return render(request, 'new_order.html', context)
 
 
+def remove_image(request, img_id):
+    img = Image.objects.get(pk=img_id)
+    if request.user in img.order.team.technicians.all() | img.order.team.radiologists.all():
+        img.delete()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return redirect('order', order_id=img.order_id)

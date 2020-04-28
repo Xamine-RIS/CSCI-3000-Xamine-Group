@@ -16,5 +16,6 @@ urlpatterns = [
     path('patient/new', views.new_patient, name='new_patient'),
     path('patient/<int:pat_id>/new-order', views.new_order, name='new_order'),
 
-    
+    path('image/<int:img_id>/remove', views.remove_image, name='remove_image'),
+
 ]

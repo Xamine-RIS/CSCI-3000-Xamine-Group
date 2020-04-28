@@ -304,7 +304,13 @@
                                     </td>
                                     <td>{{ image.added_on }}</td>
                                     <td>{{ image.user }}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td>
+                                        {% if cur_order.level_id < 4 and image_form %}
+                                            <a class="orderlink" href="{% url 'remove_image' img_id=image.pk %}">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
