@@ -419,7 +419,11 @@
                 .then(res => res.json())
                 .then(json => {
                     if (json.status === 'ok') {
-                        $.notify('Email Sent!', {type: 'success'})
+
+                        let link = '';
+                        if (json.link) link = "<br><a class='small' href='" + json.link + "'>Patient URL</a> ";
+
+                        $.notify('Email Sent!' + link, {type: 'success'})
                     } else {
                         $.notify('Error', {type: 'danger'})
                     }
@@ -427,6 +431,3 @@
         }
     </script>
 {% endblock %}
-
-</body>
-</html>

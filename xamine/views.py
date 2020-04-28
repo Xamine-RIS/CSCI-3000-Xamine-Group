@@ -2,10 +2,10 @@ import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
-from xamine.models import Order, Patient, Image
+from xamine.models import Order, Patient, Image, OrderKey
 from xamine.forms import ImageUploadForm
 from xamine.forms import NewOrderForm, PatientLookupForm
 from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
@@ -323,9 +323,30 @@ def new_order(request, pat_id):
     return render(request, 'new_order.html', context)
 
 
+@login_required
 def remove_image(request, img_id):
     img = Image.objects.get(pk=img_id)
     if request.user in img.order.team.technicians.all() | img.order.team.radiologists.all():
         img.delete()
 
     return redirect('order', order_id=img.order_id)
+
+
+def public_order(request):
+    key = request.GET.get('key')
+
+    if not key:
+        raise Http404
+
+    order_key = get_object_or_404(OrderKey, secret_key=key)
+    cur_order = order_key.order
+
+    context = {
+        "cur_order": cur_order,
+        "thumbnails": get_image_files(cur_order.images.all()),
+        'show_medical': True,
+    }
+    return render(request, 'order_pub.html', context)
+
+
+

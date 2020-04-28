@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import send_mail
+from django.urls import reverse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -15,12 +17,12 @@ def patient_email(request, order_id):
     try:
         current_key = OrderKey.objects.get_or_create(order_id=order_id)[0]
 
-        print(current_key)
+        key = randomString()
 
-        current_key.secret_key = randomString()
+        current_key.secret_key = key
         current_key.save()
 
-        url = f"{request.get_host()}"
+        url = f"{request.get_host()}{reverse('public_order')}?key={key}"
         to_email = current_key.order.patient.email_info
 
         send_mail(
@@ -33,7 +35,8 @@ def patient_email(request, order_id):
 
         return_data = {
             'status': 'ok',
-            'message': 'Email sent!'
+            'message': 'Email sent!',
+            'link': url if settings.DEBUG else None,
         }
 
         return Response(return_data, status=status.HTTP_201_CREATED)

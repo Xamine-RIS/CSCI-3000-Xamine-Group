@@ -3,6 +3,7 @@ from django.urls import path, include
 from xamine import views, apiviews
 
 urlpatterns = [
+    path('order/', views.public_order, name='public_order'),
     path('order/<int:order_id>/', views.order, name='order'),
     path('order/<int:order_id>/upload', views.upload_file, name='submit_image'),
     path('order/<int:order_id>/send', apiviews.patient_email, name='patient_view'),
