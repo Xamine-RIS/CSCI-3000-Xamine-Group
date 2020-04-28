@@ -147,10 +147,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Email settings
 
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = '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'
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-# SENDGRID_ECHO_TO_STDOUT = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# SENDGRID_API_KEY = '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'
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# # SENDGRID_ECHO_TO_STDOUT = True
 
 # Datepicker
 BOOTSTRAP4 = {
