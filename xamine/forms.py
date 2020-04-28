@@ -80,6 +80,8 @@ class ImageUploadForm(forms.ModelForm):
             'image': forms.FileInput(attrs={'allow_empty_file': 'off', 'max_length': '50', 'class': 'custom-file-input',}),
             'order': forms.HiddenInput(),
         }
+
+
 class PatientLookupForm(forms.ModelForm):
     class Meta:
         model = Patient

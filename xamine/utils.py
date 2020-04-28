@@ -1,6 +1,24 @@
+from sendgrid import SendGridAPIClient, Mail
+
 from xamine.models import AppSetting, Patient
 from datetime import datetime
 from django.http import Http404
+
+
+def send_sendgrid_email(recipient, subject, html_msg):
+    message = Mail(
+        from_email='noreply@xamine.msb.dev',
+        to_emails=recipient,
+        subject=subject,
+        html_content=html_msg)
+    try:
+        sg = SendGridAPIClient('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')
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
 
 
 def get_setting(name, default=None):

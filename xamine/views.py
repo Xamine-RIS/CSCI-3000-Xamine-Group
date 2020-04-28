@@ -323,7 +323,9 @@ def new_order(request, pat_id):
     return render(request, 'new_order.html', context)
 
 
-def delete_image(request, image_id):
-    img = Image.objects.get(pk=image_id)
-    ord = img.order
+def remove_image(request, img_id):
+    img = Image.objects.get(pk=img_id)
+    if request.user in img.order.team.technicians.all() | img.order.team.radiologists.all():
+        img.delete()
 
+    return redirect('order', order_id=img.order_id)

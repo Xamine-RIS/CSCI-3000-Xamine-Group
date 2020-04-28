@@ -133,8 +133,17 @@
 {% block afterscript %}
 
     {{ new_patient_form.media.js }}
+    <!-- start cleave media -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.10/cleave.min.js" integrity="sha256-lqWAcasN+EP6bxH3+SBODfrydkyHQ7FDwcI44sZeff4=" crossorigin="anonymous"></script>
+    <script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
+    <!-- end cleave media -->
     
     <script>
+        var cleavePhone = new Cleave('.input-phone', {
+            phone: true,
+            phoneRegionCode: 'US'
+        });
+
         const showModal = '{{ show_modal }}';
         if (showModal === 'True') {
             $('#newPatientModal').modal('show');

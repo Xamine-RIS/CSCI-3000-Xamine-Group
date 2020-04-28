@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load group_auth %}
 
 {% block header %}
     {% load phone_number %}
@@ -69,6 +70,7 @@
                     <div class="display-4">Order # {{ cur_order.id }}</div>
 
                     <div class="h5">Appointment: {{ cur_order.appointment  }}</div>
+                    <div class="h6">Status: {{ cur_order.level.name  }}</div>
                     {% if cur_order.team %}
                         <div class='text-muted small'>Team: {{ cur_order.team }}</div>
                     {% endif %}
@@ -79,7 +81,7 @@
                             </a>
                             &nbsp;&nbsp;
                         {% endif %}
-                        {% if cur_order.level.id == 1 %}
+                        {% if cur_order.level.id == 1 and request.user|has_group:'Receptionists' %}
                             <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkInModal">
                                 Check In
                             </a>
@@ -296,13 +298,19 @@
                                 <tr>
                                     <th scope="row">{{ image.id }}</th>
                                     <td>
-                                        <a class="orderlink" href="{{ image.image.url }}">
+                                        <a target="_blank" class="orderlink" href="{{ image.image.url }}">
                                             {{ image.label }}
                                         </a>
                                     </td>
                                     <td>{{ image.added_on }}</td>
                                     <td>{{ image.user }}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td>
+                                        {% if cur_order.level_id < 4 and image_form %}
+                                            <a class="orderlink" href="{% url 'remove_image' img_id=image.pk %}">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -346,7 +354,9 @@
                             <form method="POST">
                                 {% csrf_token %}
                                 {{ analysis_form.report }}
-                                <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-primary">Save Report</button>
+                                <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-primary">
+                                    <i class="fas fa-save"></i>&nbsp;&nbsp;Save Report
+                                </button>
                                 <button type="submit" class="mt-2 btn btn-primary">Submit Report</button>
                             </form>
                         {% else %}
