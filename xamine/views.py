@@ -203,7 +203,7 @@ def order(request, order_id):
     context['show_medical'] = is_in_group(request.user, medical_groups)
 
     # Send thumbnails into context
-    context['thumbnails'] = get_image_files(cur_order.images.all())[:3]
+    context['thumbnails'] = get_image_files(cur_order.images.all())
 
     return render(request, 'order.html', context)
 
