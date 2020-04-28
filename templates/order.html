@@ -311,15 +311,15 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        {% if image_form %}
+                {% if image_form %}
+                    <div class="row mt-4">
+                        <div class="col-12">
                             <form method="post">
                                 <button type="submit" class="btn btn-primary">Finalize Images</button>
                             </form>
-                        {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
         <!-- end imaging section -->
