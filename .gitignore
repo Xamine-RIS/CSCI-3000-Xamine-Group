@@ -136,3 +136,5 @@ dmypy.json
 
 .vscode\
 *mailgun_creds.py
+
+prod_settings.py
