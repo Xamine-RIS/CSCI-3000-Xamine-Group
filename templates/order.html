@@ -311,9 +311,18 @@
                         </div>
                     {% endfor %}
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        {% if image_form %}
+                            <form method="post">
+                                <button type="submit" class="btn btn-primary">Finalize Images</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- end order section -->
+        <!-- end imaging section -->
     {% endif %}
 
     {% if cur_order.level_id > 2 %}

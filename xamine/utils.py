@@ -32,7 +32,7 @@ def get_image_files(images):
     thumbnails = []
     for image in images:
         ext = image.image.path.split('.')[-1]
-        if ext in thumbnail_exts:
+        if ext.lower() in thumbnail_exts:
             thumbnails.append(image)
 
     return thumbnails
