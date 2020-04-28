@@ -6,6 +6,7 @@ from django.http import Http404
 
 import requests
 
+
 def send_mailgun_email(recip_list):
     if isinstance(recip_list, str):
         recip_list = [recip_list]
@@ -14,9 +15,9 @@ def send_mailgun_email(recip_list):
         "https://api.mailgun.net/v3/xaminemail.msb.dev",
         auth=("api", "bac0805840288ae22c69a0603af0f77b-b3780ee5-716f5d4a"),
         data={"from": "XamineRIS <mailgun@xaminemail.msb.dev>",
-			"to": recip_list,
-			"subject": "Hello",
-			"text": "Testing some Mailgun awesomness!"})
+              "to": recip_list,
+              "subject": "Hello",
+              "text": "Testing some Mailgun awesomness!"})
 
 
 def send_sendgrid_email(recipient, subject, html_msg):
