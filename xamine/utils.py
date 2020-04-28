@@ -5,12 +5,12 @@ from datetime import datetime
 from django.http import Http404
 
 
-def send_sendgrid_email():
+def send_sendgrid_email(recipient, subject, html_msg):
     message = Mail(
         from_email='noreply@xamine.msb.dev',
-        to_emails='mattburlage@gmail.com',
-        subject='Sending with SendGrid is Fun',
-        html_content='<strong>and easy to do anywhere, even with Python</strong>')
+        to_emails=recipient,
+        subject=subject,
+        html_content=html_msg)
     try:
         sg = SendGridAPIClient('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')
         response = sg.send(message)
