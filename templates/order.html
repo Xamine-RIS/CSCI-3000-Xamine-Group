@@ -3,7 +3,9 @@
 {% block header %}
     {% load phone_number %}
     {{ schedule_form.media.css }}
-
+    <style>
+        .orderlink { color: black; }
+    </style>
 {% endblock %}
 
 {% block main %}
@@ -289,7 +291,7 @@
                                 <tr>
                                     <th scope="row">{{ image.id }}</th>
                                     <td>
-                                        <a href="{{ image.image.url }}">
+                                        <a class="orderlink" href="{{ image.image.url }}">
                                             {{ image.label }}
                                         </a>
                                     </td>
