@@ -1,4 +1,4 @@
-from xamine.models import AppSetting
+from xamine.models import AppSetting, Patient
 from datetime import datetime
 from django.http import Http404
 
@@ -26,10 +26,13 @@ def is_in_group(user, group):
     return user.groups.filter(name__in=group).exists()
 
 
-def get_patients_from_dob(dob, user):
-    if is_in_group(user, 'Physicians'):
-        patient_list = Patient.objects.all()
-    elif is_in_group(user, ['Administrators', 'Radiologists', 'Receptionists', 'Technicians']):
-        patient_list = Patient.objects.all()
-    else:
-        raise Http404('bad auth')
+def get_image_files(images):
+    thumbnail_exts = ['jpg', 'png', 'bmp']
+
+    thumbnails = []
+    for image in images:
+        ext = image.image.path.split('.')[-1]
+        if ext in thumbnail_exts:
+            thumbnails.append(image)
+
+    return thumbnails

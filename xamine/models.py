@@ -99,6 +99,10 @@ class Order(models.Model):
     modality = models.ForeignKey(ModalityOption, on_delete=models.DO_NOTHING)
     notes = models.TextField(null=True, blank=True)
 
+    # Radiology information
+    imaged = models.CharField(max_length=64, null=True, blank=True)
+    imaged_time = models.DateTimeField(null=True, blank=True)
+
     # Analysis information
     report = models.TextField(null=True, blank=True)
     completed = models.CharField(max_length=64, null=True, blank=True)

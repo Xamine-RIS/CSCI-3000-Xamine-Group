@@ -9,7 +9,7 @@ from xamine.models import Order, Patient
 from xamine.forms import ImageUploadForm
 from xamine.forms import NewOrderForm, PatientLookupForm
 from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
-from xamine.utils import is_in_group
+from xamine.utils import is_in_group, get_image_files
 from xamine.tasks import send_notification
 
 
@@ -134,10 +134,19 @@ def order(request, order_id):
             form = TeamSelectionForm(data=request.POST, instance=cur_order)
             if form.is_valid():
                 form.save()
+            else:
+                raise Http404('bad auth')
 
         # Check if level and permissions for the logged in user are both technicians
         elif cur_order.level_id == 2 and is_in_group(request.user, ['Technicians', 'Radiologists']):
-                pass
+            if request.user in cur_order.team.technicians.all() | cur_order.team.technicians.all():
+
+                # Save image complete info
+                cur_order.imaged = request.user.get_username()
+                cur_order.imaged_time = timezone.now()
+                cur_order.save()
+            else:
+                raise Http404('bad auth')
 
         # Check if level and permissions for the logged in user are both radiology
         elif cur_order.level_id == 3 and is_in_group(request.user, ['Radiologists']):
@@ -154,6 +163,8 @@ def order(request, order_id):
 
                 else:
                     raise Http404('bad form')
+            else:
+                raise Http404('bad auth')
         else:
             raise Http404('bad status')
 
@@ -190,6 +201,9 @@ def order(request, order_id):
     # Define which user groups can see medical info, add to context
     medical_groups = ['Technicians', 'Radiologists', 'Physicians']
     context['show_medical'] = is_in_group(request.user, medical_groups)
+
+    # Send thumbnails into context
+    context['thumbnails'] = get_image_files(cur_order.images.all())[:3]
 
     return render(request, 'order.html', context)
 
