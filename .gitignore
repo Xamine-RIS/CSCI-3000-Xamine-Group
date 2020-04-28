@@ -133,3 +133,8 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 .idea/
+
+.vscode\
+*mailgun_creds.py
+
+prod_settings.py

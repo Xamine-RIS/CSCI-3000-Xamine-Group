@@ -1,0 +1,156 @@
+{% extends 'base/base.html' %}
+
+{% block header %}
+    {% load group_auth %}
+    <style>
+        .orderlink { 
+            color: black;
+             }
+        label{
+            font-weight: bold;
+        }
+    </style>
+
+    {{ new_patient_form.media.css }}
+{% endblock %}
+
+{% block main %}
+<form method="POST" action="{% url 'new_patient' %}">
+    {% csrf_token %}
+<div class="modal fade" id="newPatientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create New Patient</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ new_patient_form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save New Patient</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form action="{% url 'patient_lookup' %}" method="POST">  
+    {% csrf_token %} 
+    <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        Please enter patient's date of birth:
+                    </div>
+                    <label for="datepicker" class="font-weight-bold">Date of Birth:
+                    {{ patient_lookup.birth_date }}
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class='display-4 text-center'>
+                Patient Lookup Table
+            </div>
+            <div class='lead text-center mb-4'>
+                Searching for {{ date_selected }}
+            </div>
+            <div class='text-center'>
+            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#newPatientModal">
+                New Patient
+            </button>
+            <button type="button" data-toggle="modal" data-target="#new_order" class="btn btn-outline-primary mb-2">
+                Alter Search
+            </button>
+            </div>
+
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Birth Date</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col text-muted"><i class="fas fa-info"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patient_list %}
+                        <tr>
+                            <td>
+                                <a class="orderlink" href="{% url 'new_order' pat_id=patient.pk %}">
+                                    {{ patient.first_name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a class="orderlink" href="{% url 'new_order' pat_id=patient.pk %}">
+                                    {{ patient.last_name }}
+                                </a>
+                            </td>
+                            <td>{{ patient.birth_date }}</td>
+                            <td>{{ patient.phone_number }}</td>
+                            <td>{{ patient.email_info }}</td>
+                            <td class=''>
+                                <a class="orderlink " href="{% url 'patient' pat_id=patient.pk %}">
+                                    <i class="fas fa-info-circle"></i>
+                                </a> 
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr class='text-center'>
+                            <th colspan='6'>No patients found.</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block afterscript %}
+
+    {{ new_patient_form.media.js }}
+    <!-- start cleave media -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.10/cleave.min.js" integrity="sha256-lqWAcasN+EP6bxH3+SBODfrydkyHQ7FDwcI44sZeff4=" crossorigin="anonymous"></script>
+    <script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
+    <!-- end cleave media -->
+    
+    <script>
+        var cleavePhone = new Cleave('.input-phone', {
+            phone: true,
+            phoneRegionCode: 'US'
+        });
+
+        const showModal = '{{ show_modal }}';
+        if (showModal === 'True') {
+            $('#newPatientModal').modal('show');
+        }
+
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
+{% endblock %}

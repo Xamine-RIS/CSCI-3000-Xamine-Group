@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import send_mail
+from django.urls import reverse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -15,25 +17,26 @@ def patient_email(request, order_id):
     try:
         current_key = OrderKey.objects.get_or_create(order_id=order_id)[0]
 
-        print(current_key)
+        key = randomString()
 
-        current_key.secret_key = randomString()
+        current_key.secret_key = key
         current_key.save()
 
-        url = f"{request.get_host()}"
+        url = f"{request.get_host()}{reverse('public_order')}?key={key}"
         to_email = current_key.order.patient.email_info
 
         send_mail(
-        'RIS Report is Ready',
-        f'<a href="{url}">Click here to view</a>',
-        'donotreply@xaminegroup.pythonanywhere.com',
-        [to_email],
-        fail_silently=False,
+            'RIS Report is Ready',
+            f'<a href="{url}">Click here to view</a>',
+            'donotreply@xaminegroup.pythonanywhere.com',
+            [to_email],
+            fail_silently=False,
         )
 
         return_data = {
             'status': 'ok',
-            'message': 'Email sent!'
+            'message': 'Email sent!',
+            'link': url if settings.DEBUG else None,
         }
 
         return Response(return_data, status=status.HTTP_201_CREATED)
@@ -43,8 +46,8 @@ def patient_email(request, order_id):
             'message': 'Email not sent!'
         }
         return Response(return_data, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+
+
 def randomString(stringLength=128):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))

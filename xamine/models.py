@@ -12,7 +12,7 @@ class Level(models.Model):
 
 
 class AppSetting(models.Model):
-    """ Defines settings that can be turned on and off """
+    """ Defines settings that can be set dynamically """
     name = models.CharField(max_length=32)
     value = models.CharField(max_length=256)
 
@@ -39,7 +39,10 @@ class Patient(models.Model):
 
     notes = models.TextField(null=True, blank=True)
 
-    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+
+    # Related fields:
+    # -- orders = Order query set
 
     @property
     def full_name(self):
@@ -53,6 +56,8 @@ class Patient(models.Model):
 
 
 class ModalityOption(models.Model):
+    """ List of available modality options """
+
     name = models.CharField(max_length=64)
 
     def __str__(self):
@@ -60,9 +65,14 @@ class ModalityOption(models.Model):
 
 
 class Team(models.Model):
+    """ Model for all technician/radiologist teams """
+
     name = models.CharField(max_length=64)
     technicians = models.ManyToManyField(User, blank=True, related_name='tech_teams')
     radiologists = models.ManyToManyField(User, blank=True, related_name='radiol_teams')
+
+    # Related fields:
+    # -- orders = Order query set
 
     def __str__(self):
         return self.name
@@ -71,10 +81,10 @@ class Team(models.Model):
 class Order(models.Model):
     """ Model for each individual imaging order placed by doctors """
 
-    # patient info
+    # Patient Info
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="orders")
     appointment = models.DateTimeField(null=True, blank=True,)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
 
     # Automatically record timestamp info
     added_on = models.DateTimeField(auto_now_add=True)
@@ -84,9 +94,14 @@ class Order(models.Model):
     level = models.ForeignKey(Level, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     # Order information
-    visit_reason = models.CharField(max_length=128, null=True, blank=True)  # temp
-    imaging_needed = models.CharField(max_length=128, null=True, blank=True)  # temp
-    modality = models.ForeignKey(ModalityOption, on_delete=models.SET_NULL, null=True, blank=True)  # temp
+    visit_reason = models.CharField(max_length=128)
+    imaging_needed = models.CharField(max_length=128) 
+    modality = models.ForeignKey(ModalityOption, on_delete=models.DO_NOTHING)
+    notes = models.TextField(null=True, blank=True)
+
+    # Radiology information
+    imaged = models.CharField(max_length=64, null=True, blank=True)
+    imaged_time = models.DateTimeField(null=True, blank=True)
 
     # Analysis information
     report = models.TextField(null=True, blank=True)
@@ -95,21 +110,25 @@ class Order(models.Model):
 
     # Report access information
     # TODO: Add fields for patient access auth and archiving by doctor
-    
+
+    # Related fields:
+    # -- images: ImageAttachment query set
+    # -- secret_keys: OrderKey query set
+
+    # Return as string
     def __str__(self):
         return f"#{self.id} - {self.patient.full_name}"
 
 
 def image_path(instance, filename):
-    timestamp = timezone.now().strftime('%f')
-
-    return f"ris/{instance.order.id}/{timestamp}-{filename}"
+    """ Determines where to save image attachment files """
+    return f"ris/{instance.order_id}/{timezone.now().strftime('%f')}-{filename}"
 
 
 class Image(models.Model):
     """ Model for the actual Image to be associated with an Order """
 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='images')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='images', null=True)
     label = models.CharField(max_length=30)
     image = models.FileField(upload_to=image_path)
     user = models.CharField(max_length=30)
@@ -120,7 +139,7 @@ class Image(models.Model):
 
 
 class OrderKey(models.Model):
-    """ Secret Key for auth public orders """
+    """ Secret Key for authenticating patient viewing of orders """
     
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='secret_keys')
     secret_key = models.CharField(max_length=256)

@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -147,10 +147,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Email settings
 
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = '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'
-# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-SENDGRID_ECHO_TO_STDOUT = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Check prodsettings.py to see how to enable emails
 
 # Datepicker
 BOOTSTRAP4 = {

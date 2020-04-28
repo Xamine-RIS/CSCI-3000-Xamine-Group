@@ -1,62 +1,66 @@
 {% extends 'base/base.html' %}
+{% load group_auth %}
 
 {% block header %}
-{{ schedule_form.media.css }}
-
+    {% load phone_number %}
+    {{ schedule_form.media.css }}
+    <style>
+        .orderlink { color: black; }
+    </style>
 {% endblock %}
 
 {% block main %}
     {% load group_auth %}
 
     {% if schedule_form %}
-      <form method="POST" action="{% url 'schedule_time' order_id=cur_order.id %}">
-          {% csrf_token %}
+        <form method="POST" action="{% url 'schedule_time' order_id=cur_order.id %}">
+            {% csrf_token %}
             <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Schedule</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ schedule_form.appointment }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-              {{ schedule_form.appointment }}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Schedule Appointment</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
+        </form>
     {% endif %}
 
     {% if cur_order.level_id == 1 %}
-      <form method="POST" action="{% url 'order' order_id=cur_order.id %}">
-          {% csrf_token %}
-      <div class="modal fade" id="checkInModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Check in</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <form method="POST" action="{% url 'order' order_id=cur_order.id %}">
+            {% csrf_token %}
+            <div class="modal fade" id="checkInModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Check in</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <b>Team:</b>
+                            {{ checkin_form.team }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Check in</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <b>Team:</b>
-                {{ checkin_form.team }}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Check in</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
+        </form>
     {% endif %}
 
     <!-- patient info section -->
@@ -65,24 +69,25 @@
             <div class="row">
                 <div class="col-12 mb-2">
                     <div class="display-4">Order # {{ cur_order.id }}</div>
-                    
-                        <div class="h5">Appointment: {{ cur_order.appointment  }}</div>
-                        {% if cur_order.team %}
+
+                    <div class="h5">Appointment: {{ cur_order.appointment  }}</div>
+                    <div class="h6">Status: {{ cur_order.level.name  }}</div>
+                    {% if cur_order.team %}
                         <div class='text-muted small'>Team: {{ cur_order.team }}</div>
+                    {% endif %}
+                    <div class="text-muted small">
+                        {% if schedule_form %}
+                            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">
+                                {{ cur_order.appointment|yesno:"Reschedule,Schedule" }}
+                            </a>
+                            &nbsp;&nbsp;
                         {% endif %}
-                        <div class="text-muted small">
-                            {% if schedule_form %}
-                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">
-                                    {{ cur_order.appointment|yesno:"Reschedule,Schedule" }}
-                                </a>
-                                &nbsp;&nbsp;
-                            {% endif %}
-                            {% if cur_order.level.id == 1 %}
-                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkInModal">
-                                    Check In
-                                </a>
-                            {% endif %}
-                        </div>
+                        {% if cur_order.level.id == 1 and request.user|has_group:'Receptionists' %}
+                            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkInModal">
+                                Check In
+                            </a>
+                        {% endif %}
+                    </div>
                     <hr>
                 </div>
                 <div class="col-12">
@@ -90,7 +95,7 @@
                     <a href="{% url 'patient' pat_id=cur_order.patient.id %}" class="text-muted small ml-2" data-toggle="tooltip" data-placement="top" title="Link to Patient History">
                         View More
                     </a>
-                </div> 
+                </div>
 
             </div>
             <div class="row">
@@ -116,7 +121,7 @@
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Phone Number:</span><br>
-                            {{ cur_order.patient.phone_number }}
+                            {{ cur_order.patient.phone_number|phone_number }}
                         </div>
                         <div class="col-4">
                             <span class="font-weight-bold">Email Address:</span><br>
@@ -227,11 +232,48 @@
 
     {% if cur_order.level_id > 1 %}
         <!-- imaging section -->
+        {% if cur_order.level_id < 4 and image_form %}
+            <form method="POST" action="{% url 'submit_image' order_id=cur_order.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal fade" id="imageFormModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="imageFormModalLabel">Image Form</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Label</b>
+                                {{ image_form.label }}
+                                <b>Image</b>
+                                <div class="custom-file">
+                                    <!-- <input type="file" class="custom-file-input" id="customFile"> -->
+                                    {{ image_form.image }}
+                                    <label class="custom-file-label" for="id_image">Choose Image</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+
         <div class="collapse show" id="imaging_info">
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-12">
-                        <span class="h4">Imaging</span>
+                        <div class="h4">Imaging</div>
+                        {% if cur_order.imaged %}
+                            <div class="text-muted small mt-2">
+                                Imaging completed by {{ cur_order.imaged }} at {{ cur_order.imaged_time }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -243,55 +285,89 @@
                                 <th scope="col">File</th>
                                 <th scope="col">Timestamp</th>
                                 <th scope="col">User</th>
-                                <th scope="col"><i class="fas fa-plus"></i></th>
+                                <th scope="col">
+                                    {% if cur_order.level_id < 4 and image_form %}
+                                        <button type="button" class="btn btn-sm btn-link" id="imageFormModalBtn" data-toggle="modal" data-target="#imageFormModal">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    {% endif %}
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for image in cur_order.images.all %} 
+                            {% for image in cur_order.images.all %}
                                 <tr>
                                     <th scope="row">{{ image.id }}</th>
-                                    <td>{{ image.label }}</td>
+                                    <td>
+                                        <a target="_blank" class="orderlink" href="{{ image.image.url }}">
+                                            {{ image.label }}
+                                        </a>
+                                    </td>
                                     <td>{{ image.added_on }}</td>
                                     <td>{{ image.user }}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td>
+                                        {% if cur_order.level_id < 4 and image_form %}
+                                            <a class="orderlink" href="{% url 'remove_image' img_id=image.pk %}">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <div class="row mt-3">
+                    {% for image in thumbnails %}
+                        <div class="col-4">
+                            <img class="img-fluid img-thumbnail" src="{{ image.image.url }}" />
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if image_form %}
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Finalize Images</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <!-- end order section -->
+        <!-- end imaging section -->
     {% endif %}
 
     {% if cur_order.level_id > 2 %}
         <!-- analysis section -->
-            <div class="collapse show" id="order_info">
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <span class="h4">Analysis Report</span>
-                        </div>
+        <div class="collapse show" id="order_info">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="h4">Analysis Report</span>
                     </div>
-                    <div class="row">
-                        <div class="col-12 mt-2">
-                            {% if analysis_form %}
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        {% if analysis_form %}
                             <form method="POST">
                                 {% csrf_token %}
                                 {{ analysis_form.report }}
-                                <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-primary">Save Report</button>
+                                <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-primary">
+                                    <i class="fas fa-save"></i>&nbsp;&nbsp;Save Report
+                                </button>
                                 <button type="submit" class="mt-2 btn btn-primary">Submit Report</button>
                             </form>
-                            {% else %}
-                                {{ cur_order.report }}
-                                <br>
-                                <div class='text-muted small mt-2'>
+                        {% else %}
+                            {{ cur_order.report }}
+                            <br>
+                            <div class='text-muted small mt-2'>
                                 Completed by {{ cur_order.completed }} on {{ cur_order.completed_time }}
-                                </div>
+                            </div>
 
-                            {% endif %}
-                        </div>
+                        {% endif %}
                     </div>
                     {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
                     <div class="row">
@@ -301,7 +377,17 @@
                     </div>
                     {% endif %}
                 </div>
+                {% if cur_order.level_id > 3 and request.user|has_group:'Physicians' and request.user == cur_order.patient.doctor %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button id="patient_send" type="button" onclick="sendPatientEmail()" class="btn btn-outline-primary">
+                                Send Report to Patient
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
+        </div>
         <!-- end analysis section -->
     {% endif %}
 
@@ -326,7 +412,8 @@
         </script>
     {% endif %}
 
-{{ schedule_form.media.js }}
+    {{ schedule_form.media.js }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
 
     <script>
         $('#datepicker').datepicker({
@@ -351,8 +438,21 @@
             $('#edit_order_info').collapse('hide');
             document.getElementById('edit_order_form').reset()
         }
+
+        function sendPatientEmail () {
+            fetch("{% url 'patient_view' order_id=cur_order.id %}")
+                .then(res => res.json())
+                .then(json => {
+                    if (json.status === 'ok') {
+
+                        let link = '';
+                        if (json.link) link = "<br><a class='small' href='" + json.link + "'>Patient URL</a> ";
+
+                        $.notify('Email Sent!' + link, {type: 'success'})
+                    } else {
+                        $.notify('Error', {type: 'danger'})
+                    }
+                })
+        }
     </script>
 {% endblock %}
-
-</body>
-</html>
