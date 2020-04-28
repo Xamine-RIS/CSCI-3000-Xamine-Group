@@ -24,11 +24,11 @@ def patient_email(request, order_id):
         to_email = current_key.order.patient.email_info
 
         send_mail(
-        'RIS Report is Ready',
-        f'<a href="{url}">Click here to view</a>',
-        'donotreply@xaminegroup.pythonanywhere.com',
-        [to_email],
-        fail_silently=False,
+            'RIS Report is Ready',
+            f'<a href="{url}">Click here to view</a>',
+            'donotreply@xaminegroup.pythonanywhere.com',
+            [to_email],
+            fail_silently=False,
         )
 
         return_data = {
@@ -43,8 +43,8 @@ def patient_email(request, order_id):
             'message': 'Email not sent!'
         }
         return Response(return_data, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+
+
 def randomString(stringLength=128):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
