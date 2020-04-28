@@ -266,7 +266,7 @@
                 <div class="row">
                     <div class="col-12">
                         <span class="h4">Imaging</span>
-                        {% if cur_order.level_id > 3 %}
+                        {% if cur_order.imaged %}
                             <span class="text-muted small">
                                 Imaging completed by {{ cur_order.imaged }} at {{ cur_order.imaged_time }}
                             </span>
