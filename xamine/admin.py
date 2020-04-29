@@ -17,9 +17,13 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
 
 
+class TeamAdmin(admin.ModelAdmin):
+    filter_horizontal = ['radiologists', 'technicians']
+
+
 admin.site.register(Patient)
 admin.site.register(Level)
 # admin.site.register(AppSetting)
 # admin.site.register(Image)
 admin.site.register(ModalityOption)
-admin.site.register(Team)
+admin.site.register(Team, TeamAdmin)
