@@ -84,7 +84,7 @@ class Order(models.Model):
     # Patient Info
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="orders")
     appointment = models.DateTimeField(null=True, blank=True,)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=False, related_name='orders')
 
     # Automatically record timestamp info
     added_on = models.DateTimeField(auto_now_add=True)
