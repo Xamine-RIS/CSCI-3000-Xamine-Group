@@ -14,6 +14,8 @@ yesnoch = (
 
 
 class PatientInfoForm(forms.ModelForm):
+    """ Handles creation and updating of Patient model """
+
     class Meta:
         model = Patient
         fields = [
@@ -38,17 +40,20 @@ class PatientInfoForm(forms.ModelForm):
 
 
 class ScheduleForm(forms.ModelForm):
+    """ Handles scheduling of Orders """
+
     class Meta:
         model = Order
         fields = ['appointment']
 
         widgets = {
             'appointment': DateTimePickerInput(format='%m/%d/%Y %I:%M %p', options={"useCurrent": True},  
-                                                attrs={'placeholder': 'mm/dd/yyyy'})
+                                               attrs={'placeholder': 'mm/dd/yyyy'})
         }
 
 
 class TeamSelectionForm(forms.ModelForm):
+    """ Handles selection of our team for each order """
     class Meta:
         model = Order
         fields = ['team']
@@ -59,6 +64,7 @@ class TeamSelectionForm(forms.ModelForm):
 
 
 class AnalysisForm(forms.ModelForm):
+    """ Handles submission and saving of radiology report """
     class Meta:
         model = Order
         fields = ['report']
@@ -69,11 +75,11 @@ class AnalysisForm(forms.ModelForm):
 
 
 class ImageUploadForm(forms.ModelForm):
+    """ Handles Image uploading """
+
     class Meta:
         model = Image
         fields = ['label', 'image', 'order']
-
-        
 
         widgets = {
             'label': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
@@ -83,6 +89,7 @@ class ImageUploadForm(forms.ModelForm):
 
 
 class PatientLookupForm(forms.ModelForm):
+    """ Handles patient lookup """
     class Meta:
         model = Patient
         fields = ['birth_date']
@@ -94,6 +101,8 @@ class PatientLookupForm(forms.ModelForm):
 
 
 class NewOrderForm(forms.ModelForm):
+    """ Handles creation of new order """
+
     class Meta:
         model = Order
         fields = ['patient', 'visit_reason', 'imaging_needed', 'modality', 'notes']

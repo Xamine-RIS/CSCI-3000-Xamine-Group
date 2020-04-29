@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 
 
 def validate_file_size(value):
+    """ validates size of image uploads. """
     filesize = value.size
 
     if filesize > 2000000000:

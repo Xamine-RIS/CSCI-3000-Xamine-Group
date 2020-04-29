@@ -25,12 +25,16 @@ def is_in_group(user, group):
 
 
 def get_image_files(images):
+    # List of thumbanilable extensions
     thumbnail_exts = ['jpg', 'png', 'bmp']
 
+    # For each image whose type is listed above, add to our thumbnail list
     thumbnails = []
     for image in images:
         ext = image.image.path.split('.')[-1]
         if ext.lower() in thumbnail_exts:
             thumbnails.append(image)
 
+    # Return thumbnail list established above
     return thumbnails
+

@@ -1,0 +1,74 @@
+/
+	Controller: xamine.views.index
+	URL Name: index
+	Description: Responsible for showing user dashboard.
+
+/admin/
+	Controller: django.contrib.admin.sites.index
+	URL Name: admin:index
+	Description: Shows Django's built in Admin portal.
+
+/image/<int:img_id>/remove
+	Controller: xamine.views.remove_image
+	URL Name: remove_image
+	Description: Removes image from RIS order.
+
+/login/
+	Controller: django.contrib.auth.views.LoginView
+	URL Name: login
+	Description: Logs user if given correct credentials.
+
+/logout/
+	Controller: django.contrib.auth.views.LogoutView
+	URL Name: logout
+	Description: Logs user out and redirects to login.
+
+/order/
+	Controller: xamine.views.public_order
+	URL Name: public_order
+	Description: Shows an order to the patient with the secret link.
+
+/order/<int:order_id>/
+	Controller: xamine.views.order
+	URL Name: order
+	Description: Shows the order requested if permitted.
+
+/order/<int:order_id>/save
+	Controller: xamine.views.save_order
+	URL Name: save_order
+	Description: Saves the order's radiology report if permitted.
+
+/order/<int:order_id>/schedule
+	Controller: xamine.views.schedule_order
+	URL Name: schedule_time
+	Description: Schedules an order, if user is permitted
+
+/order/<int:order_id>/send
+	Controller: xamine.apiviews.patient_email
+	URL Name: patient_view
+	Description: Send's secret link email to patient.
+
+/order/<int:order_id>/upload
+	Controller: xamine.views.upload_file
+	URL Name: submit_image
+	Description: Uploads an image into the provided order, if permitted.
+
+/patient/
+	Controller: xamine.views.patient_lookup
+	URL Name: patient_lookup
+	Description: Displays patient lookup table and allows for creation of patients & orders.
+
+/patient/<int:pat_id>/
+	Controller: xamine.views.patient
+	URL Name: patient
+	Description: Displays patient information and associated orders.
+
+/patient/<int:pat_id>/new-order
+	Controller: xamine.views.new_order
+	URL Name: new_order
+	Description: Creates a new order for the provided patient.
+
+/patient/new
+	Controller: xamine.views.new_patient
+	URL Name: new_patient
+	Description: Display and process creation of a new patient.

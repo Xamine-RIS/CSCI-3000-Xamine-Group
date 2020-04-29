@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <h3>{{ headline1 }}</h3>
+                <h4>{{ headline2 }}</h4>
+                {% if link %}
+                    <h5><a href="{{ link }}">{{ headline3 }}</a></h5>
+                {% else %}
+                    <h5>{{ headline3 }}</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block afterscript %}
+
+{% endblock %}

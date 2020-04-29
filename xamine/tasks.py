@@ -27,26 +27,34 @@ def send_email(to_email, from_email, subject, html_content):
 
 @background(schedule=5)
 def send_notification(order_id):
-    ord = Order.objects.get(pk=order_id)
+    """ Send notification to correct group of users """
 
+    # Grab correct order via order_id and set our from address
+    ord = Order.objects.get(pk=order_id)
     sender = 'xamineinc@gmail.com'
 
+    # If level is 1, send to the receptionists
     if ord.level_id == 1:
         subject = f"New Patient Referral: {ord.patient.full_name}"
         body = f"The office of {ord.patient.doctor.get_full_name()} has referred {ord.patient.full_name}."
 
         recipients = Group.objects.get(name="Receptionists").user_set.values_list('email', flat=True)
 
+    # If level is 2, send to the technicians from the order's assigned team
     elif ord.level_id == 2:
         subject = f"Patient Checked In: {ord.patient.full_name}"
         body = f"Patient checked in for their appointment."
 
         recipients = ord.team.technicians.values_list('email', flat=True)
+
+    # If level is 2, send to the radiologists from the order's assigned team
     elif ord.level_id == 3:
         subject = f"Imaging Complete: {ord.patient.full_name}"
         body = f"Patient imaging has been completed and is ready for analysis."
 
         recipients = ord.team.technicians.values_list('email', flat=True)
+
+    # if level is 4, send to the patient's doctor
     elif ord.level_id == 4:
         subject = f"Order Complete: {ord.patient.full_name}"
         body = f"Patient imaging and analysis has been completed and is ready for review."
@@ -55,6 +63,7 @@ def send_notification(order_id):
     else:
         return
 
+    # Grad order URL, set up body of message, and send email
     url = reverse('order', kwargs={'order_id': ord.id})
     body += f"<br><br><a href='{url}' target='_blank'>Click Here to View</a>"
 

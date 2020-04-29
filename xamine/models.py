@@ -110,9 +110,6 @@ class Order(models.Model):
     completed = models.CharField(max_length=64, null=True, blank=True)
     completed_time = models.DateTimeField(null=True, blank=True)
 
-    # Report access information
-    # TODO: Add fields for patient access auth and archiving by doctor
-
     # Related fields:
     # -- images: ImageAttachment query set
     # -- secret_keys: OrderKey query set
@@ -150,43 +147,3 @@ class OrderKey(models.Model):
 
     def __str__(self):
         return f"{self.order.patient.email_info} on {self.date_created}"
-
-
-#Models for scheduling via django-agenda
-
-# class Availability(AbstractAvailability):
-#     class AgendaMeta:
-#         schedule_model = Team
-#         schedule_field = "team"
-
-
-# class AvailabilityOccurrence(AbstractAvailabilityOccurrence):
-#     class AgendaMeta:
-#         availability_model = Availability
-#         schedule_model = Team
-#         schedule_field = "team"
-
-
-# class TimeSlot(AbstractTimeSlot):
-#     class AgendaMeta:
-#         availability_model = Availability
-#         schedule_model = Team
-#         schedule_field = "team" 
-
-# class TeamReservation(AbstractBooking):
-#     class AgendaMeta:
-#         schedule_model = Team
-
-#     owner = models.ForeignKey(
-#         to=settings.AUTH_USER_MODEL,
-#         on_delete=models.PROTECT,
-#         related_name="reservations",
-#     )
-#     start_time = models.DateTimeField(db_index=True)
-#     end_time = models.DateTimeField(db_index=True)
-#     approved = models.BooleanField(default=False)
-
-#     def get_reserved_spans(self):
-#         # we only reserve the time if the reservation has been approved
-#         if self.approved:
-#             yield TimeSpan(self.start_time, self.end_time)
