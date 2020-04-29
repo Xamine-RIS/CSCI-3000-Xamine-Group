@@ -39,7 +39,7 @@ class Patient(models.Model):
     allergy_mridye = models.BooleanField()
     allergy_latex = models.BooleanField()
 
-    notes = models.TextField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True, max_length=1000)
 
     doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 
@@ -99,14 +99,14 @@ class Order(models.Model):
     visit_reason = models.CharField(max_length=128)
     imaging_needed = models.CharField(max_length=128) 
     modality = models.ForeignKey(ModalityOption, on_delete=models.DO_NOTHING)
-    notes = models.TextField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True, max_length=1000)
 
     # Radiology information
     imaged = models.CharField(max_length=64, null=True, blank=True)
     imaged_time = models.DateTimeField(null=True, blank=True)
 
     # Analysis information
-    report = models.TextField(null=True, blank=True)
+    report = models.TextField(null=True, blank=True, max_length=5000)
     completed = models.CharField(max_length=64, null=True, blank=True)
     completed_time = models.DateTimeField(null=True, blank=True)
 
