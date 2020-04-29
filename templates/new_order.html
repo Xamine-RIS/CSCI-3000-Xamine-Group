@@ -33,25 +33,25 @@
     <div class="row">
         <div class="col">
             <div class="row">
-                <div class="col-3 mt-2">
+                <div class="col-md-3 col-12 mt-2">
                     <div class='font-weight-bold'>
                         Patient Name:
                     </div>
                     {{ patient.full_name }}
                 </div>
-                <div class="col-3 mt-2">
+                <div class="col-md-3 col-12 mt-2">
                     <div class='font-weight-bold'>
                         Date of Birth:
                     </div>
                     {{ patient.birth_date }}
                 </div>
-                <div class="col-3 mt-2">
+                <div class="col-md-3 col-12 mt-2">
                     <div class='font-weight-bold'>
                         Phone Number:
                     </div>
                     {{ patient.phone_number|phone_number }}
                 </div>
-                <div class="col-3 mt-2">
+                <div class="col-md-3 col-12 mt-2">
                     <div class='font-weight-bold'>
                        Email:
                     </div>
@@ -60,7 +60,7 @@
                 
             </div>
         </div>
-        <div class="col-2 text-center mt-2">  
+        <div class="col-md-2 col-12 text-md-center mt-2">
             <div class='font-weight-bold'>
                 Allergy list:
             </div>
@@ -81,7 +81,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6 offset-3">
+        <div class="col-md-6 col-12 offset-md-3">
             <div class='font-weight-bold'>
                 Patient Notes:
             </div>
@@ -94,19 +94,19 @@
                 Order Info
             </div>
         </div>
-        <div class="col-4 mt-2">
+        <div class="col-md-4 col-12 mt-2">
             <label for="id_visit_reason">
                 Visit Reason: 
             </label>
             {{ new_order_form.visit_reason }}
         </div>
-        <div class="col-4 mt-2">
+        <div class="col-md-4 col-12 mt-2">
             <label for="id_imaging_needed">
                 Imaging Needed:
             </label>
             {{ new_order_form.imaging_needed }}
         </div>
-        <div class="col-4 mt-2">
+        <div class="col-md-4 col-12 mt-2">
             <label for="id_modality">
                 Modality Type: 
             </label>

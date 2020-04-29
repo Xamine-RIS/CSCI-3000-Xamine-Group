@@ -46,10 +46,10 @@ def patient_email(request, order_id):
         }
 
         return Response(return_data, status=status.HTTP_201_CREATED)
-    except:
+    except Exception as e:
         return_data = {
             'status': 'fail',
-            'message': 'Email not sent!'
+            'message': f'Email not sent!'
         }
         return Response(return_data, status=status.HTTP_400_BAD_REQUEST)
 
