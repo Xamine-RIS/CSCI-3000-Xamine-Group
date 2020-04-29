@@ -1,8 +1,4 @@
-from sendgrid import SendGridAPIClient, Mail
-
-from xamine.models import AppSetting, Patient
-from datetime import datetime
-from django.http import Http404
+from xamine.models import AppSetting
 
 
 def get_setting(name, default=None):
