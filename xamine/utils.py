@@ -19,7 +19,7 @@ from django.http import Http404
 #               "subject": "Hello",
 #               "text": "Testing some Mailgun awesomness!"})
 
-
+#sends email
 def send_sendgrid_email(recipient, subject, html_msg):
     message = Mail(
         from_email='noreply@xamine.msb.dev',
