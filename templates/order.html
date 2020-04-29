@@ -101,29 +101,29 @@
             <div class="row">
                 <div class="col-12">
                     <div class="row mt-3">
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <span class="font-weight-bold">First Name:</span><br>
                             {{ cur_order.patient.first_name }}
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <span class="font-weight-bold">Middle Name:</span><br>
                             {{ cur_order.patient.middle_name|default_if_none:'' }}
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <span class="font-weight-bold">Last Name:</span><br>
                             {{ cur_order.patient.last_name }}
                         </div>
                     </div>
                     <div class="row mt-1">
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <span class="font-weight-bold">DOB:</span><br>
                             {{ cur_order.patient.birth_date }}
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <span class="font-weight-bold">Phone Number:</span><br>
                             {{ cur_order.patient.phone_number|phone_number }}
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <span class="font-weight-bold">Email Address:</span><br>
                             {{ cur_order.patient.email_info }}
                         </div>
@@ -133,23 +133,23 @@
                             <div class="col-12">
                                 <hr>
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4 col-12">
                                 <span class="font-weight-bold">X-Ray Dye Allergy:</span><br>
                                 {{ cur_order.patient.allergy_xraydye|yesno:"Yes,No" }}
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4 col-12">
                                 <span class="font-weight-bold">MRI Dye Allergy:</span><br>
                                 {{ cur_order.patient.allergy_mridye|yesno:"Yes,No" }}
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4 col-12">
                                 <span class="font-weight-bold">Latex Allergy:</span><br>
                                 {{ cur_order.patient.allergy_latex|yesno:"Yes,No" }}
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4 col-12">
                                 <span class="font-weight-bold">Asthma:</span><br>
                                 {{ cur_order.patient.allergy_asthma|yesno:"Yes,No" }}
                             </div>
-                            <div class="col-8">
+                            <div class="col-md-8 col-12">
                                 <span class="font-weight-bold">Notes:</span><br>
                                 {{ cur_order.notes }}
                             </div>
@@ -174,15 +174,15 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row mt-3">
-                                <div class="col-4">
+                                <div class="col-md-4 col-12">
                                     <label class="font-weight-bold">Reason for Visit:</label>
                                     <textarea class="form-control">Broken Left Leg</textarea>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-md-4 col-12">
                                     <label class="font-weight-bold">Imaging Needed:</label>
                                     <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-md-4 col-12">
                                     <label class="font-weight-bold">Modality:</label>
                                     <textarea class="form-control">X-Ray of Left Leg Instep & Outstep</textarea>
                                 </div>
@@ -213,15 +213,15 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-4">
+                <div class="col-md-4 col-12">
                     <span class="font-weight-bold">Reason for Visit:</span><br>
                     {{ cur_order.visit_reason }}
                 </div>
-                <div class="col-4">
+                <div class="col-md-4 col-12">
                     <span class="font-weight-bold">Imaging Needed:</span><br>
                     {{ cur_order.imaging_needed }}
                 </div>
-                <div class="col-4">
+                <div class="col-md-4 col-12">
                     <span class="font-weight-bold">Modality:</span><br>
                     {{ cur_order.modality }}
                 </div>
@@ -283,8 +283,8 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">File</th>
-                                <th scope="col">Timestamp</th>
-                                <th scope="col">User</th>
+                                <th scope="col" class="d-none d-md-table-cell">Timestamp</th>
+                                <th scope="col" class="d-none d-md-table-cell">User</th>
                                 <th scope="col">
                                     {% if cur_order.level_id < 4 and image_form %}
                                         <button type="button" class="btn btn-sm btn-link" id="imageFormModalBtn" data-toggle="modal" data-target="#imageFormModal">
@@ -303,8 +303,8 @@
                                             {{ image.label }}
                                         </a>
                                     </td>
-                                    <td>{{ image.added_on }}</td>
-                                    <td>{{ image.user }}</td>
+                                    <td class="d-none d-md-table-cell">{{ image.added_on }}</td>
+                                    <td class="d-none d-md-table-cell">{{ image.user }}</td>
                                     <td>
                                         {% if cur_order.level_id < 4 and image_form %}
                                             <a class="orderlink" href="{% url 'remove_image' img_id=image.pk %}">
@@ -320,7 +320,7 @@
                 </div>
                 <div class="row mt-3">
                     {% for image in thumbnails %}
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <a href="{{ image.image.url }}" target="_blank">
                                 <img class="img-fluid img-thumbnail" src="{{ image.image.url }}"  alt="{{ image.label }}"/>
                             </a>

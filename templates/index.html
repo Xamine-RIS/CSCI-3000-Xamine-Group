@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-6 text-center">
+                    <div class="col-12 col-md-6 text-center">
                         <div class="mb-3 h5">Active Orders</div>
                         <table class="table table-sm">
                             <thead>
@@ -78,7 +78,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-6 text-center">
+                    <div class="col-12 col-md-6 text-center">
                         <div class="mb-3 h5">Completed Orders</div>
                         <table class="table table-sm">
                             <thead>
@@ -93,7 +93,7 @@
                                 <tr>
                                     <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                                     <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                    <td>{{ order.last_edit|date:'d/m/Y' }}</td>
+                                    <td>{{ order.last_edit|date:'m/d/Y' }}</td>
                                 </tr>
                             {% empty %}
                                 <tr>
@@ -116,7 +116,7 @@
         <!-- receptionist section -->
         <div class="container mt-1" id="reception_section">
             <div class="row mt-3">
-                <div class="col-6 text-center">
+                <div class="col-12 col-md-6 text-center">
                     <div class="h5">
                         Today's Appointments
                     </div>
@@ -148,7 +148,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-6 text-center">
+                <div class="col-12 col-md-6 text-center">
                     <div class="h5">Unscheduled Appointments</div>
                     <div class="text-muted small mb-3">Click to Schedule</div>
                     <table class="table table-sm">
@@ -192,10 +192,10 @@
                         <tr>
                             <th>Order #</th>
                             <th>Patient</th>
-                            <th>Visit Reason</th>
-                            <th>Imaging</th>
+                            <th class="d-none d-md-table-cell">Visit Reason</th>
+                            <th class="d-none d-md-table-cell">Imaging</th>
                             <th>Modality</th>
-                            <th>Appt</th>
+                            <th class="d-none d-md-table-cell">Appt</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -203,10 +203,10 @@
                             <tr>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                <td>{{ order.visit_reason }}</td>
-                                <td>{{ order.imaging_needed }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.visit_reason }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.imaging_needed }}</td>
                                 <td>{{ order.modality }}</td>
-                                <td>{{ order.appointment }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.appointment }}</td>
                             </tr>
                         {% empty %}
                             <tr>
@@ -235,10 +235,10 @@
                         <tr>
                             <th>Order #</th>
                             <th>Patient</th>
-                            <th>Visit Reason</th>
-                            <th>Imaging</th>
+                            <th class="d-none d-md-table-cell">Visit Reason</th>
+                            <th class="d-none d-md-table-cell">Imaging</th>
                             <th>Modality</th>
-                            <th>Completed</th>
+                            <th class="d-none d-md-table-cell">Completed</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -254,10 +254,10 @@
                                         {{ order.patient.full_name }}
                                     </a>
                                 </td>
-                                <td>{{ order.visit_reason }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.visit_reason }}</td>
                                 <td>{{ order.imaging_needed }}</td>
-                                <td>{{ order.modality }}</td>
-                                <td>{{ order.last_edit }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.modality }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.last_edit }}</td>
                             </tr>
                         {% empty %}
                             <tr>
