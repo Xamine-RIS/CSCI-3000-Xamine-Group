@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
+from xamine.validators import validate_file_size
+
 
 class Level(models.Model):
     """ Model to define different points in order workflow """
@@ -130,7 +132,7 @@ class Image(models.Model):
 
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='images', null=True)
     label = models.CharField(max_length=30)
-    image = models.FileField(upload_to=image_path)
+    image = models.FileField(upload_to=image_path, validators=[validate_file_size])
     user = models.CharField(max_length=30)
     added_on = models.DateTimeField(auto_now_add=True)
 
