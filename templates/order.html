@@ -321,7 +321,9 @@
                 <div class="row mt-3">
                     {% for image in thumbnails %}
                         <div class="col-4">
-                            <img class="img-fluid img-thumbnail" src="{{ image.image.url }}"  alt="{{ image.label }}"/>
+                            <a href="{{ image.image.url }}" target="_blank">
+                                <img class="img-fluid img-thumbnail" src="{{ image.image.url }}"  alt="{{ image.label }}"/>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
@@ -355,19 +357,16 @@
                             <form method="POST">
                                 {% csrf_token %}
                                 {{ analysis_form.report }}
-
                                 <button type="submit" class="mt-2 btn btn-success">Submit Report</button>
                                 <button type="submit" formaction="{% url 'save_order' order_id=cur_order.id %}" class="mt-2 btn btn-outline-primary">
                                     <i class="fas fa-save"></i>&nbsp;&nbsp;Save Report
                                 </button>
                             </form>
                         {% else %}
-                            {{ cur_order.report }}
-                            <br>
-                            <div class='text-muted small mt-2'>
+                            <div class='text-muted small mt-2 mb-4'>
                                 Completed by {{ cur_order.completed }} on {{ cur_order.completed_time }}
                             </div>
-
+                            {{ cur_order.report }}
                         {% endif %}
                     </div>
                 </div>

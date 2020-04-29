@@ -24,7 +24,7 @@ def patient_email(request, order_id):
         current_key.secret_key = key
         current_key.save()
 
-        url = f"{request.get_host()}{reverse('public_order')}?key={key}"
+        url = f"https://{request.get_host()}{reverse('public_order')}?key={key}"
         to_email = current_key.order.patient.email_info
 
         html_content = "Imaging report has been emailed to you: <br><br>" + url
