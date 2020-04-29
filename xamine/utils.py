@@ -4,37 +4,6 @@ from xamine.models import AppSetting, Patient
 from datetime import datetime
 from django.http import Http404
 
-# import requests
-#
-#
-# def send_mailgun_email(recip_list):
-#     if isinstance(recip_list, str):
-#         recip_list = [recip_list]
-#
-#     return requests.post(
-#         "https://api.mailgun.net/v3/xaminemail.msb.dev",
-#         auth=("api", "bac0805840288ae22c69a0603af0f77b-b3780ee5-716f5d4a"),
-#         data={"from": "XamineRIS <mailgun@xaminemail.msb.dev>",
-#               "to": recip_list,
-#               "subject": "Hello",
-#               "text": "Testing some Mailgun awesomness!"})
-
-#sends email
-def send_sendgrid_email(recipient, subject, html_msg):
-    message = Mail(
-        from_email='noreply@xamine.msb.dev',
-        to_emails=recipient,
-        subject=subject,
-        html_content=html_msg)
-    try:
-        sg = SendGridAPIClient('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')
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-    except Exception as e:
-        print(e.message)
-
 
 def get_setting(name, default=None):
     """ Get the setting from the database """

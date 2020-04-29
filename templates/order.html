@@ -369,13 +369,13 @@
 
                         {% endif %}
                     </div>
-                    {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
-                    <div class="row">
-                        <div class='col-12 text-right'>
-                            <button type="button" class="btn btn-primary" onclick="sendPatientEmail()">Send Report</button> 
-                        </div>
-                    </div>
-                    {% endif %}
+                    {#                    {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}#}
+                    {#                    <div class="row">#}
+                    {#                        <div class='col-12 text-right'>#}
+                    {#                            <button type="button" class="btn btn-primary" onclick="sendPatientEmail()">Send Report</button> #}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    {#                    {% endif %}#}
                 </div>
                 {% if cur_order.level_id > 3 and request.user|has_group:'Physicians' and request.user == cur_order.patient.doctor %}
                     <div class="row mt-3">
@@ -396,21 +396,7 @@
 {% endblock %}
 
 {% block afterscript %}
-{% load group_auth %}
-    {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
-        <script>
-            function sendPatientEmail () {
-                let orderId = '{{ cur_order.id }}';
-                fetch('/order/' + orderId + '/send')
-                .then(res => {
-                    return res.json()
-                })
-                .then(json => {
-                    console.log(json)
-                })
-            }
-        </script>
-    {% endif %}
+    {% load group_auth %}
 
     {{ schedule_form.media.js }}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
@@ -439,20 +425,23 @@
             document.getElementById('edit_order_form').reset()
         }
 
-        function sendPatientEmail () {
-            fetch("{% url 'patient_view' order_id=cur_order.id %}")
-                .then(res => res.json())
-                .then(json => {
-                    if (json.status === 'ok') {
+        {% if cur_order.level_id >= 4 and request.user|has_group:"Physicians" %}
+            function sendPatientEmail () {
+                fetch("{% url 'patient_view' order_id=cur_order.id %}")
+                    .then(res => res.json())
+                    .then(json => {
+                        if (json.status === 'ok') {
 
-                        let link = '';
-                        if (json.link) link = "<br><a class='small' href='" + json.link + "'>Patient URL</a> ";
+                            let link = '';
+                            if (json.link) link = "<br><a class='small' href='" + json.link + "'>Patient URL</a> ";
 
-                        $.notify('Email Sent!' + link, {type: 'success'})
-                    } else {
-                        $.notify('Error', {type: 'danger'})
-                    }
-                })
-        }
+                            $.notify('Email Sent!' + link, {type: 'success'})
+                        } else {
+                            $.notify('Error', {type: 'danger'})
+                        }
+                    })
+            }
+        {% endif %}
+
     </script>
 {% endblock %}
