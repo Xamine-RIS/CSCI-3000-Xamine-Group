@@ -7,9 +7,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from xamine.models import Order, Patient, OrderKey
+from xamine.models import OrderKey
 import random
 import string
+
+from xamine.tasks import send_email
 
 
 @api_view(['GET'])
@@ -25,13 +27,17 @@ def patient_email(request, order_id):
         url = f"{request.get_host()}{reverse('public_order')}?key={key}"
         to_email = current_key.order.patient.email_info
 
-        send_mail(
-            'RIS Report is Ready',
-            f'<a href="{url}">Click here to view</a>',
-            'donotreply@xaminegroup.pythonanywhere.com',
-            [to_email],
-            fail_silently=False,
-        )
+        html_content = "Imaging report has been emailed to you: <br><br>" + url
+
+        send_email([to_email], 'xamineinc@gmail.com', 'RIS Report is Ready', html_content)
+
+        # send_mail(
+        #     'RIS Report is Ready',
+        #     f'Navigate here to view: {url}',
+        #     'xamineinc@gmail.com',
+        #     [to_email],
+        #     fail_silently=False,
+        # )
 
         return_data = {
             'status': 'ok',

@@ -1,6 +1,7 @@
 from background_task import background
 from django.contrib.auth.models import Group
 from django.core.mail import EmailMultiAlternatives
+from django.urls import reverse
 from django.utils.html import strip_tags
 
 from xamine.models import Order
@@ -28,7 +29,7 @@ def send_email(to_email, from_email, subject, html_content):
 def send_notification(order_id):
     ord = Order.objects.get(pk=order_id)
 
-    sender = 'noreply@xamine.msb.dev'
+    sender = 'xamineinc@gmail.com'
 
     if ord.level_id == 1:
         subject = f"New Patient Referral: {ord.patient.full_name}"
@@ -53,5 +54,8 @@ def send_notification(order_id):
         recipients = [ord.patient.doctor.email]
     else:
         return
+
+    url = reverse('order', kwargs={'order_id': ord.id})
+    body += f"<br><br><a href='{url}' target='_blank'>Click Here to View</a>"
 
     send_email(list(recipients), sender, subject, body)
