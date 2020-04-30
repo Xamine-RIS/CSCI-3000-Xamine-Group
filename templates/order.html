@@ -6,6 +6,10 @@
     {{ schedule_form.media.css }}
     <style>
         .orderlink { color: black; }
+
+        .text-area-wrap {
+            overflow-wrap: break-word;
+        }
     </style>
 {% endblock %}
 
@@ -149,7 +153,7 @@
                                 <span class="font-weight-bold">Asthma:</span><br>
                                 {{ cur_order.patient.allergy_asthma|yesno:"Yes,No" }}
                             </div>
-                            <div class="col-md-8 col-12">
+                            <div class="col-md-8 col-12 text-area-wrap">
                                 <span class="font-weight-bold">Notes:</span><br>
                                 {{ cur_order.notes }}
                             </div>
@@ -224,6 +228,10 @@
                 <div class="col-md-4 col-12">
                     <span class="font-weight-bold">Modality:</span><br>
                     {{ cur_order.modality }}
+                </div>
+                <div class="col-12 text-area-wrap">
+                    <span class="font-weight-bold">Modality:</span><br>
+                    {{ cur_order.notes }}
                 </div>
             </div>
         </div>
@@ -366,7 +374,9 @@
                             <div class='text-muted small mt-2 mb-4'>
                                 Completed by {{ cur_order.completed }} on {{ cur_order.completed_time }}
                             </div>
-                            {{ cur_order.report }}
+                            <div class="text-area-wrap">
+                                {{ cur_order.report }}
+                            </div>
                         {% endif %}
                     </div>
                 </div>
