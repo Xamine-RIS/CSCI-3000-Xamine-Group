@@ -230,7 +230,7 @@
                     {{ cur_order.modality }}
                 </div>
                 <div class="col-12 text-area-wrap">
-                    <span class="font-weight-bold">Modality:</span><br>
+                    <span class="font-weight-bold">Order Notes:</span><br>
                     {{ cur_order.notes }}
                 </div>
             </div>
@@ -340,7 +340,31 @@
                         <div class="col-12">
                             <form method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Finalize Images</button>
+                                {% if cur_order.images.all %}
+                                    <button type="submit" class="btn btn-primary">Finalize Images</button>
+                                {% else %}
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Warning: No images uploaded</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to submit this to radiology with no images?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary">Finalize with No Images</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary">Finalize with No Images</button>
+                                {% endif %}
                             </form>
                         </div>
                     </div>
