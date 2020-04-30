@@ -326,6 +326,14 @@ def patient_lookup(request):
     # Grab a data object from our DateWidget
     dob = datetime.datetime.strptime(request.POST['birth_date'], '%m/%d/%Y').date()
 
+    if dob > datetime.date.today():
+        messages = {
+            'headline1': 'Birth date must be in the past',
+            'headline2': 'Please try again.',
+            'headline3': f""
+        }
+        return show_message(request, messages)
+
     # Grab a list of patients with that DOB from DB
     patient_list = Patient.objects.filter(birth_date=dob)
 
