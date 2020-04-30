@@ -18,6 +18,9 @@ from xamine.tasks import send_email
 def patient_email(request, order_id):
     """ Handles sending email to patient to view order """
 
+    # Establish where the app is hosted
+    host = "xamine.msb.dev"
+
     # attempt to send email
     try:
         # Either create or update the key for this order
@@ -31,7 +34,7 @@ def patient_email(request, order_id):
         current_key.save()
 
         # Establish our URL and recipient, the patient's email
-        url = f"https://{request.get_host()}{reverse('public_order')}?key={key}"
+        url = f"https://{host}{reverse('public_order')}?key={key}"
         to_email = current_key.order.patient.email_info
 
         # Set up our message content
