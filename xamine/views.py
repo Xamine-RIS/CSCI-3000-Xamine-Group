@@ -397,7 +397,7 @@ def new_order(request, pat_id):
 
 
 @login_required
-def remove_image(request, img_id):
+def remove_file(request, img_id):
     """ Removes image from our order model """
 
     # Grab image in question

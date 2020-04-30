@@ -17,6 +17,6 @@ urlpatterns = [
     path('patient/new', views.new_patient, name='new_patient'),  # Submit new patient info
     path('patient/<int:pat_id>/new-order', views.new_order, name='new_order'),  # Start new order for patient
 
-    path('image/<int:img_id>/remove', views.remove_image, name='remove_image'),  # Remove specified image
+    path('image/<int:img_id>/remove', views.remove_file, name='remove_image'),  # Remove specified image
 
 ]
