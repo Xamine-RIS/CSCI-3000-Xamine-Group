@@ -164,7 +164,7 @@
                             <tr>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                <td>{{ order.added_on|date:'d/m/Y' }}</td>
+                                <td>{{ order.added_on|date:'m/d/Y' }}</td>
                             </tr>
                         {% empty %}
                             <tr>
