@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
-from xamine.validators import validate_file_size
+from xamine.validators import validate_file_size, check_past_date
 
 
 class Level(models.Model):
@@ -30,7 +30,7 @@ class Patient(models.Model):
     middle_name = models.CharField(max_length=128, blank=True, null=True)
     last_name = models.CharField(max_length=128)
     email_info = models.EmailField()
-    birth_date = models.DateField()
+    birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
 
     # Medical information
