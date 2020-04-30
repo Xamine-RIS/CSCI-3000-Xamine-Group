@@ -289,6 +289,14 @@ def schedule_order(request, order_id):
             appt = datetime.datetime.strptime(request.POST['appointment'], '%m/%d/%Y %I:%M %p')
             twohrslater = appt + datetime.timedelta(hours=2)
 
+            if appt.date() < datetime.date.today():
+                messages = {
+                    'headline1': 'Appointment is in the past.',
+                    'headline2': '',
+                    'headline3': f"Orders can only be assigned to today or in the future."
+                }
+                return show_message(request, messages)
+
             conflict = Order.objects.filter(appointment__gte=appt, appointment__lt=twohrslater).exists()
         else:
             # We did not get an appointment key in our POST data, so we're going to blank out our appt time.
