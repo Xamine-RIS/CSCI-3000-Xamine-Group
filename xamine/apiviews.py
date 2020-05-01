@@ -54,7 +54,8 @@ def patient_email(request, order_id):
         # Return JSON to express failure
         return_data = {
             'status': 'fail',
-            'message': f'Email not sent!'
+            'message': f'Email not sent!',
+            'error': e,
         }
         return Response(return_data, status=status.HTTP_400_BAD_REQUEST)
 
