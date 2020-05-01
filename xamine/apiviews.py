@@ -63,5 +63,5 @@ def patient_email(request, order_id):
 def random_string(string_length=128):
     """ Gets random string of desired length """
     # Get list of all lowercase and uppercase letters and return the desired number of them randomly
-    letters = string.ascii_lowercase + string.ascii_uppercase + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    letters = string.ascii_lowercase + string.ascii_uppercase
     return ''.join(random.choice(letters) for i in range(string_length))
