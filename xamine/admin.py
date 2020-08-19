@@ -23,7 +23,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 admin.site.register(Patient)
 admin.site.register(Level)
-# admin.site.register(AppSetting)
+admin.site.register(AppSetting)
 # admin.site.register(Image)
 admin.site.register(ModalityOption)
 admin.site.register(Team, TeamAdmin)

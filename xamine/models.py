@@ -18,6 +18,10 @@ class AppSetting(models.Model):
     name = models.CharField(max_length=32)
     value = models.CharField(max_length=256)
 
+    @staticmethod
+    def get_setting(name):
+        return AppSetting.objects.get(name=name).value
+
     def __str__(self):
         return self.name
 
