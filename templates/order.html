@@ -462,7 +462,9 @@
                             let link = '';
                             if (json.link) link = "<br><a class='small' href='" + json.link + "'>Patient URL</a> ";
 
-                            $.notify('Email Sent!' + link, {type: 'success'})
+                            const message = json.message;
+
+                            $.notify(message + link, {type: 'success'})
                         } else {
                             $.notify('Error', {type: 'danger'})
                             console.log(json);
