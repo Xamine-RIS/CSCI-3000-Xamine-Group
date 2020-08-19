@@ -4,7 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
 from django.utils.html import strip_tags
 
-from xamine.models import Order
+from xamine.models import Order, AppSetting
 
 
 def send_email(to_email, from_email, subject, html_content):
