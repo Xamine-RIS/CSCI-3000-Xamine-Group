@@ -66,7 +66,7 @@ def send_notification(order_id):
     else:
         return
 
-    # Grad order URL, set up body of message, and send email
+    # Grab order URL, set up body of message, and send email
     url = reverse('order', kwargs={'order_id': ord.id})
     body += f"<br><br><a href='{url}' target='_blank'>Click Here to View</a>"
 
