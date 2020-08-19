@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from xamine.models import OrderKey
+from xamine.models import OrderKey, AppSetting
 import random
 import string
 
@@ -40,14 +40,18 @@ def patient_email(request, order_id):
     # Set up our message content
     html_content = "Imaging report has been emailed to you: <br><br>" + url
 
-    # Send patient our email
-    send_email([to_email], 'xamineinc@gmail.com', 'RIS Report is Ready', html_content)
+    if AppSetting.get_setting('EMAIL_TOGGLE'):
+        # Send patient our email
+        send_email([to_email], 'xamineinc@gmail.com', 'RIS Report is Ready', html_content)
+        message = 'Email Sent!'
+    else:
+        message = 'Link created!'
 
     # Return JSON to confirm success
     return_data = {
         'status': 'ok',
-        'message': 'Email sent!',
-        'link': url if settings.DEBUG else None,
+        'message': message,
+        'link': url,
     }
     return Response(return_data, status=status.HTTP_201_CREATED)
     # except Exception as e:
