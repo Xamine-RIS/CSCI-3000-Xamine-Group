@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
+
 
 from xamine.validators import validate_file_size, check_past_date
 
@@ -151,3 +154,9 @@ class OrderKey(models.Model):
 
     def __str__(self):
         return f"{self.order.patient.email_info} on {self.date_created}"
+
+
+@receiver(pre_delete, sender=Image)
+def mymodel_delete(sender, instance, **kwargs):
+    # Pass false so FileField doesn't save the model.
+    instance.file.delete(False)
