@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'xaminegroup.pythonanywhere.com',
+    'abisalimi.pythonanywhere.com',
     '127.0.0.1',
     'localhost',
     'xamine.msb.dev',
