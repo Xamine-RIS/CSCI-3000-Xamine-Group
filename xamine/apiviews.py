@@ -40,7 +40,7 @@ def patient_email(request, order_id):
         # Set up our message content
         html_content = "Imaging report has been emailed to you: <br><br>" + url
 
-        if AppSetting.get_setting('EMAIL_TOGGLE'):
+        if AppSetting.get_setting('EMAIL_TOGGLE') == 'True':
             # Send patient our email
             send_email([to_email], 'xamineinc@gmail.com', 'RIS Report is Ready', html_content)
             message = 'Email Sent!'
