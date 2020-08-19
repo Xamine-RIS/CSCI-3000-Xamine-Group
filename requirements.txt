@@ -11,3 +11,4 @@ django-sendgrid-v5
 django-background-tasks
 django-extensions
 sendgrid
+django-cleanup
