@@ -1,3 +1,5 @@
+test
+
 /
 	Controller: xamine.views.index
 	URL Name: index
