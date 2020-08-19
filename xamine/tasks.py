@@ -10,6 +10,9 @@ from xamine.models import Order
 def send_email(to_email, from_email, subject, html_content):
     """ Defines how to send generic email"""
 
+    if AppSetting.get_setting("EMAIL_TOGGLE") != 'True':
+        return
+
     if isinstance(to_email, str):
         to_email = [to_email]
 
