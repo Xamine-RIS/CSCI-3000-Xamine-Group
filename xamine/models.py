@@ -160,5 +160,5 @@ class OrderKey(models.Model):
 def mymodel_delete(sender, instance, **kwargs):
     # Pass false so FileField doesn't save the model.
 
-    if instance.file:
-        instance.file.delete(False)
+    if instance.image:
+        instance.image.delete(False)
