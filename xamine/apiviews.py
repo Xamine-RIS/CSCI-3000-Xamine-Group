@@ -19,7 +19,7 @@ def patient_email(request, order_id):
     """ Handles sending email to patient to view order """
 
     # Establish where the app is hosted
-    host = "xamine.msb.dev"
+    host = "abisalimi.pythonanywhere.com/"
 
     # attempt to send email
     try:
